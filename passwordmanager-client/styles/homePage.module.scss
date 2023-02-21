@@ -1,0 +1,15 @@
+@import "./colors.module.scss";
+
+.main {
+  text-align: center;
+
+  h1 {
+    color: $logo-color;
+    font-size: 8rem;
+  }
+
+  p {
+    color: $text-color;
+    font-size: 6rem;
+  }
+}

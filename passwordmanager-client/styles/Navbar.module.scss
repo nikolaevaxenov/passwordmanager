@@ -1,0 +1,27 @@
+@import "./colors.module.scss";
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  background-color: $navbar-bg;
+
+  margin: 0;
+  padding: 1rem;
+
+  &__logo {
+    color: $logo-color;
+  }
+
+  &__links {
+    display: flex;
+    gap: 1rem;
+
+    color: $text-color;
+
+    a:hover {
+      color: $hover-text-color;
+    }
+  }
+}
