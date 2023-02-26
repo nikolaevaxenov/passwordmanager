@@ -1,5 +1,6 @@
 package com.passwordmanager.passwordmanagerserver.controller;
 
+import com.fasterxml.jackson.databind.node.TextNode;
 import com.passwordmanager.passwordmanagerserver.model.Address;
 import com.passwordmanager.passwordmanagerserver.service.AddressService;
 import org.springframework.http.HttpStatus;
@@ -45,5 +46,17 @@ public class AddressController {
     @ResponseStatus(HttpStatus.OK)
     public void deleteAddress(@PathVariable Long id, Principal principal) {
         addressService.deleteAddress(id, principal);
+    }
+
+    @PostMapping("/shared/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public void addSharingAddress(@PathVariable Long id, @RequestBody TextNode email, Principal principal) {
+        addressService.addSharingAddress(id, email.asText(), principal);
+    }
+
+    @DeleteMapping("/shared/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public void removeSharingAddress(@PathVariable Long id, @RequestBody TextNode userId, Principal principal) {
+        addressService.removeSharingAddress(id, userId.asLong(), principal);
     }
 }

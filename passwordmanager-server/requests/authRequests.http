@@ -1,0 +1,48 @@
+###
+# @no-log
+# @name SignIn
+POST http://localhost:8080/api/v1/authorization/signin
+Content-Type: application/json
+
+{
+  "username": "first@mail.com",
+  "password": "123456"
+}
+
+> {% client.global.set("auth_token", response.body); %}
+###
+
+###
+# @no-log
+# @name SignUp
+POST http://localhost:8080/api/v1/authorization/signup
+Content-Type: application/json
+
+{
+  "username": "user@mail.com",
+  "password": "123456"
+}
+
+> {% client.global.set("auth_token", response.body); %}
+###
+
+###
+# @no-log
+# @name User page
+GET http://localhost:8080/user
+Authorization: Bearer {{auth_token}}
+###
+
+###
+# @no-log
+# @name Admin page
+GET http://localhost:8080/admin
+Authorization: Bearer {{auth_token}}
+###
+
+###
+# @no-log
+# @name Get email
+GET http://localhost:8080/api/v1/authorization/signin
+Authorization: Bearer {{auth_token}}
+###

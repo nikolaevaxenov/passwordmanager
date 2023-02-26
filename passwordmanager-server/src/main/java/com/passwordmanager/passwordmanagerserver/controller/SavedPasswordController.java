@@ -1,7 +1,11 @@
 package com.passwordmanager.passwordmanagerserver.controller;
 
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.TextNode;
 import com.passwordmanager.passwordmanagerserver.model.SavedPassword;
 import com.passwordmanager.passwordmanagerserver.service.SavedPasswordService;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -45,5 +49,17 @@ public class SavedPasswordController {
     @ResponseStatus(HttpStatus.OK)
     public void deleteSavedPassword(@PathVariable Long id, Principal principal) {
         savedPasswordService.deleteSavedPassword(id, principal);
+    }
+
+    @PostMapping("/shared/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public void addSharingSavedPassword(@PathVariable Long id, @RequestBody TextNode email, Principal principal) {
+        savedPasswordService.addSharingSavedPassword(id, email.asText(), principal);
+    }
+
+    @DeleteMapping("/shared/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public void removeSharingSavedPassword(@PathVariable Long id, @RequestBody TextNode userId, Principal principal) {
+        savedPasswordService.removeSharingSavedPassword(id, userId.asLong(), principal);
     }
 }

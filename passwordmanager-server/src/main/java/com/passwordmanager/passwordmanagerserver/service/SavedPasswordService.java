@@ -9,6 +9,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.security.Principal;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class SavedPasswordService {
@@ -23,7 +24,17 @@ public class SavedPasswordService {
     public Set<SavedPassword> getAllSavedPasswords(Principal principal) {
         var user = userRepository.findByEmail(principal.getName()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
-        return user.getSavedPasswords();
+        var sharedSavedPasswords = savedPasswordRepository
+                .findAll()
+                .stream()
+                .filter(p -> p.getSharedWithUsers()
+                        .stream()
+                        .anyMatch(id -> id.equals(user.getId())))
+                .collect(Collectors.toSet());
+
+        sharedSavedPasswords.addAll(user.getSavedPasswords());
+
+        return sharedSavedPasswords;
     }
 
     public SavedPassword getSavedPasswordById(Long id, Principal principal) {
@@ -81,5 +92,32 @@ public class SavedPasswordService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
         savedPasswordRepository.delete(pass);
+    }
+
+    public void addSharingSavedPassword(Long id, String email, Principal principal) {
+        var owner = userRepository.findByEmail(principal.getName()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        var otherUser = userRepository.findByEmail(email).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        var pass = owner.getSavedPasswords()
+                .stream()
+                .filter(p -> p.getId().equals(id))
+                .findFirst()
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        pass.addSharedWithUsers(otherUser.getId());
+        savedPasswordRepository.save(pass);
+    }
+
+    public void removeSharingSavedPassword(Long id, Long userId, Principal principal) {
+        var owner = userRepository.findByEmail(principal.getName()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        var pass = owner.getSavedPasswords()
+                .stream()
+                .filter(p -> p.getId().equals(id))
+                .findFirst()
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        pass.removeSharedWithUsers(userId);
+        savedPasswordRepository.save(pass);
     }
 }

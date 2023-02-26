@@ -1,0 +1,82 @@
+###
+# @no-log
+# @name SignIn
+POST http://localhost:8080/api/v1/authorization/signin
+Content-Type: application/json
+
+{
+  "username": "first@mail.com",
+  "password": "123456"
+}
+
+> {% client.global.set("auth_token", response.body); %}
+###
+
+###
+# @no-log
+# @name Get all notes
+GET http://localhost:8080/api/v1/note
+Authorization: Bearer {{auth_token}}
+###
+
+###
+# @no-log
+# @name Get note by id
+GET http://localhost:8080/api/v1/note/1
+Authorization: Bearer {{auth_token}}
+###
+
+###
+# @no-log
+# @name Add new note
+POST http://localhost:8080/api/v1/note
+Authorization: Bearer {{auth_token}}
+Content-Type: application/json
+
+{
+  "title": "Added note",
+  "text": "lorem ipsum"
+}
+###
+
+###
+# @no-log
+# @name Edit note
+PUT http://localhost:8080/api/v1/note
+Authorization: Bearer {{auth_token}}
+Content-Type: application/json
+
+{
+  "id": 4,
+  "title": "Added eee note"
+}
+###
+
+###
+# @no-log
+# @name Delete note
+DELETE http://localhost:8080/api/v1/note/4
+Authorization: Bearer {{auth_token}}
+###
+
+###
+# @no-log
+# @name Add sharing to note
+POST http://localhost:8080/api/v1/note/shared/4
+Authorization: Bearer {{auth_token}}
+Content-Type: application/json
+
+"first@mail.com"
+
+###
+
+###
+# @no-log
+# @name Remove sharing to note
+DELETE http://localhost:8080/api/v1/note/shared/5
+Authorization: Bearer {{auth_token}}
+Content-Type: application/json
+
+"1"
+
+###

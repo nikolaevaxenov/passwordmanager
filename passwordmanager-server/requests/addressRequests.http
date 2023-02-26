@@ -1,0 +1,88 @@
+###
+# @no-log
+# @name SignIn
+POST http://localhost:8080/api/v1/authorization/signin
+Content-Type: application/json
+
+{
+  "username": "first@mail.com",
+  "password": "123456"
+}
+
+> {% client.global.set("auth_token", response.body); %}
+###
+
+###
+# @no-log
+# @name Get all addresses
+GET http://localhost:8080/api/v1/address
+Authorization: Bearer {{auth_token}}
+###
+
+###
+# @no-log
+# @name Get address by id
+GET http://localhost:8080/api/v1/address/1
+Authorization: Bearer {{auth_token}}
+###
+
+###
+# @no-log
+# @name Add new address
+POST http://localhost:8080/api/v1/address
+Authorization: Bearer {{auth_token}}
+Content-Type: application/json
+
+{
+  "title": "Added address",
+  "firstName": "Ivan",
+  "address1": "Lorem rd.",
+  "city": "Ipsum",
+  "county": "Dolor county",
+  "state": "SIT",
+  "zipCode": "123456",
+  "country": "Amet"
+}
+###
+
+###
+# @no-log
+# @name Edit address
+PUT http://localhost:8080/api/v1/address
+Authorization: Bearer {{auth_token}}
+Content-Type: application/json
+
+{
+  "id": 4,
+  "title": "Added ee address"
+}
+###
+
+###
+# @no-log
+# @name Delete address
+DELETE http://localhost:8080/api/v1/address/5
+Authorization: Bearer {{auth_token}}
+###
+
+###
+# @no-log
+# @name Add sharing to address
+POST http://localhost:8080/api/v1/address/shared/4
+Authorization: Bearer {{auth_token}}
+Content-Type: application/json
+
+"first@mail.com"
+
+###
+
+###
+# @no-log
+# @name Remove sharing to address
+DELETE http://localhost:8080/api/v1/address/shared/4
+Authorization: Bearer {{auth_token}}
+Content-Type: application/json
+
+"1"
+
+###

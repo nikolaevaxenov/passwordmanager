@@ -93,6 +93,8 @@ public class PasswordmanagerServerApplication {
             paymentCard2.setUser(user2);
             paymentCard3.setUser(user3);
 
+            paymentCard1.setSharedWithUsers(Set.of(user2.getId()));
+
             paymentCardRepository.save(paymentCard1);
             paymentCardRepository.save(paymentCard2);
             paymentCardRepository.save(paymentCard3);

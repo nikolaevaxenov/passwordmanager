@@ -109,6 +109,14 @@ public class SavedPassword {
         this.sharedWithUsers = sharedWithUsers;
     }
 
+    public void addSharedWithUsers(Long id) {
+        this.sharedWithUsers.add(id);
+    }
+
+    public void removeSharedWithUsers(Long id) {
+        this.sharedWithUsers.remove(id);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

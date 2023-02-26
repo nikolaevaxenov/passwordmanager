@@ -1,5 +1,6 @@
 package com.passwordmanager.passwordmanagerserver.controller;
 
+import com.fasterxml.jackson.databind.node.TextNode;
 import com.passwordmanager.passwordmanagerserver.model.Note;
 import com.passwordmanager.passwordmanagerserver.service.NoteService;
 import org.springframework.http.HttpStatus;
@@ -45,5 +46,17 @@ public class NoteController {
     @ResponseStatus(HttpStatus.OK)
     public void deleteNote(@PathVariable Long id, Principal principal) {
         noteService.deleteNote(id, principal);
+    }
+
+    @PostMapping("/shared/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public void addSharingNote(@PathVariable Long id, @RequestBody TextNode email, Principal principal) {
+        noteService.addSharingNote(id, email.asText(), principal);
+    }
+
+    @DeleteMapping("/shared/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public void removeSharingNote(@PathVariable Long id, @RequestBody TextNode userId, Principal principal) {
+        noteService.removeSharingNote(id, userId.asLong(), principal);
     }
 }

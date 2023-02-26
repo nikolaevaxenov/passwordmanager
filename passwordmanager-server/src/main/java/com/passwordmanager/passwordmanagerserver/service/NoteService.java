@@ -9,6 +9,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.security.Principal;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class NoteService {
@@ -24,7 +25,17 @@ public class NoteService {
     public Set<Note> getAllNotes(Principal principal) {
         var user = userRepository.findByEmail(principal.getName()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
-        return user.getNotes();
+        var sharedNotes = noteRepository
+                .findAll()
+                .stream()
+                .filter(p -> p.getSharedWithUsers()
+                        .stream()
+                        .anyMatch(id -> id.equals(user.getId())))
+                .collect(Collectors.toSet());
+
+        sharedNotes.addAll(user.getNotes());
+
+        return sharedNotes;
     }
 
     public Note getNoteById(Long id, Principal principal) {
@@ -71,5 +82,32 @@ public class NoteService {
                 .filter(n -> n.getId().equals(id))
                 .findFirst()
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND)));
+    }
+
+    public void addSharingNote(Long id, String email, Principal principal) {
+        var owner = userRepository.findByEmail(principal.getName()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        var otherUser = userRepository.findByEmail(email).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        var note = owner.getNotes()
+                .stream()
+                .filter(p -> p.getId().equals(id))
+                .findFirst()
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        note.addSharedWithUsers(otherUser.getId());
+        noteRepository.save(note);
+    }
+
+    public void removeSharingNote(Long id, Long userId, Principal principal) {
+        var owner = userRepository.findByEmail(principal.getName()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        var note = owner.getNotes()
+                .stream()
+                .filter(p -> p.getId().equals(id))
+                .findFirst()
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        note.removeSharedWithUsers(userId);
+        noteRepository.save(note);
     }
 }

@@ -1,0 +1,85 @@
+###
+# @no-log
+# @name SignIn
+POST http://localhost:8080/api/v1/authorization/signin
+Content-Type: application/json
+
+{
+  "username": "first@mail.com",
+  "password": "123456"
+}
+
+> {% client.global.set("auth_token", response.body); %}
+###
+
+###
+# @no-log
+# @name Get all payment card
+GET http://localhost:8080/api/v1/paymentcard
+Authorization: Bearer {{auth_token}}
+###
+
+###
+# @no-log
+# @name Get payment card by id
+GET http://localhost:8080/api/v1/paymentcard/1
+Authorization: Bearer {{auth_token}}
+###
+
+###
+# @no-log
+# @name Add new payment card
+POST http://localhost:8080/api/v1/paymentcard
+Authorization: Bearer {{auth_token}}
+Content-Type: application/json
+
+{
+  "title": "Added card",
+  "cardBrand": "JCB",
+  "number": "1234 5678 8901 2345",
+  "securityCode": "123",
+  "expirationDate": "12/23"
+}
+###
+
+###
+# @no-log
+# @name Edit payment card
+PUT http://localhost:8080/api/v1/paymentcard
+Authorization: Bearer {{auth_token}}
+Content-Type: application/json
+
+{
+  "id": 4,
+  "title": "Added eee payment card"
+}
+###
+
+###
+# @no-log
+# @name Delete payment card
+DELETE http://localhost:8080/api/v1/paymentcard/4
+Authorization: Bearer {{auth_token}}
+###
+
+###
+# @no-log
+# @name Add sharing to payment card
+POST http://localhost:8080/api/v1/paymentcard/shared/4
+Authorization: Bearer {{auth_token}}
+Content-Type: application/json
+
+"first@mail.com"
+
+###
+
+###
+# @no-log
+# @name Remove sharing to payment card
+DELETE http://localhost:8080/api/v1/paymentcard/shared/5
+Authorization: Bearer {{auth_token}}
+Content-Type: application/json
+
+"1"
+
+###

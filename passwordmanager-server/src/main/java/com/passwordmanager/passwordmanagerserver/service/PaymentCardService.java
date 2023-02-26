@@ -9,6 +9,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.security.Principal;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class PaymentCardService {
@@ -24,7 +25,17 @@ public class PaymentCardService {
     public Set<PaymentCard> getAllPaymentCards(Principal principal) {
         var user = userRepository.findByEmail(principal.getName()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
-        return user.getPaymentCards();
+        var sharedPaymentCards = paymentCardRepository
+                .findAll()
+                .stream()
+                .filter(p -> p.getSharedWithUsers()
+                        .stream()
+                        .anyMatch(id -> id.equals(user.getId())))
+                .collect(Collectors.toSet());
+
+        sharedPaymentCards.addAll(user.getPaymentCards());
+
+        return sharedPaymentCards;
     }
 
     public PaymentCard getPaymentCardById(Long id, Principal principal) {
@@ -83,5 +94,32 @@ public class PaymentCardService {
                 .filter(p -> p.getId().equals(id))
                 .findFirst()
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND)));
+    }
+
+    public void addSharingPaymentCard(Long id, String email, Principal principal) {
+        var owner = userRepository.findByEmail(principal.getName()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        var otherUser = userRepository.findByEmail(email).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        var paymentCard = owner.getPaymentCards()
+                .stream()
+                .filter(p -> p.getId().equals(id))
+                .findFirst()
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        paymentCard.addSharedWithUsers(otherUser.getId());
+        paymentCardRepository.save(paymentCard);
+    }
+
+    public void removeSharingPaymentCard(Long id, Long userId, Principal principal) {
+        var owner = userRepository.findByEmail(principal.getName()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        var paymentCard = owner.getPaymentCards()
+                .stream()
+                .filter(p -> p.getId().equals(id))
+                .findFirst()
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        paymentCard.removeSharedWithUsers(userId);
+        paymentCardRepository.save(paymentCard);
     }
 }

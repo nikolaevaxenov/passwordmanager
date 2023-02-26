@@ -9,6 +9,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.security.Principal;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class AddressService {
@@ -24,7 +25,17 @@ public class AddressService {
     public Set<Address> getAllAddresses(Principal principal) {
         var user = userRepository.findByEmail(principal.getName()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
-        return user.getAddresses();
+        var sharedAddresses = addressRepository
+                .findAll()
+                .stream()
+                .filter(p -> p.getSharedWithUsers()
+                        .stream()
+                        .anyMatch(id -> id.equals(user.getId())))
+                .collect(Collectors.toSet());
+
+        sharedAddresses.addAll(user.getAddresses());
+
+        return sharedAddresses;
     }
 
     public Address getAddressById(Long id, Principal principal) {
@@ -122,5 +133,32 @@ public class AddressService {
                 .filter(a -> a.getId().equals(id))
                 .findFirst()
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND)));
+    }
+
+    public void addSharingAddress(Long id, String email, Principal principal) {
+        var owner = userRepository.findByEmail(principal.getName()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        var otherUser = userRepository.findByEmail(email).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        var address = owner.getAddresses()
+                .stream()
+                .filter(p -> p.getId().equals(id))
+                .findFirst()
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        address.addSharedWithUsers(otherUser.getId());
+        addressRepository.save(address);
+    }
+
+    public void removeSharingAddress(Long id, Long userId, Principal principal) {
+        var owner = userRepository.findByEmail(principal.getName()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        var address = owner.getAddresses()
+                .stream()
+                .filter(p -> p.getId().equals(id))
+                .findFirst()
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        address.removeSharedWithUsers(userId);
+        addressRepository.save(address);
     }
 }

@@ -1,5 +1,6 @@
 package com.passwordmanager.passwordmanagerserver.controller;
 
+import com.fasterxml.jackson.databind.node.TextNode;
 import com.passwordmanager.passwordmanagerserver.model.PaymentCard;
 import com.passwordmanager.passwordmanagerserver.service.PaymentCardService;
 import org.springframework.http.HttpStatus;
@@ -45,5 +46,17 @@ public class PaymentCardController {
     @ResponseStatus(HttpStatus.OK)
     public void deletePaymentCard(@PathVariable Long id, Principal principal) {
         paymentCardService.deletePaymentCard(id, principal);
+    }
+
+    @PostMapping("/shared/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public void addSharingPaymentCard(@PathVariable Long id, @RequestBody TextNode email, Principal principal) {
+        paymentCardService.addSharingPaymentCard(id, email.asText(), principal);
+    }
+
+    @DeleteMapping("/shared/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public void removeSharingPaymentCard(@PathVariable Long id, @RequestBody TextNode userId, Principal principal) {
+        paymentCardService.removeSharingPaymentCard(id, userId.asLong(), principal);
     }
 }
