@@ -57,9 +57,17 @@ public class SavedPasswordController {
         savedPasswordService.addSharingSavedPassword(id, email.asText(), principal);
     }
 
+    @PutMapping("shared/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public void removeSharingWithMeSavedPassword(@PathVariable Long id, Principal principal) {
+        savedPasswordService.removeSharingWithMeSavedPassword(id, principal);
+    }
+
     @DeleteMapping("/shared/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public void removeSharingSavedPassword(@PathVariable Long id, @RequestBody TextNode userId, Principal principal) {
-        savedPasswordService.removeSharingSavedPassword(id, userId.asLong(), principal);
+    public void removeSharingSavedPassword(@PathVariable Long id, @RequestBody TextNode email, Principal principal) {
+        System.out.println(id);
+        System.out.println(email.asText());
+        savedPasswordService.removeSharingSavedPassword(id, email.asText(), principal);
     }
 }

@@ -39,17 +39,24 @@ public class PasswordmanagerServerApplication {
             userRepository.save(user3);
             userRepository.save(adminUser);
 
-            var pass1 = new SavedPassword("First password", "http://localhost:8080", "user", "pass");
-            var pass2 = new SavedPassword("Second password", "http://localhost:8080", "user", "pass");
-            var pass3 = new SavedPassword("Third password", "http://localhost:8080", "user", "pass");
-            var pass4 = new SavedPassword("Fourth password", "http://localhost:8080", "user", "pass");
+            var pass1 = new SavedPassword("First password", "http://localhost:8080", "user1@mail.com", "pass1");
+            var pass2 = new SavedPassword("Second password", "http://localhost:8080", "user2@mail.com", "pass2");
+            var pass3 = new SavedPassword("Third password", "http://localhost:8080", "user3@mail.com", "pass3");
+            var pass4 = new SavedPassword("Fourth password", "http://localhost:8080", "user4@mail.com", "pass4");
+
+            String loremIpsum = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
+
+            pass1.setNote(loremIpsum);
+            pass2.setNote(loremIpsum);
+            pass3.setNote(loremIpsum);
+            pass4.setNote(loremIpsum);
 
             pass1.setUser(user1);
             pass2.setUser(user1);
             pass3.setUser(user2);
             pass4.setUser(user3);
 
-            pass1.setSharedWithUsers(Set.of(user2.getId(), user3.getId()));
+            pass1.setSharedWithUsers(Set.of(user2.getEmail(), user3.getEmail()));
 
             savedPasswordRepository.save(pass1);
             savedPasswordRepository.save(pass2);
@@ -64,7 +71,7 @@ public class PasswordmanagerServerApplication {
             note2.setUser(user2);
             note3.setUser(user3);
 
-            note1.setSharedWithUsers(Set.of(user2.getId()));
+            note1.setSharedWithUsers(Set.of(user2.getEmail()));
 
             noteRepository.save(note1);
             noteRepository.save(note2);
@@ -78,8 +85,8 @@ public class PasswordmanagerServerApplication {
             address2.setUser(user3);
             address3.setUser(user3);
 
-            address1.setSharedWithUsers(Set.of(user2.getId(), user3.getId()));
-            address2.setSharedWithUsers(Set.of(user2.getId()));
+            address1.setSharedWithUsers(Set.of(user2.getEmail(), user3.getEmail()));
+            address2.setSharedWithUsers(Set.of(user2.getEmail()));
 
             addressRepository.save(address1);
             addressRepository.save(address2);
@@ -93,7 +100,7 @@ public class PasswordmanagerServerApplication {
             paymentCard2.setUser(user2);
             paymentCard3.setUser(user3);
 
-            paymentCard1.setSharedWithUsers(Set.of(user2.getId()));
+            paymentCard1.setSharedWithUsers(Set.of(user2.getEmail()));
 
             paymentCardRepository.save(paymentCard1);
             paymentCardRepository.save(paymentCard2);

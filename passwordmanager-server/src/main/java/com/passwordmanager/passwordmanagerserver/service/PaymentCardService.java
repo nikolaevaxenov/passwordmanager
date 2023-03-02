@@ -30,7 +30,7 @@ public class PaymentCardService {
                 .stream()
                 .filter(p -> p.getSharedWithUsers()
                         .stream()
-                        .anyMatch(id -> id.equals(user.getId())))
+                        .anyMatch(email -> email.equals(user.getEmail())))
                 .collect(Collectors.toSet());
 
         sharedPaymentCards.addAll(user.getPaymentCards());
@@ -106,11 +106,11 @@ public class PaymentCardService {
                 .findFirst()
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
-        paymentCard.addSharedWithUsers(otherUser.getId());
+        paymentCard.addSharedWithUsers(otherUser.getEmail());
         paymentCardRepository.save(paymentCard);
     }
 
-    public void removeSharingPaymentCard(Long id, Long userId, Principal principal) {
+    public void removeSharingPaymentCard(Long id, String email, Principal principal) {
         var owner = userRepository.findByEmail(principal.getName()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
         var paymentCard = owner.getPaymentCards()
@@ -119,7 +119,21 @@ public class PaymentCardService {
                 .findFirst()
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
-        paymentCard.removeSharedWithUsers(userId);
+        paymentCard.removeSharedWithUsers(email);
+        paymentCardRepository.save(paymentCard);
+    }
+
+    public void removeSharingWithMePaymentCard(Long id, Principal principal) {
+        var user = userRepository.findByEmail(principal.getName()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        var paymentCard = paymentCardRepository
+                .findAll()
+                .stream()
+                .filter(p -> p.getId().equals(id))
+                .findFirst()
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        paymentCard.removeSharedWithUsers(user.getEmail());
         paymentCardRepository.save(paymentCard);
     }
 }

@@ -1,14 +1,18 @@
 "use client";
 
-import { useForm } from "react-hook-form";
+import {
+  createAuthToken,
+  selectAuthToken,
+  setAuthToken,
+} from "@/features/auth/authSlice";
+import { useAppDispatch, useAppSelector } from "@/hooks/hooks";
+import { signIn, SignInCredentials } from "@/services/auth";
 import styles from "@/styles/signInForm.module.scss";
 import Link from "next/link";
-import { useMutation } from "react-query";
-import { signIn, SignInCredentials } from "@/services/auth";
-import { useAppDispatch, useAppSelector } from "@/hooks/hooks";
-import { setEmail, setToken } from "@/features/auth/authSlice";
-import { useEffect, useState } from "react";
 import { redirect } from "next/navigation";
+import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import { useMutation } from "react-query";
 
 type SignInFormData = {
   email: string;
@@ -17,20 +21,19 @@ type SignInFormData = {
 
 export default function SignInForm() {
   const dispatch = useAppDispatch();
-  const auth = useAppSelector((state) => state.auth);
+  const authToken = useAppSelector(selectAuthToken);
 
   const [authError, setAuthError] = useState(false);
 
   useEffect(() => {
-    if (auth.email !== null) {
-      redirect("/");
+    if (authToken !== null) {
+      redirect("/profile");
     }
-  }, [auth.email]);
+  }, [authToken]);
 
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
   } = useForm<SignInFormData>();
 
@@ -43,8 +46,7 @@ export default function SignInForm() {
       { email: data.email, password: data.password },
       {
         onSuccess: (data, variables) => {
-          dispatch(setEmail(variables.email));
-          dispatch(setToken(data));
+          dispatch(setAuthToken(createAuthToken(variables.email, data)));
           setAuthError(false);
         },
         onError: () => setAuthError(true),

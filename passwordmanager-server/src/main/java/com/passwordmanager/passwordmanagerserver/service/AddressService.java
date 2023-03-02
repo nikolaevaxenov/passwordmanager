@@ -30,7 +30,7 @@ public class AddressService {
                 .stream()
                 .filter(p -> p.getSharedWithUsers()
                         .stream()
-                        .anyMatch(id -> id.equals(user.getId())))
+                        .anyMatch(email -> email.equals(user.getEmail())))
                 .collect(Collectors.toSet());
 
         sharedAddresses.addAll(user.getAddresses());
@@ -145,11 +145,11 @@ public class AddressService {
                 .findFirst()
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
-        address.addSharedWithUsers(otherUser.getId());
+        address.addSharedWithUsers(otherUser.getEmail());
         addressRepository.save(address);
     }
 
-    public void removeSharingAddress(Long id, Long userId, Principal principal) {
+    public void removeSharingAddress(Long id, String email, Principal principal) {
         var owner = userRepository.findByEmail(principal.getName()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
         var address = owner.getAddresses()
@@ -158,7 +158,21 @@ public class AddressService {
                 .findFirst()
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
-        address.removeSharedWithUsers(userId);
+        address.removeSharedWithUsers(email);
+        addressRepository.save(address);
+    }
+
+    public void removeSharingWithMeAddress(Long id, Principal principal) {
+        var user = userRepository.findByEmail(principal.getName()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        var address = addressRepository
+                .findAll()
+                .stream()
+                .filter(p -> p.getId().equals(id))
+                .findFirst()
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        address.removeSharedWithUsers(user.getEmail());
         addressRepository.save(address);
     }
 }

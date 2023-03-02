@@ -25,7 +25,7 @@ public class Note {
     private User user;
 
     @ElementCollection
-    private Set<Long> sharedWithUsers;
+    private Set<String> sharedWithUsers;
 
     public Note() {
     }
@@ -67,20 +67,20 @@ public class Note {
         this.user = user;
     }
 
-    public Set<Long> getSharedWithUsers() {
+    public Set<String> getSharedWithUsers() {
         return sharedWithUsers;
     }
 
-    public void setSharedWithUsers(Set<Long> sharedWithUsers) {
+    public void setSharedWithUsers(Set<String> sharedWithUsers) {
         this.sharedWithUsers = sharedWithUsers;
     }
 
-    public void addSharedWithUsers(Long id) {
-        this.sharedWithUsers.add(id);
+    public void addSharedWithUsers(String email) {
+        this.sharedWithUsers.add(email);
     }
 
-    public void removeSharedWithUsers(Long id) {
-        this.sharedWithUsers.remove(id);
+    public void removeSharedWithUsers(String email) {
+        this.sharedWithUsers.remove(email);
     }
 
     @Override

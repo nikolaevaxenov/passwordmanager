@@ -11,6 +11,10 @@
   padding: 1rem;
 
   &__logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
     color: $logo-color;
   }
 

@@ -26,14 +26,19 @@ public class SavedPassword {
     @NotBlank
     private String password;
 
+    @Column(columnDefinition = "TEXT")
     private String note;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "owner_email", referencedColumnName = "email")
     @JsonBackReference(value = "savedPasswords")
     private User user;
 
+    @Column(name = "owner_email", insertable=false, updatable=false)
+    private String owner_email;
+
     @ElementCollection
-    private Set<Long> sharedWithUsers;
+    private Set<String> sharedWithUsers;
 
     public SavedPassword() {
     }
@@ -101,32 +106,40 @@ public class SavedPassword {
         this.user = user;
     }
 
-    public Set<Long> getSharedWithUsers() {
+    public Set<String> getSharedWithUsers() {
         return sharedWithUsers;
     }
 
-    public void setSharedWithUsers(Set<Long> sharedWithUsers) {
+    public void setSharedWithUsers(Set<String> sharedWithUsers) {
         this.sharedWithUsers = sharedWithUsers;
     }
 
-    public void addSharedWithUsers(Long id) {
-        this.sharedWithUsers.add(id);
+    public void addSharedWithUsers(String email) {
+        this.sharedWithUsers.add(email);
     }
 
-    public void removeSharedWithUsers(Long id) {
-        this.sharedWithUsers.remove(id);
+    public void removeSharedWithUsers(String email) {
+        this.sharedWithUsers.remove(email);
+    }
+
+    public String getOwner_email() {
+        return owner_email;
+    }
+
+    public void setOwner_email(String owner_email) {
+        this.owner_email = owner_email;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof SavedPassword that)) return false;
-        return getId().equals(that.getId()) && getTitle().equals(that.getTitle()) && getUrl().equals(that.getUrl()) && getUsername().equals(that.getUsername()) && getPassword().equals(that.getPassword()) && Objects.equals(getNote(), that.getNote()) && Objects.equals(getUser(), that.getUser()) && Objects.equals(getSharedWithUsers(), that.getSharedWithUsers());
+        return getId().equals(that.getId()) && getTitle().equals(that.getTitle()) && getUrl().equals(that.getUrl()) && getUsername().equals(that.getUsername()) && getPassword().equals(that.getPassword()) && Objects.equals(getNote(), that.getNote()) && getUser().equals(that.getUser()) && getOwner_email().equals(that.getOwner_email()) && Objects.equals(getSharedWithUsers(), that.getSharedWithUsers());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getTitle(), getUrl(), getUsername(), getPassword(), getNote(), getUser(), getSharedWithUsers());
+        return Objects.hash(getId(), getTitle(), getUrl(), getUsername(), getPassword(), getNote(), getUser(), getOwner_email(), getSharedWithUsers());
     }
 
     @Override
@@ -139,6 +152,7 @@ public class SavedPassword {
                 ", password='" + password + '\'' +
                 ", note='" + note + '\'' +
                 ", user=" + user +
+                ", owner_email='" + owner_email + '\'' +
                 ", sharedWithUsers=" + sharedWithUsers +
                 '}';
     }

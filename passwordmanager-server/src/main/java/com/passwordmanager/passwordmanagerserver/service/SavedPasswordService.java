@@ -29,7 +29,7 @@ public class SavedPasswordService {
                 .stream()
                 .filter(p -> p.getSharedWithUsers()
                         .stream()
-                        .anyMatch(id -> id.equals(user.getId())))
+                        .anyMatch(email -> email.equals(user.getEmail())))
                 .collect(Collectors.toSet());
 
         sharedSavedPasswords.addAll(user.getSavedPasswords());
@@ -104,11 +104,11 @@ public class SavedPasswordService {
                 .findFirst()
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
-        pass.addSharedWithUsers(otherUser.getId());
+        pass.addSharedWithUsers(otherUser.getEmail());
         savedPasswordRepository.save(pass);
     }
 
-    public void removeSharingSavedPassword(Long id, Long userId, Principal principal) {
+    public void removeSharingSavedPassword(Long id, String email, Principal principal) {
         var owner = userRepository.findByEmail(principal.getName()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
         var pass = owner.getSavedPasswords()
@@ -117,7 +117,21 @@ public class SavedPasswordService {
                 .findFirst()
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
-        pass.removeSharedWithUsers(userId);
+        pass.removeSharedWithUsers(email);
+        savedPasswordRepository.save(pass);
+    }
+
+    public void removeSharingWithMeSavedPassword(Long id, Principal principal) {
+        var user = userRepository.findByEmail(principal.getName()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        var pass = savedPasswordRepository
+                .findAll()
+                .stream()
+                .filter(p -> p.getId().equals(id))
+                .findFirst()
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        pass.removeSharedWithUsers(user.getEmail());
         savedPasswordRepository.save(pass);
     }
 }

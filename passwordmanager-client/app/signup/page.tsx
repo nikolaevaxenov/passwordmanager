@@ -1,14 +1,18 @@
 "use client";
 
-import { useForm } from "react-hook-form";
+import {
+  createAuthToken,
+  selectAuthToken,
+  setAuthToken,
+} from "@/features/auth/authSlice";
+import { useAppDispatch, useAppSelector } from "@/hooks/hooks";
+import { SignInCredentials, signUp } from "@/services/auth";
 import styles from "@/styles/SignUpForm.module.scss";
 import Link from "next/link";
-import { useMutation } from "react-query";
-import { signUp, SignInCredentials } from "@/services/auth";
-import { useAppDispatch, useAppSelector } from "@/hooks/hooks";
-import { setEmail, setToken } from "@/features/auth/authSlice";
-import { useEffect, useState } from "react";
 import { redirect } from "next/navigation";
+import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import { useMutation } from "react-query";
 
 type SignUpFormData = {
   email: string;
@@ -18,15 +22,15 @@ type SignUpFormData = {
 
 export default function SignUpForm() {
   const dispatch = useAppDispatch();
-  const auth = useAppSelector((state) => state.auth);
+  const authToken = useAppSelector(selectAuthToken);
 
   const [authError, setAuthError] = useState(false);
 
   useEffect(() => {
-    if (auth.email !== null) {
-      redirect("/");
+    if (authToken !== null) {
+      redirect("/profile");
     }
-  }, [auth.email]);
+  }, [authToken]);
 
   const {
     register,
@@ -46,8 +50,7 @@ export default function SignUpForm() {
       { email: data.email, password: data.password1 },
       {
         onSuccess: (data, variables) => {
-          dispatch(setEmail(variables.email));
-          dispatch(setToken(data));
+          dispatch(setAuthToken(createAuthToken(variables.email, data)));
           setAuthError(false);
         },
         onError: () => setAuthError(true),

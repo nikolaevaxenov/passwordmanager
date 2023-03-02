@@ -54,9 +54,15 @@ public class NoteController {
         noteService.addSharingNote(id, email.asText(), principal);
     }
 
+    @PutMapping("shared/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public void removeSharingWithMeNote(@PathVariable Long id, Principal principal) {
+        noteService.removeSharingWithMeNote(id, principal);
+    }
+
     @DeleteMapping("/shared/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public void removeSharingNote(@PathVariable Long id, @RequestBody TextNode userId, Principal principal) {
-        noteService.removeSharingNote(id, userId.asLong(), principal);
+    public void removeSharingNote(@PathVariable Long id, @RequestBody TextNode email, Principal principal) {
+        noteService.removeSharingNote(id, email.asText(), principal);
     }
 }

@@ -54,9 +54,15 @@ public class PaymentCardController {
         paymentCardService.addSharingPaymentCard(id, email.asText(), principal);
     }
 
+    @PutMapping("shared/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public void removeSharingWithMePaymentCard(@PathVariable Long id, Principal principal) {
+        paymentCardService.removeSharingWithMePaymentCard(id, principal);
+    }
+
     @DeleteMapping("/shared/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public void removeSharingPaymentCard(@PathVariable Long id, @RequestBody TextNode userId, Principal principal) {
-        paymentCardService.removeSharingPaymentCard(id, userId.asLong(), principal);
+    public void removeSharingPaymentCard(@PathVariable Long id, @RequestBody TextNode email, Principal principal) {
+        paymentCardService.removeSharingPaymentCard(id, email.asText(), principal);
     }
 }

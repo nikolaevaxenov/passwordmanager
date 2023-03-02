@@ -54,9 +54,15 @@ public class AddressController {
         addressService.addSharingAddress(id, email.asText(), principal);
     }
 
+    @PutMapping("shared/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public void removeSharingWithMeAddress(@PathVariable Long id, Principal principal) {
+        addressService.removeSharingWithMeAddress(id, principal);
+    }
+
     @DeleteMapping("/shared/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public void removeSharingAddress(@PathVariable Long id, @RequestBody TextNode userId, Principal principal) {
-        addressService.removeSharingAddress(id, userId.asLong(), principal);
+    public void removeSharingAddress(@PathVariable Long id, @RequestBody TextNode email, Principal principal) {
+        addressService.removeSharingAddress(id, email.asText(), principal);
     }
 }
