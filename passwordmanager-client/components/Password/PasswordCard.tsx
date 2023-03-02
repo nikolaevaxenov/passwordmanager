@@ -1,8 +1,8 @@
 "use client";
 
-import PasswordDeleteModal from "@/components/PasswordDeleteModal";
-import PasswordEditModal from "@/components/PasswordEditModal";
-import PasswordShareModal from "@/components/PasswordShareModal";
+import PasswordDeleteModal from "@/components/Password/PasswordDeleteModal";
+import PasswordEditModal from "@/components/Password/PasswordEditModal";
+import PasswordShareModal from "@/components/Password/PasswordShareModal";
 import { AuthToken } from "@/features/auth/authSlice";
 import { PasswordData } from "@/services/passwords";
 import styles from "@/styles/components/PasswordCard.module.scss";
@@ -153,24 +153,11 @@ export default function PasswordCard({
         isOpen={editModalIsOpen}
         onRequestClose={() => setEditModalIsOpen(false)}
         ariaHideApp={false}
+        className={styles.main__modal}
         style={{
           overlay: {
             position: "fixed",
             backgroundColor: "rgba(0, 0, 0, 0.8)",
-          },
-          content: {
-            position: "absolute",
-            top: "10rem",
-            left: "20%",
-            right: "20%",
-            bottom: "10%",
-            background: "#2E373D",
-            border: "1px solid rgba(255, 255, 255, 0.54)",
-            overflow: "auto",
-            WebkitOverflowScrolling: "touch",
-            borderRadius: "4px",
-            outline: "none",
-            padding: "20px",
           },
         }}
       >
@@ -185,24 +172,11 @@ export default function PasswordCard({
         isOpen={deleteModalIsOpen}
         onRequestClose={() => setDeleteModalIsOpen(false)}
         ariaHideApp={false}
+        className={styles.main__modal}
         style={{
           overlay: {
             position: "fixed",
             backgroundColor: "rgba(0, 0, 0, 0.8)",
-          },
-          content: {
-            position: "absolute",
-            top: "10rem",
-            left: "20%",
-            right: "20%",
-            bottom: "10%",
-            background: "#2E373D",
-            border: "1px solid rgba(255, 255, 255, 0.54)",
-            overflow: "auto",
-            WebkitOverflowScrolling: "touch",
-            borderRadius: "4px",
-            outline: "none",
-            padding: "20px",
           },
         }}
       >
@@ -218,24 +192,11 @@ export default function PasswordCard({
         isOpen={shareModalIsOpen}
         onRequestClose={() => setShareModalIsOpen(false)}
         ariaHideApp={false}
+        className={styles.main__modal}
         style={{
           overlay: {
             position: "fixed",
             backgroundColor: "rgba(0, 0, 0, 0.8)",
-          },
-          content: {
-            position: "absolute",
-            top: "10rem",
-            left: "20%",
-            right: "20%",
-            bottom: "10%",
-            background: "#2E373D",
-            border: "1px solid rgba(255, 255, 255, 0.54)",
-            overflow: "auto",
-            WebkitOverflowScrolling: "touch",
-            borderRadius: "4px",
-            outline: "none",
-            padding: "20px",
           },
         }}
       >

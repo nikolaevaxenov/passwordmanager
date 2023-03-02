@@ -1,9 +1,8 @@
 "use client";
 
-import PasswordAddModal from "@/components/PasswordAddModal";
-import PasswordCard from "@/components/PasswordCard";
-import { selectAuthToken } from "@/features/auth/authSlice";
-import { useAppSelector } from "@/hooks/hooks";
+import PasswordAddModal from "@/components/Password/PasswordAddModal";
+import PasswordCard from "@/components/Password/PasswordCard";
+import { AuthToken } from "@/features/auth/authSlice";
 import { getAllPasswords, PasswordData } from "@/services/passwords";
 import styles from "@/styles/components/PasswordList.module.scss";
 import { useState } from "react";
@@ -11,16 +10,15 @@ import { AiOutlinePlus } from "react-icons/ai";
 import Modal from "react-modal";
 import { useQuery } from "react-query";
 
-export default function PasswordList({
-  notify,
-}: {
+type PasswordListProps = {
   notify: (text: string, error?: boolean) => void;
-}) {
-  const auth = useAppSelector(selectAuthToken);
+  authToken: AuthToken | null;
+};
 
+export default function PasswordList({ notify, authToken }: PasswordListProps) {
   const { isSuccess, refetch, data } = useQuery(
-    ["passwords", auth?.token],
-    () => auth?.token && getAllPasswords(auth.token)
+    ["passwords", authToken?.token],
+    () => authToken?.token && getAllPasswords(authToken.token)
   );
 
   const [addModalIsOpen, setAddModalIsOpen] = useState(false);
@@ -36,7 +34,7 @@ export default function PasswordList({
               password={password}
               refetch={refetch}
               notify={notify}
-              authToken={auth}
+              authToken={authToken}
             />
           ))}
         <div className={styles.main__addPasswordButton}>
@@ -49,24 +47,11 @@ export default function PasswordList({
         isOpen={addModalIsOpen}
         onRequestClose={() => setAddModalIsOpen(false)}
         ariaHideApp={false}
+        className={styles.main__modal}
         style={{
           overlay: {
             position: "fixed",
             backgroundColor: "rgba(0, 0, 0, 0.8)",
-          },
-          content: {
-            position: "absolute",
-            top: "10rem",
-            left: "20%",
-            right: "20%",
-            bottom: "10%",
-            background: "#2E373D",
-            border: "1px solid rgba(255, 255, 255, 0.54)",
-            overflow: "auto",
-            WebkitOverflowScrolling: "touch",
-            borderRadius: "4px",
-            outline: "none",
-            padding: "20px",
           },
         }}
       >

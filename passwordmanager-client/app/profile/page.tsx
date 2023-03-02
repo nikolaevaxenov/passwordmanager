@@ -1,9 +1,15 @@
 "use client";
 
+import AddressList from "@/components/Address/AddressList";
 import EntitySwitcher from "@/components/EntitySwitcher";
-import PasswordList from "@/components/PasswordList";
+import NoteList from "@/components/Note/NoteList";
+import PasswordList from "@/components/Password/PasswordList";
+import PaymentCardList from "@/components/PaymentCard/PaymentCardList";
 import { selectAuthToken } from "@/features/auth/authSlice";
-import { selectSelectedEntity } from "@/features/profile/profileReducer";
+import {
+  selectSelectedEntity,
+  ProfileEntities,
+} from "@/features/profile/profileReducer";
 import { useAppSelector } from "@/hooks/hooks";
 import styles from "@/styles/components/profile.module.scss";
 import { redirect } from "next/navigation";
@@ -48,7 +54,18 @@ export default function Profile() {
   return (
     <main className={styles.main}>
       <EntitySwitcher />
-      <PasswordList notify={notify} authToken={authToken} />
+      {selectedEntity === ProfileEntities.Passwords && (
+        <PasswordList notify={notify} authToken={authToken} />
+      )}
+      {selectedEntity === ProfileEntities.PaymentCards && (
+        <PaymentCardList notify={notify} authToken={authToken} />
+      )}
+      {selectedEntity === ProfileEntities.Addresses && (
+        <AddressList notify={notify} authToken={authToken} />
+      )}
+      {selectedEntity === ProfileEntities.Notes && (
+        <NoteList notify={notify} authToken={authToken} />
+      )}
       <ToastContainer
         position="bottom-center"
         autoClose={3000}

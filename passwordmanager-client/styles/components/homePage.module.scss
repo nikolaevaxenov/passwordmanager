@@ -5,11 +5,23 @@
 
   h1 {
     color: $logo-color;
-    font-size: 8rem;
+    font-size: 6rem;
   }
 
   p {
     color: $text-color;
-    font-size: 6rem;
+    font-size: 4rem;
+  }
+
+  @media (max-width: 812px) {
+    h1 {
+      color: $logo-color;
+      font-size: 4rem;
+    }
+
+    p {
+      color: $text-color;
+      font-size: 2rem;
+    }
   }
 }

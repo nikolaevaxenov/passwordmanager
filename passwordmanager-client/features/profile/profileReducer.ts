@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { RootState } from "@/store/store";
 
-enum ProfileEntities {
+export enum ProfileEntities {
   Passwords,
   PaymentCards,
   Addresses,

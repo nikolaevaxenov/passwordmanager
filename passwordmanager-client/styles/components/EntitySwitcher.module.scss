@@ -1,0 +1,26 @@
+@import "@/styles/colors.scss";
+
+.main {
+  display: flex;
+  justify-content: space-evenly;
+
+  margin: 1rem 0;
+
+  @import "@/styles/Button.scss";
+
+  button {
+    width: 14rem;
+    height: 2.5rem;
+  }
+
+  @media (max-width: 812px) {
+    margin: 1rem;
+    gap: 1rem;
+    overflow-x: scroll;
+
+    button {
+      overflow: hidden;
+      font-size: 0.8rem;
+    }
+  }
+}
