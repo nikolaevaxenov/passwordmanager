@@ -7,7 +7,7 @@ import {
 } from "@/features/auth/authSlice";
 import { useAppDispatch, useAppSelector } from "@/hooks/hooks";
 import { signIn, SignInCredentials } from "@/services/auth";
-import styles from "@/styles/signInForm.module.scss";
+import styles from "@/styles/components/signInForm.module.scss";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { useEffect, useState } from "react";

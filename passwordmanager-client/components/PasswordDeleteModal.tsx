@@ -7,7 +7,7 @@ import {
   DeletePasswordData,
   removeSharePasswordWithMe,
 } from "@/services/passwords";
-import styles from "@/styles/PasswordDeleteModal.module.scss";
+import styles from "@/styles/components/PasswordDeleteModal.module.scss";
 import { Dispatch, SetStateAction } from "react";
 import {
   QueryObserverResult,

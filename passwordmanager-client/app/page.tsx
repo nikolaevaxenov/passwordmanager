@@ -1,4 +1,4 @@
-import styles from "@/styles/homePage.module.scss";
+import styles from "@/styles/components/homePage.module.scss";
 
 export default function Home() {
   return (

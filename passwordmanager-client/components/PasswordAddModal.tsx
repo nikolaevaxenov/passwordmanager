@@ -3,7 +3,7 @@
 import { selectAuthToken } from "@/features/auth/authSlice";
 import { useAppSelector } from "@/hooks/hooks";
 import { addNewPassword, NewPasswordData } from "@/services/passwords";
-import styles from "@/styles/PasswordEditModal.module.scss";
+import styles from "@/styles/components/PasswordEditModal.module.scss";
 import { Dispatch, SetStateAction } from "react";
 import { useForm } from "react-hook-form";
 import {
@@ -158,7 +158,14 @@ export default function PasswordAddModal({
           )}
         </div>
 
-        <button type="submit">Add password</button>
+        <button
+          type="submit"
+          style={{
+            background: "#60d394",
+          }}
+        >
+          Add password
+        </button>
         <button
           className={styles.modalCancel}
           type="button"

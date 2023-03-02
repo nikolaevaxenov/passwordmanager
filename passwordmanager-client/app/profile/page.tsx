@@ -5,7 +5,7 @@ import PasswordList from "@/components/PasswordList";
 import { selectAuthToken } from "@/features/auth/authSlice";
 import { selectSelectedEntity } from "@/features/profile/profileReducer";
 import { useAppSelector } from "@/hooks/hooks";
-import styles from "@/styles/profile.module.scss";
+import styles from "@/styles/components/profile.module.scss";
 import { redirect } from "next/navigation";
 import { useEffect } from "react";
 import { toast, ToastContainer } from "react-toastify";

@@ -7,7 +7,7 @@ import {
   EditPasswordData,
   PasswordData,
 } from "@/services/passwords";
-import styles from "@/styles/PasswordEditModal.module.scss";
+import styles from "@/styles/components/PasswordEditModal.module.scss";
 import { Dispatch, SetStateAction } from "react";
 import { useForm } from "react-hook-form";
 import {
@@ -177,7 +177,14 @@ export default function PasswordEditModal({
           )}
         </div>
 
-        <button type="submit">Save password</button>
+        <button
+          type="submit"
+          style={{
+            background: "#60d394",
+          }}
+        >
+          Save password
+        </button>
         <button
           className={styles.modalCancel}
           type="button"

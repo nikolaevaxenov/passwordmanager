@@ -7,7 +7,7 @@ import {
   choosePaymentCards,
 } from "@/features/profile/profileReducer";
 import { useAppDispatch } from "@/hooks/hooks";
-import styles from "@/styles/EntitySwitcher.module.scss";
+import styles from "@/styles/components/EntitySwitcher.module.scss";
 
 export default function EntitySwitcher() {
   const dispatch = useAppDispatch();

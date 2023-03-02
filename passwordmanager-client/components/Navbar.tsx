@@ -1,9 +1,9 @@
 "use client";
 
-import Link from "next/link";
-import styles from "@/styles/Navbar.module.scss";
+import { logout, selectAuthToken } from "@/features/auth/authSlice";
 import { useAppDispatch, useAppSelector } from "@/hooks/hooks";
-import { selectAuthToken, logout } from "@/features/auth/authSlice";
+import styles from "@/styles/components/Navbar.module.scss";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import { FaKey } from "react-icons/fa";
 

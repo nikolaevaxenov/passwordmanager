@@ -1,15 +1,15 @@
 "use client";
 
+import PasswordAddModal from "@/components/PasswordAddModal";
+import PasswordCard from "@/components/PasswordCard";
 import { selectAuthToken } from "@/features/auth/authSlice";
 import { useAppSelector } from "@/hooks/hooks";
 import { getAllPasswords, PasswordData } from "@/services/passwords";
-import styles from "@/styles/PasswordList.module.scss";
-import { AiOutlinePlus } from "react-icons/ai";
-import { useQuery } from "react-query";
-import PasswordCard from "@/components/PasswordCard";
-import Modal from "react-modal";
+import styles from "@/styles/components/PasswordList.module.scss";
 import { useState } from "react";
-import PasswordAddModal from "@/components/PasswordAddModal";
+import { AiOutlinePlus } from "react-icons/ai";
+import Modal from "react-modal";
+import { useQuery } from "react-query";
 
 export default function PasswordList({
   notify,
@@ -39,12 +39,11 @@ export default function PasswordList({
               authToken={auth}
             />
           ))}
-        <button
-          className={styles.main__addPasswordButton}
-          onClick={() => setAddModalIsOpen(true)}
-        >
-          <AiOutlinePlus />
-        </button>
+        <div className={styles.main__addPasswordButton}>
+          <button onClick={() => setAddModalIsOpen(true)}>
+            <AiOutlinePlus />
+          </button>
+        </div>
       </div>
       <Modal
         isOpen={addModalIsOpen}

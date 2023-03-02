@@ -5,14 +5,11 @@ import { useAppSelector } from "@/hooks/hooks";
 import {
   addSharePassword,
   AddSharePasswordData,
-  deletePassword,
-  DeletePasswordData,
   PasswordData,
   removeSharePassword,
   RemoveSharePasswordData,
-  removeSharePasswordWithMe,
 } from "@/services/passwords";
-import styles from "@/styles/PasswordShareModal.module.scss";
+import styles from "@/styles/components/PasswordShareModal.module.scss";
 import { Dispatch, SetStateAction } from "react";
 import { useForm } from "react-hook-form";
 import { RiDeleteBin2Fill } from "react-icons/ri";

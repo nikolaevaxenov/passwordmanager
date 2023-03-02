@@ -5,7 +5,7 @@ import PasswordEditModal from "@/components/PasswordEditModal";
 import PasswordShareModal from "@/components/PasswordShareModal";
 import { AuthToken } from "@/features/auth/authSlice";
 import { PasswordData } from "@/services/passwords";
-import styles from "@/styles/PasswordCard.module.scss";
+import styles from "@/styles/components/PasswordCard.module.scss";
 import Link from "next/link";
 import { useState } from "react";
 import { CopyToClipboard } from "react-copy-to-clipboard";
