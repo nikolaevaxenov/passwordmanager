@@ -1,0 +1,69 @@
+@import "@/styles/colors.scss";
+
+.main {
+  h1 {
+    color: $text-color;
+    text-align: center;
+  }
+
+  @import "@/styles/Button.scss";
+
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+
+  font-size: 0.9rem;
+
+  margin-top: 1rem;
+
+  color: $text-color;
+
+  input {
+    width: 100%;
+
+    margin: 0.5rem 0;
+    padding: 0.5rem;
+
+    border: 1px solid $logo-color;
+    border-radius: 5px;
+
+    &:focus {
+      outline: 3px solid $logo-color;
+    }
+  }
+
+  form {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+    button {
+      background-color: $button-edit;
+    }
+  }
+
+  &__error {
+    color: red;
+  }
+
+  &__shareTable {
+    display: grid;
+    grid-template-columns: 1fr auto;
+
+    column-gap: 0.5rem;
+    row-gap: 1rem;
+
+    align-items: center;
+    text-align: center;
+
+    button {
+      background-color: $button-cancel;
+    }
+  }
+
+  @media (max-width: 812px) {
+    form {
+      flex-direction: column;
+    }
+  }
+}
