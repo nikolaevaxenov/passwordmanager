@@ -61,11 +61,16 @@ public class Address {
 
     private String phone;
 
+    @Column(columnDefinition = "TEXT")
     private String note;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "owner_email", referencedColumnName = "email")
     @JsonBackReference(value = "addresses")
     private User user;
+
+    @Column(name = "owner_email", insertable=false, updatable=false)
+    private String owner_email;
 
     @ElementCollection
     private Set<String> sharedWithUsers;
@@ -268,16 +273,24 @@ public class Address {
         this.sharedWithUsers.remove(email);
     }
 
+    public String getOwner_email() {
+        return owner_email;
+    }
+
+    public void setOwner_email(String owner_email) {
+        this.owner_email = owner_email;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Address address)) return false;
-        return getId().equals(address.getId()) && getTitle().equals(address.getTitle()) && getFirstName().equals(address.getFirstName()) && Objects.equals(getMiddleName(), address.getMiddleName()) && Objects.equals(getLastName(), address.getLastName()) && Objects.equals(getUsername(), address.getUsername()) && getGender() == address.getGender() && Objects.equals(getBirthDate(), address.getBirthDate()) && Objects.equals(getCompany(), address.getCompany()) && getAddress1().equals(address.getAddress1()) && Objects.equals(getAddress2(), address.getAddress2()) && Objects.equals(getAddress3(), address.getAddress3()) && getCity().equals(address.getCity()) && getCounty().equals(address.getCounty()) && getState().equals(address.getState()) && getZipCode().equals(address.getZipCode()) && getCountry().equals(address.getCountry()) && Objects.equals(getEmail(), address.getEmail()) && Objects.equals(getPhone(), address.getPhone()) && Objects.equals(getNote(), address.getNote()) && Objects.equals(getUser(), address.getUser()) && Objects.equals(getSharedWithUsers(), address.getSharedWithUsers());
+        return getId().equals(address.getId()) && getTitle().equals(address.getTitle()) && getFirstName().equals(address.getFirstName()) && Objects.equals(getMiddleName(), address.getMiddleName()) && Objects.equals(getLastName(), address.getLastName()) && Objects.equals(getUsername(), address.getUsername()) && getGender() == address.getGender() && Objects.equals(getBirthDate(), address.getBirthDate()) && Objects.equals(getCompany(), address.getCompany()) && getAddress1().equals(address.getAddress1()) && Objects.equals(getAddress2(), address.getAddress2()) && Objects.equals(getAddress3(), address.getAddress3()) && getCity().equals(address.getCity()) && getCounty().equals(address.getCounty()) && getState().equals(address.getState()) && getZipCode().equals(address.getZipCode()) && getCountry().equals(address.getCountry()) && Objects.equals(getEmail(), address.getEmail()) && Objects.equals(getPhone(), address.getPhone()) && Objects.equals(getNote(), address.getNote()) && getUser().equals(address.getUser()) && getOwner_email().equals(address.getOwner_email()) && Objects.equals(getSharedWithUsers(), address.getSharedWithUsers());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getTitle(), getFirstName(), getMiddleName(), getLastName(), getUsername(), getGender(), getBirthDate(), getCompany(), getAddress1(), getAddress2(), getAddress3(), getCity(), getCounty(), getState(), getZipCode(), getCountry(), getEmail(), getPhone(), getNote(), getUser(), getSharedWithUsers());
+        return Objects.hash(getId(), getTitle(), getFirstName(), getMiddleName(), getLastName(), getUsername(), getGender(), getBirthDate(), getCompany(), getAddress1(), getAddress2(), getAddress3(), getCity(), getCounty(), getState(), getZipCode(), getCountry(), getEmail(), getPhone(), getNote(), getUser(), getOwner_email(), getSharedWithUsers());
     }
 
     @Override
@@ -304,6 +317,7 @@ public class Address {
                 ", phone='" + phone + '\'' +
                 ", note='" + note + '\'' +
                 ", user=" + user +
+                ", owner_email='" + owner_email + '\'' +
                 ", sharedWithUsers=" + sharedWithUsers +
                 '}';
     }

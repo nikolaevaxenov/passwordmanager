@@ -3,11 +3,11 @@
 import { selectAuthToken } from "@/features/auth/authSlice";
 import { useAppSelector } from "@/hooks/hooks";
 import {
-  deletePassword,
-  DeletePasswordData,
-  removeSharePasswordWithMe,
-} from "@/services/passwords";
-import styles from "@/styles/components/Password/PasswordDeleteModal.module.scss";
+  deletePaymentCard,
+  DeletePaymentCardData,
+  removeSharePaymentCardWithMe,
+} from "@/services/paymentCards";
+import styles from "@/styles/components/PaymentCard/PaymentCardDeleteModal.module.scss";
 import { Dispatch, SetStateAction } from "react";
 import {
   QueryObserverResult,
@@ -16,14 +16,14 @@ import {
   useMutation,
 } from "react-query";
 
-export default function PasswordDeleteModal({
-  passwordId,
+export default function PaymentCardDeleteModal({
+  paymentCardId,
   setDeleteModalIsOpen,
   notify,
   refetch,
   shared = false,
 }: {
-  passwordId: number;
+  paymentCardId: number;
   setDeleteModalIsOpen: Dispatch<SetStateAction<boolean>>;
   notify: (text: string, error?: boolean) => void;
   refetch: <TPageData>(
@@ -33,56 +33,57 @@ export default function PasswordDeleteModal({
 }) {
   const authToken = useAppSelector(selectAuthToken);
 
-  const deletePasswordMutation = useMutation(
-    (credentials: DeletePasswordData) => deletePassword(credentials)
+  const deletePaymentCardMutation = useMutation(
+    (credentials: DeletePaymentCardData) => deletePaymentCard(credentials)
   );
 
-  const removeSharePasswordWithMeMutation = useMutation(
-    (credentials: DeletePasswordData) => removeSharePasswordWithMe(credentials)
+  const removeSharePaymentCardWithMeMutation = useMutation(
+    (credentials: DeletePaymentCardData) =>
+      removeSharePaymentCardWithMe(credentials)
   );
 
   return (
     <div className={styles.main}>
       <h1>
         {shared
-          ? "Are you sure want to stop sharing this password with you?"
-          : "Are you sure want to delete this password?"}
+          ? "Are you sure want to stop sharing this payment card with you?"
+          : "Are you sure want to delete this payment card?"}
       </h1>
       <div>
         <button
           onClick={() => {
             shared
-              ? removeSharePasswordWithMeMutation.mutate(
+              ? removeSharePaymentCardWithMeMutation.mutate(
                   {
                     token: authToken?.token || "",
-                    id: passwordId,
+                    id: paymentCardId,
                   },
                   {
                     onSuccess: () => {
                       setDeleteModalIsOpen(false);
-                      notify("Password successfully deleted!");
+                      notify("Payment card successfully deleted!");
                       refetch();
                     },
                     onError: () => {
                       setDeleteModalIsOpen(false);
-                      notify("Password delete failed!", true);
+                      notify("Payment card delete failed!", true);
                     },
                   }
                 )
-              : deletePasswordMutation.mutate(
+              : deletePaymentCardMutation.mutate(
                   {
                     token: authToken?.token || "",
-                    id: passwordId,
+                    id: paymentCardId,
                   },
                   {
                     onSuccess: () => {
                       setDeleteModalIsOpen(false);
-                      notify("Password successfully deleted!");
+                      notify("Payment card successfully deleted!");
                       refetch();
                     },
                     onError: () => {
                       setDeleteModalIsOpen(false);
-                      notify("Password delete failed!", true);
+                      notify("Payment card delete failed!", true);
                     },
                   }
                 );

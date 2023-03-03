@@ -3,7 +3,7 @@
 import { selectAuthToken } from "@/features/auth/authSlice";
 import { useAppSelector } from "@/hooks/hooks";
 import { addNewPassword, NewPasswordData } from "@/services/passwords";
-import styles from "@/styles/components/PasswordEditModal.module.scss";
+import styles from "@/styles/components/Password/PasswordEditModal.module.scss";
 import { Dispatch, SetStateAction } from "react";
 import { useForm } from "react-hook-form";
 import {

@@ -3,13 +3,13 @@
 import { selectAuthToken } from "@/features/auth/authSlice";
 import { useAppSelector } from "@/hooks/hooks";
 import {
-  addSharePassword,
-  AddSharePasswordData,
-  PasswordData,
-  removeSharePassword,
-  RemoveSharePasswordData,
-} from "@/services/passwords";
-import styles from "@/styles/components/Password/PasswordShareModal.module.scss";
+  addSharePaymentCard,
+  AddSharePaymentCardData,
+  PaymentCardData,
+  removeSharePaymentCard,
+  RemoveSharePaymentCardData,
+} from "@/services/paymentCards";
+import styles from "@/styles/components/PaymentCard/PaymentCardShareModal.module.scss";
 import { Dispatch, SetStateAction } from "react";
 import { useForm } from "react-hook-form";
 import { RiDeleteBin2Fill } from "react-icons/ri";
@@ -22,16 +22,16 @@ import {
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-type SharePasswordFormData = {
+type SharePaymentCardFormData = {
   email: string;
 };
 
-export default function PasswordShareModal({
-  password,
+export default function PaymentCardShareModal({
+  paymentCard,
   setShareModalIsOpen,
   refetch,
 }: {
-  password: PasswordData;
+  paymentCard: PaymentCardData;
   setShareModalIsOpen: Dispatch<SetStateAction<boolean>>;
   refetch: <TPageData>(
     options?: (RefetchOptions & RefetchQueryFilters<TPageData>) | undefined
@@ -43,14 +43,15 @@ export default function PasswordShareModal({
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<SharePasswordFormData>();
+  } = useForm<SharePaymentCardFormData>();
 
-  const addSharePasswordMutation = useMutation(
-    (credentials: AddSharePasswordData) => addSharePassword(credentials)
+  const addSharePaymentCardMutation = useMutation(
+    (credentials: AddSharePaymentCardData) => addSharePaymentCard(credentials)
   );
 
-  const removeSharePasswordMutation = useMutation(
-    (credentials: RemoveSharePasswordData) => removeSharePassword(credentials)
+  const removeSharePaymentCardMutation = useMutation(
+    (credentials: RemoveSharePaymentCardData) =>
+      removeSharePaymentCard(credentials)
   );
 
   const notify = (text: string, error: boolean = false) => {
@@ -78,15 +79,15 @@ export default function PasswordShareModal({
   };
 
   const onSubmit = handleSubmit((data) => {
-    addSharePasswordMutation.mutate(
+    addSharePaymentCardMutation.mutate(
       {
         token: authToken?.token || "",
-        id: password.id,
+        id: paymentCard.id,
         userEmail: data.email,
       },
       {
         onSuccess: () => {
-          notify("Password successfully shared!");
+          notify("Payment card successfully shared!");
           refetch();
         },
         onError: () => {
@@ -99,7 +100,7 @@ export default function PasswordShareModal({
   return (
     <>
       <div className={styles.main}>
-        <h1>Share this password</h1>
+        <h1>Share this payment card</h1>
         <form onSubmit={onSubmit}>
           <p>
             User's email <span style={{ color: "red" }}>*</span>
@@ -124,15 +125,15 @@ export default function PasswordShareModal({
           <button type="submit">Share</button>
         </form>
         <div className={styles.main__shareTable}>
-          {password.sharedWithUsers.map((email) => (
+          {paymentCard.sharedWithUsers.map((email) => (
             <>
               <p key={email}>{email}</p>
               <button
                 onClick={() =>
-                  removeSharePasswordMutation.mutate(
+                  removeSharePaymentCardMutation.mutate(
                     {
                       token: authToken?.token || "",
-                      id: password.id,
+                      id: paymentCard.id,
                       userEmail: email,
                     },
                     {

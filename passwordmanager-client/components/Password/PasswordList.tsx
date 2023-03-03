@@ -4,7 +4,7 @@ import PasswordAddModal from "@/components/Password/PasswordAddModal";
 import PasswordCard from "@/components/Password/PasswordCard";
 import { AuthToken } from "@/features/auth/authSlice";
 import { getAllPasswords, PasswordData } from "@/services/passwords";
-import styles from "@/styles/components/PasswordList.module.scss";
+import styles from "@/styles/components/Password/PasswordList.module.scss";
 import { useState } from "react";
 import { AiOutlinePlus } from "react-icons/ai";
 import Modal from "react-modal";

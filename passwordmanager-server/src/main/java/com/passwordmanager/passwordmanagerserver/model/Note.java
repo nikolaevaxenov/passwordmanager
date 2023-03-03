@@ -18,11 +18,16 @@ public class Note {
     private String title;
 
     @NotBlank
+    @Column(columnDefinition = "TEXT")
     private String text;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "owner_email", referencedColumnName = "email")
     @JsonBackReference(value = "notes")
     private User user;
+
+    @Column(name = "owner_email", insertable=false, updatable=false)
+    private String owner_email;
 
     @ElementCollection
     private Set<String> sharedWithUsers;
@@ -83,16 +88,24 @@ public class Note {
         this.sharedWithUsers.remove(email);
     }
 
+    public String getOwner_email() {
+        return owner_email;
+    }
+
+    public void setOwner_email(String owner_email) {
+        this.owner_email = owner_email;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Note note)) return false;
-        return getId().equals(note.getId()) && getTitle().equals(note.getTitle()) && getText().equals(note.getText()) && Objects.equals(getUser(), note.getUser()) && Objects.equals(getSharedWithUsers(), note.getSharedWithUsers());
+        return getId().equals(note.getId()) && getTitle().equals(note.getTitle()) && getText().equals(note.getText()) && getUser().equals(note.getUser()) && getOwner_email().equals(note.getOwner_email()) && Objects.equals(getSharedWithUsers(), note.getSharedWithUsers());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getTitle(), getText(), getUser(), getSharedWithUsers());
+        return Objects.hash(getId(), getTitle(), getText(), getUser(), getOwner_email(), getSharedWithUsers());
     }
 
     @Override
@@ -102,6 +115,7 @@ public class Note {
                 ", title='" + title + '\'' +
                 ", text='" + text + '\'' +
                 ", user=" + user +
+                ", owner_email='" + owner_email + '\'' +
                 ", sharedWithUsers=" + sharedWithUsers +
                 '}';
     }

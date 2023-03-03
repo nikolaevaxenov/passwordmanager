@@ -29,11 +29,16 @@ public class PaymentCard {
     @NotBlank
     private String expirationDate;
 
+    @Column(columnDefinition = "TEXT")
     private String note;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "owner_email", referencedColumnName = "email")
     @JsonBackReference(value = "paymentCards")
     private User user;
+
+    @Column(name = "owner_email", insertable=false, updatable=false)
+    private String owner_email;
 
     @ElementCollection
     private Set<String> sharedWithUsers;
@@ -129,16 +134,24 @@ public class PaymentCard {
         this.sharedWithUsers.remove(email);
     }
 
+    public String getOwner_email() {
+        return owner_email;
+    }
+
+    public void setOwner_email(String owner_email) {
+        this.owner_email = owner_email;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof PaymentCard that)) return false;
-        return getId().equals(that.getId()) && getTitle().equals(that.getTitle()) && getCardBrand() == that.getCardBrand() && getNumber().equals(that.getNumber()) && getSecurityCode().equals(that.getSecurityCode()) && getExpirationDate().equals(that.getExpirationDate()) && Objects.equals(getNote(), that.getNote()) && Objects.equals(getUser(), that.getUser()) && Objects.equals(getSharedWithUsers(), that.getSharedWithUsers());
+        return getId().equals(that.getId()) && getTitle().equals(that.getTitle()) && getCardBrand() == that.getCardBrand() && getNumber().equals(that.getNumber()) && getSecurityCode().equals(that.getSecurityCode()) && getExpirationDate().equals(that.getExpirationDate()) && Objects.equals(getNote(), that.getNote()) && getUser().equals(that.getUser()) && getOwner_email().equals(that.getOwner_email()) && Objects.equals(getSharedWithUsers(), that.getSharedWithUsers());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getTitle(), getCardBrand(), getNumber(), getSecurityCode(), getExpirationDate(), getNote(), getUser(), getSharedWithUsers());
+        return Objects.hash(getId(), getTitle(), getCardBrand(), getNumber(), getSecurityCode(), getExpirationDate(), getNote(), getUser(), getOwner_email(), getSharedWithUsers());
     }
 
     @Override
@@ -152,6 +165,7 @@ public class PaymentCard {
                 ", expirationDate='" + expirationDate + '\'' +
                 ", note='" + note + '\'' +
                 ", user=" + user +
+                ", owner_email='" + owner_email + '\'' +
                 ", sharedWithUsers=" + sharedWithUsers +
                 '}';
     }
