@@ -1,10 +1,10 @@
 package com.passwordmanager.passwordmanagerserver.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.passwordmanager.passwordmanagerserver.types.CardBrand;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 
+import java.util.Date;
 import java.util.Objects;
 import java.util.Set;
 
@@ -18,16 +18,14 @@ public class PaymentCard {
     @NotBlank
     private String title;
 
-    private CardBrand cardBrand;
-
     @NotBlank
     private String number;
 
     @NotBlank
     private String securityCode;
 
-    @NotBlank
-    private String expirationDate;
+    @Temporal(TemporalType.DATE)
+    private Date expirationDate;
 
     @Column(columnDefinition = "TEXT")
     private String note;
@@ -46,9 +44,8 @@ public class PaymentCard {
     public PaymentCard() {
     }
 
-    public PaymentCard(String title, CardBrand cardBrand, String number, String securityCode, String expirationDate) {
+    public PaymentCard(String title, String number, String securityCode, Date expirationDate) {
         this.title = title;
-        this.cardBrand = cardBrand;
         this.number = number;
         this.securityCode = securityCode;
         this.expirationDate = expirationDate;
@@ -70,14 +67,6 @@ public class PaymentCard {
         this.title = title;
     }
 
-    public CardBrand getCardBrand() {
-        return cardBrand;
-    }
-
-    public void setCardBrand(CardBrand cardBrand) {
-        this.cardBrand = cardBrand;
-    }
-
     public String getNumber() {
         return number;
     }
@@ -94,11 +83,11 @@ public class PaymentCard {
         this.securityCode = securityCode;
     }
 
-    public String getExpirationDate() {
+    public Date getExpirationDate() {
         return expirationDate;
     }
 
-    public void setExpirationDate(String expirationDate) {
+    public void setExpirationDate(Date expirationDate) {
         this.expirationDate = expirationDate;
     }
 
@@ -146,12 +135,12 @@ public class PaymentCard {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof PaymentCard that)) return false;
-        return getId().equals(that.getId()) && getTitle().equals(that.getTitle()) && getCardBrand() == that.getCardBrand() && getNumber().equals(that.getNumber()) && getSecurityCode().equals(that.getSecurityCode()) && getExpirationDate().equals(that.getExpirationDate()) && Objects.equals(getNote(), that.getNote()) && getUser().equals(that.getUser()) && getOwner_email().equals(that.getOwner_email()) && Objects.equals(getSharedWithUsers(), that.getSharedWithUsers());
+        return getId().equals(that.getId()) && getTitle().equals(that.getTitle()) && getNumber().equals(that.getNumber()) && getSecurityCode().equals(that.getSecurityCode()) && getExpirationDate().equals(that.getExpirationDate()) && Objects.equals(getNote(), that.getNote()) && getUser().equals(that.getUser()) && getOwner_email().equals(that.getOwner_email()) && Objects.equals(getSharedWithUsers(), that.getSharedWithUsers());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getTitle(), getCardBrand(), getNumber(), getSecurityCode(), getExpirationDate(), getNote(), getUser(), getOwner_email(), getSharedWithUsers());
+        return Objects.hash(getId(), getTitle(), getNumber(), getSecurityCode(), getExpirationDate(), getNote(), getUser(), getOwner_email(), getSharedWithUsers());
     }
 
     @Override
@@ -159,7 +148,6 @@ public class PaymentCard {
         return "PaymentCard{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
-                ", cardBrand=" + cardBrand +
                 ", number='" + number + '\'' +
                 ", securityCode='" + securityCode + '\'' +
                 ", expirationDate='" + expirationDate + '\'' +

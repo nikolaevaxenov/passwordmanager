@@ -9,7 +9,9 @@ import {
 } from "@/services/paymentCards";
 import styles from "@/styles/components/PaymentCard/PaymentCardEditModal.module.scss";
 import { Dispatch, SetStateAction } from "react";
-import { useForm } from "react-hook-form";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import { Controller, useForm } from "react-hook-form";
 import {
   QueryObserverResult,
   RefetchOptions,
@@ -19,10 +21,9 @@ import {
 
 type PaymentCardEditFormData = {
   title?: string;
-  cardBrand?: string;
   number?: string;
   securityCode?: string;
-  expirationDate?: string;
+  expirationDate?: Date;
   note?: string;
 };
 
@@ -42,16 +43,16 @@ export default function PaymentCardEditModal({
   const authToken = useAppSelector(selectAuthToken);
 
   const {
+    control,
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm<PaymentCardEditFormData>({
     defaultValues: {
       title: paymentCard.title,
-      cardBrand: paymentCard.cardBrand,
       number: paymentCard.number,
       securityCode: paymentCard.securityCode,
-      expirationDate: paymentCard.expirationDate,
       note: paymentCard.note,
     },
   });
@@ -66,10 +67,9 @@ export default function PaymentCardEditModal({
         token: authToken?.token || "",
         id: paymentCard.id,
         title: data.title,
-        cardBrand: data.cardBrand,
         number: data.number,
         securityCode: data.securityCode,
-        expirationDate: data.expirationDate,
+        expirationDate: data.expirationDate?.toISOString(),
         note: data.note,
       },
       {
@@ -110,44 +110,51 @@ export default function PaymentCardEditModal({
 
         <div>
           <p>
-            Card brand <span style={{ color: "red" }}>*</span>
-          </p>
-          <select
-            style={{
-              outline: errors.cardBrand ? "3px solid red" : undefined,
-            }}
-            {...register("cardBrand", {
-              required: "Card brand is required!",
-            })}
-          >
-            <option value="VISA">Visa</option>
-            <option value="MASTERCARD">Master card</option>
-            <option value="AMERICAN_EXPRESS">American Express</option>
-            <option value="DISCOVER">Discover</option>
-            <option value="UNION_PAY">Union Pay</option>
-            <option value="JCB">JCB</option>
-            <option value="MIR">MIR</option>
-          </select>
-          {errors.cardBrand && (
-            <p className={styles.edit__form__error}>
-              {errors.cardBrand?.message}
-            </p>
-          )}
-        </div>
-
-        <div>
-          <p>
             Card number <span style={{ color: "red" }}>*</span>
           </p>
           <input
             placeholder="4210 2489 5875 5593"
             type="text"
+            maxLength={19}
             style={{
               outline: errors.number ? "3px solid red" : undefined,
             }}
             {...register("number", {
               required: "Card number is required!",
+              maxLength: {
+                value: 19,
+                message: "Card number should have only 16 digits!",
+              },
+              minLength: {
+                value: 19,
+                message: "Card number should have only 16 digits!",
+              },
+              pattern: {
+                value: /^(?=.*\d)[\d ]+$/,
+                message: "Card number should have only digits!",
+              },
             })}
+            onKeyDown={(e) => {
+              const backspacePressed = e.key !== "Backspace";
+              const currentValue = e.currentTarget.value;
+              if (backspacePressed) {
+                const lengthNoSpaces = currentValue.replace(/ /g, "").length;
+                if (
+                  lengthNoSpaces !== 0 &&
+                  lengthNoSpaces % 4 === 0 &&
+                  currentValue.length < 17
+                ) {
+                  setValue("number", currentValue + " ");
+                }
+              } else {
+                if (currentValue[currentValue.length - 2] === " ") {
+                  setValue(
+                    "number",
+                    currentValue.slice(0, currentValue.length - 1)
+                  );
+                }
+              }
+            }}
           />
           {errors.number && (
             <p className={styles.edit__form__error}>{errors.number?.message}</p>
@@ -158,14 +165,19 @@ export default function PaymentCardEditModal({
           <p>
             Expiration date <span style={{ color: "red" }}>*</span>
           </p>
-          <input
-            placeholder="01/24"
-            style={{
-              outline: errors.expirationDate ? "3px solid red" : undefined,
-            }}
-            {...register("expirationDate", {
-              required: "Expiration date is required!",
-            })}
+          <Controller
+            control={control}
+            name="expirationDate"
+            rules={{ required: "Card expiration date is required!" }}
+            render={({ field }) => (
+              <DatePicker
+                placeholderText="Select card expiration date"
+                dateFormat="MM/yy"
+                showMonthYearPicker
+                onChange={(date) => field.onChange(date)}
+                selected={field.value}
+              />
+            )}
           />
           {errors.expirationDate && (
             <p className={styles.edit__form__error}>
@@ -181,11 +193,24 @@ export default function PaymentCardEditModal({
           <input
             placeholder="024"
             type="password"
+            maxLength={4}
             style={{
               outline: errors.securityCode ? "3px solid red" : undefined,
             }}
             {...register("securityCode", {
               required: "Security code is required!",
+              maxLength: {
+                value: 4,
+                message: "Card security code should have only 3 or 4 digits!",
+              },
+              minLength: {
+                value: 3,
+                message: "Card security code should have only 3 or 4 digits!",
+              },
+              pattern: {
+                value: /^(?=.*\d)[\d ]+$/,
+                message: "Card security code should have only digits!",
+              },
             })}
           />
           {errors.securityCode && (
@@ -208,24 +233,28 @@ export default function PaymentCardEditModal({
           )}
         </div>
 
-        <button
-          type="submit"
-          style={{
-            background: "#60d394",
-          }}
-        >
-          Save payment card
-        </button>
-        <button
-          className={styles.modalCancel}
-          type="button"
-          onClick={() => setEditModalIsOpen(false)}
-          style={{
-            background: "#ef233c",
-          }}
-        >
-          Cancel
-        </button>
+        <div className={styles.buttons}>
+          <button
+            type="submit"
+            style={{
+              background: "#60d394",
+            }}
+          >
+            Add payment card
+          </button>
+        </div>
+        <div className={styles.buttons}>
+          <button
+            className={styles.modalCancel}
+            type="button"
+            onClick={() => setEditModalIsOpen(false)}
+            style={{
+              background: "#ef233c",
+            }}
+          >
+            Cancel
+          </button>
+        </div>
       </form>
     </div>
   );

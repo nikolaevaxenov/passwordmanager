@@ -72,10 +72,19 @@
       height: 10rem;
     }
 
-    @import "@/styles/Button.scss";
-
     &__error {
       color: red;
     }
+  }
+}
+
+.buttons {
+  @import "@/styles/Button.scss";
+
+  display: flex;
+  justify-content: center;
+
+  button {
+    width: 100%;
   }
 }

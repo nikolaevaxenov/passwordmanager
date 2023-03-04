@@ -79,3 +79,14 @@
     }
   }
 }
+
+.buttons {
+  @import "@/styles/Button.scss";
+
+  display: flex;
+  justify-content: center;
+
+  button {
+    width: 100%;
+  }
+}

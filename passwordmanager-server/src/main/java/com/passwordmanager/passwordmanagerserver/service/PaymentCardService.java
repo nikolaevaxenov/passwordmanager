@@ -68,9 +68,6 @@ public class PaymentCardService {
         if (paymentCard.getTitle() != null)
             pc.setTitle(paymentCard.getTitle());
 
-        if (paymentCard.getCardBrand() != null)
-            pc.setCardBrand(paymentCard.getCardBrand());
-
         if (paymentCard.getNumber() != null)
             pc.setNumber(paymentCard.getNumber());
 

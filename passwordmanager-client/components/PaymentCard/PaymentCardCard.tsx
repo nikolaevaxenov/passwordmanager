@@ -24,6 +24,7 @@ import {
   RefetchQueryFilters,
 } from "react-query";
 import "react-toastify/dist/ReactToastify.css";
+import creditCardType from "credit-card-type";
 
 export default function PaymentCardCard({
   paymentCard,
@@ -44,6 +45,9 @@ export default function PaymentCardCard({
   const [editModalIsOpen, setEditModalIsOpen] = useState(false);
   const [deleteModalIsOpen, setDeleteModalIsOpen] = useState(false);
   const [shareModalIsOpen, setShareModalIsOpen] = useState(false);
+
+  const cardType = creditCardType(paymentCard.number.replaceAll(" ", ""))[0]
+    ?.niceType;
 
   return (
     <>
@@ -69,9 +73,7 @@ export default function PaymentCardCard({
             <div>
               <p>{paymentCard.number}</p>
             </div>
-            <div>
-              <p>({paymentCard.cardBrand})</p>
-            </div>
+            <div>{cardType && <p>({cardType})</p>}</div>
           </div>
           <div className={styles.icon__button}>
             <CopyToClipboard
@@ -85,12 +87,17 @@ export default function PaymentCardCard({
             <BsCalendarDateFill />
           </div>
           <div>
-            <p>{paymentCard.expirationDate}</p>
+            <p>
+              {paymentCard.expirationDate.split("-")[1]}/
+              {paymentCard.expirationDate.split("-")[0].slice(2, 4)}
+            </p>
           </div>
           <div>
             <div className={styles.icon__button}>
               <CopyToClipboard
-                text={paymentCard.expirationDate}
+                text={`${
+                  paymentCard.expirationDate.split("-")[1]
+                }/${paymentCard.expirationDate.split("-")[0].slice(2, 4)}`}
                 onCopy={() =>
                   notify("Card expiration date copied to clipboard!")
                 }

@@ -3,7 +3,6 @@ package com.passwordmanager.passwordmanagerserver;
 import com.passwordmanager.passwordmanagerserver.config.RsaKeyProperties;
 import com.passwordmanager.passwordmanagerserver.model.*;
 import com.passwordmanager.passwordmanagerserver.repository.*;
-import com.passwordmanager.passwordmanagerserver.types.CardBrand;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -11,6 +10,7 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.util.Date;
 import java.util.Set;
 
 @EnableConfigurationProperties(RsaKeyProperties.class)
@@ -92,9 +92,9 @@ public class PasswordmanagerServerApplication {
             addressRepository.save(address2);
             addressRepository.save(address3);
 
-            var paymentCard1 = new PaymentCard("First card", CardBrand.VISA, "1234 5678 8901 2345", "123", "12/23");
-            var paymentCard2 = new PaymentCard("Second card", CardBrand.AMERICAN_EXPRESS, "1234 5678 8901 2345", "123", "12/23");
-            var paymentCard3 = new PaymentCard("Third card", CardBrand.JCB, "1234 5678 8901 2345", "123", "12/23");
+            var paymentCard1 = new PaymentCard("First card", "1234 5678 8901 2345", "123", new Date());
+            var paymentCard2 = new PaymentCard("Second card", "1234 5678 8901 2345", "123", new Date());
+            var paymentCard3 = new PaymentCard("Third card", "1234 5678 8901 2345", "123", new Date());
 
             paymentCard1.setUser(user1);
             paymentCard2.setUser(user2);

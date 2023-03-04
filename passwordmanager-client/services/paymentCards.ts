@@ -1,7 +1,6 @@
 export type PaymentCardData = {
   id: number;
   title: string;
-  cardBrand: string;
   number: string;
   securityCode: string;
   expirationDate: string;
@@ -13,7 +12,6 @@ export type PaymentCardData = {
 export type NewPaymentCardData = {
   token: string;
   title: string;
-  cardBrand: string;
   number: string;
   securityCode: string;
   expirationDate: string;
@@ -24,7 +22,6 @@ export type EditPaymentCardData = {
   token: string;
   id: number;
   title?: string;
-  cardBrand?: string;
   number?: string;
   securityCode?: string;
   expirationDate?: string;
@@ -68,7 +65,6 @@ export const addNewPaymentCard = async (requestData: NewPaymentCardData) => {
     },
     body: JSON.stringify({
       title: requestData.title,
-      cardBrand: requestData.cardBrand,
       number: requestData.number,
       securityCode: requestData.securityCode,
       expirationDate: requestData.expirationDate,
@@ -92,7 +88,6 @@ export const editPaymentCard = async (requestData: EditPaymentCardData) => {
     body: JSON.stringify({
       id: requestData.id,
       title: requestData.title,
-      cardBrand: requestData.cardBrand,
       number: requestData.number,
       securityCode: requestData.securityCode,
       expirationDate: requestData.expirationDate,
