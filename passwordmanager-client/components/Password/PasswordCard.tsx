@@ -143,11 +143,7 @@ export default function PasswordCard({
             <RiDeleteBin2Fill />
           </button>
         </div>
-        {showNote && (
-          <div className={styles.main__note}>
-            <p>{password.note}</p>
-          </div>
-        )}
+        {showNote && <div className={styles.main__note}>{password.note}</div>}
       </div>
       <Modal
         isOpen={editModalIsOpen}

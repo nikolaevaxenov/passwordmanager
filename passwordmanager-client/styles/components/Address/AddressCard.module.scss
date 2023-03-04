@@ -100,6 +100,11 @@
     padding: 20px;
   }
 
+  &__note {
+    margin-left: 1rem;
+    white-space: pre-wrap;
+  }
+
   @media (max-width: 812px) {
     margin: 1rem;
 

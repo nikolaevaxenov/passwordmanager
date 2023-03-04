@@ -96,7 +96,7 @@ export default function NoteEditModal({
           <p>
             Text <span style={{ color: "red" }}>*</span>
           </p>
-          <input
+          <textarea
             style={{
               outline: errors.text ? "3px solid red" : undefined,
             }}

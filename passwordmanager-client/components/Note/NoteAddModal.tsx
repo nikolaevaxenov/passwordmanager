@@ -3,7 +3,7 @@
 import { selectAuthToken } from "@/features/auth/authSlice";
 import { useAppSelector } from "@/hooks/hooks";
 import { addNewNote, NewNoteData } from "@/services/notes";
-import styles from "@/styles/components/Note/NoteEditModal.module.scss";
+import styles from "@/styles/components/Note/NoteAddModal.module.scss";
 import { Dispatch, SetStateAction } from "react";
 import { useForm } from "react-hook-form";
 import {
@@ -84,7 +84,7 @@ export default function NoteAddModal({
           <p>
             Text <span style={{ color: "red" }}>*</span>
           </p>
-          <input
+          <textarea
             style={{
               outline: errors.text ? "3px solid red" : undefined,
             }}

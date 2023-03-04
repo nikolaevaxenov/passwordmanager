@@ -3,7 +3,7 @@
 import { selectAuthToken } from "@/features/auth/authSlice";
 import { useAppSelector } from "@/hooks/hooks";
 import { addNewPassword, NewPasswordData } from "@/services/passwords";
-import styles from "@/styles/components/Password/PasswordEditModal.module.scss";
+import styles from "@/styles/components/Password/PasswordAddModal.module.scss";
 import { Dispatch, SetStateAction } from "react";
 import { useForm } from "react-hook-form";
 import {
@@ -147,7 +147,7 @@ export default function PasswordAddModal({
 
         <div>
           <p>Note</p>
-          <input
+          <textarea
             style={{
               outline: errors.note ? "3px solid red" : undefined,
             }}

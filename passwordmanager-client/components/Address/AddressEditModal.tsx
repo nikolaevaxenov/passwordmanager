@@ -431,7 +431,7 @@ export default function AddressEditModal({
 
         <div>
           <p>Note</p>
-          <input
+          <textarea
             style={{
               outline: errors.note ? "3px solid red" : undefined,
             }}

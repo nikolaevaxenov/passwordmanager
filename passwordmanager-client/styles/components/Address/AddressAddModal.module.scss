@@ -50,7 +50,8 @@
     color: $text-color;
 
     input,
-    select {
+    select,
+    textarea {
       width: 100%;
 
       margin: 0.5rem 0;
@@ -62,6 +63,13 @@
       &:focus {
         outline: 3px solid $logo-color;
       }
+    }
+
+    textarea {
+      resize: none;
+
+      width: 20rem;
+      height: 10rem;
     }
 
     &__error {
