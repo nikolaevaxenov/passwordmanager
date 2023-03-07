@@ -1,11 +1,14 @@
 "use client";
 
+import PasswordGenerator from "@/components/Password/PasswordGenerator";
 import { selectAuthToken } from "@/features/auth/authSlice";
 import { useAppSelector } from "@/hooks/hooks";
 import { addNewPassword, NewPasswordData } from "@/services/passwords";
 import styles from "@/styles/components/Password/PasswordAddModal.module.scss";
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { useForm } from "react-hook-form";
+import { BsFillEyeFill, BsFillEyeSlashFill } from "react-icons/bs";
+import { FaDice } from "react-icons/fa";
 import {
   QueryObserverResult,
   RefetchOptions,
@@ -13,7 +16,7 @@ import {
   useMutation,
 } from "react-query";
 
-type PasswordAddFormData = {
+export type PasswordAddFormData = {
   title: string;
   username: string;
   password: string;
@@ -34,8 +37,12 @@ export default function PasswordAddModal({
 }) {
   const authToken = useAppSelector(selectAuthToken);
 
+  const [showPasswordGenerator, setShowPasswordGenerator] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+
   const {
     register,
+    setValue,
     handleSubmit,
     formState: { errors },
   } = useForm<PasswordAddFormData>();
@@ -110,16 +117,28 @@ export default function PasswordAddModal({
           <p>
             Password <span style={{ color: "red" }}>*</span>
           </p>
-          <input
-            placeholder="pass"
-            type="password"
-            style={{
-              outline: errors.password ? "3px solid red" : undefined,
-            }}
-            {...register("password", {
-              required: "Password is required!",
-            })}
-          />
+          <div className={styles.edit__form__password}>
+            <input
+              placeholder="pass"
+              type={showPassword ? "text" : "password"}
+              style={{
+                outline: errors.password ? "3px solid red" : undefined,
+              }}
+              {...register("password", {
+                required: "Password is required!",
+              })}
+            />
+            <div className={styles.icon_button}>
+              <div onClick={() => setShowPassword(!showPassword)}>
+                {showPassword ? <BsFillEyeSlashFill /> : <BsFillEyeFill />}
+              </div>
+              <div
+                onClick={() => setShowPasswordGenerator(!showPasswordGenerator)}
+              >
+                <FaDice />
+              </div>
+            </div>
+          </div>
           {errors.password && (
             <p className={styles.edit__form__error}>
               {errors.password?.message}
@@ -177,6 +196,12 @@ export default function PasswordAddModal({
           Cancel
         </button>
       </form>
+      {showPasswordGenerator && (
+        <PasswordGenerator
+          setShowPasswordGenerator={setShowPasswordGenerator}
+          setValue={setValue}
+        />
+      )}
     </div>
   );
 }

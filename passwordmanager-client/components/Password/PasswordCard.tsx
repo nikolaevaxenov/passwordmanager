@@ -14,6 +14,7 @@ import { BiCopy } from "react-icons/bi";
 import {
   BsBoxArrowUpRight,
   BsFillEyeFill,
+  BsFillEyeSlashFill,
   BsFillKeyFill,
   BsLink45Deg,
 } from "react-icons/bs";
@@ -98,7 +99,7 @@ export default function PasswordCard({
               className={styles.icon__button}
               onClick={() => setShowPassword(!showPassword)}
             >
-              <BsFillEyeFill />
+              {showPassword ? <BsFillEyeSlashFill /> : <BsFillEyeFill />}
             </div>
             <div className={styles.icon__button}>
               <CopyToClipboard
