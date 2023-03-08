@@ -8,10 +8,22 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Arrays;
 import java.util.Collection;
 
+/**
+ * User entity class for an authorization, implements an UserDetails interface.
+ *
+ * @see UserDetails
+ */
 @Slf4j
 public class SecurityUser implements UserDetails {
     private final User user;
 
+    /**
+     * SecurityUser constructor.
+     *
+     * @param user User entity
+     *
+     * @see User
+     */
     public SecurityUser(User user) {
         this.user = user;
     }
@@ -26,6 +38,16 @@ public class SecurityUser implements UserDetails {
         return user.getPassword();
     }
 
+    /**
+     * Method for getting user's authorities.
+     * Gets authorities that is represented in string, separated by comma,
+     * splits it and for each authority creates new SinpleGrantedAuthority object.
+     *
+     * @return List of authorities represents by SimpleGrantedAuthority
+     *
+     * @see GrantedAuthority
+     * @see SimpleGrantedAuthority
+     */
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return Arrays.stream(user

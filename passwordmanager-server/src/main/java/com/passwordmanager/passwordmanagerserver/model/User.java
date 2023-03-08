@@ -8,6 +8,10 @@ import jakarta.validation.constraints.NotBlank;
 import java.util.Objects;
 import java.util.Set;
 
+/**
+ * Entity class that's represents user.
+ * Contains one-to-many relations to saved passwords, notes, addresses, payment cards.
+ */
 @Entity
 @Table(name = "users")
 public class User {
@@ -42,9 +46,19 @@ public class User {
     @JsonManagedReference(value = "paymentCards")
     private Set<PaymentCard> paymentCards;
 
+    /**
+     * Empty constuctor for user entity.
+     */
     public User() {
     }
 
+    /**
+     * Constructor for user entity.
+     *
+     * @param email User's email
+     * @param password User's password. Will be stored in encrypted by Argon2d format.
+     * @param roles User's authorities. Stored in string, separated by comma.
+     */
     public User(String email, String password, String roles) {
         this.email = email;
         this.password = password;

@@ -8,6 +8,14 @@ import org.hibernate.annotations.ColumnTransformer;
 import java.util.Objects;
 import java.util.Set;
 
+/**
+ * Entity class that's represents note
+ * Includes:
+ * <ul>
+ *     <li>Title - Required</li>
+ *     <li>Text - Required</li>
+ * </ul>
+ */
 @Entity
 @Table(name = "notes")
 public class Note {
@@ -41,9 +49,18 @@ public class Note {
     @ElementCollection
     private Set<String> sharedWithUsers;
 
+    /**
+     * Empty constructor for note entity.
+     */
     public Note() {
     }
 
+    /**
+     * Constructor for note entity.
+     *
+     * @param title Note's title
+     * @param text Note's text
+     */
     public Note(String title, String text) {
         this.title = title;
         this.text = text;

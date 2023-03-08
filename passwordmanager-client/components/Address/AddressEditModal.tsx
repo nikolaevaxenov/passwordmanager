@@ -27,7 +27,7 @@ type AddressEditFormData = {
   lastName?: string;
   username?: string;
   gender?: Gender;
-  birthDate?: Date;
+  birthdate?: Date;
   company?: string;
   address1?: string;
   address2?: string;
@@ -70,7 +70,7 @@ export default function AddressEditModal({
       lastName: address.lastName,
       username: address.username,
       gender: address.gender,
-      birthDate: address.birthDate,
+      birthdate: address.birthdate,
       company: address.company,
       address1: address.address1,
       address2: address.address2,
@@ -101,7 +101,7 @@ export default function AddressEditModal({
         lastName: data.lastName,
         username: data.username,
         gender: data.gender,
-        birthDate: data.birthDate,
+        birthdate: data.birthdate,
         company: data.company,
         address1: data.address1,
         address2: data.address2,
@@ -233,7 +233,7 @@ export default function AddressEditModal({
           <p>Birth date</p>
           <Controller
             control={control}
-            name="birthDate"
+            name="birthdate"
             render={({ field }) => (
               <DatePicker
                 placeholderText="Select birth date"
@@ -243,9 +243,9 @@ export default function AddressEditModal({
               />
             )}
           />
-          {errors.birthDate && (
+          {errors.birthdate && (
             <p className={styles.edit__form__error}>
-              {errors.birthDate?.message}
+              {errors.birthdate?.message}
             </p>
           )}
         </div>

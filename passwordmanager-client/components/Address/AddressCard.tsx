@@ -76,7 +76,7 @@ export default function AddressCard({
           </div>
           <div>
             <h1>Birth date: </h1>
-            <p>{address.birthDate?.toLocaleString()}</p>
+            <p>{address.birthdate?.toLocaleString()}</p>
           </div>
           <div>
             <h1>Company: </h1>

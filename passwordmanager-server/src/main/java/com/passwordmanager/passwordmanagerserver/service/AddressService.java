@@ -83,8 +83,8 @@ public class AddressService {
         if (address.getGender() != null)
             addr.setGender(address.getGender());
 
-        if (address.getBirthDate() != null)
-            addr.setBirthDate(address.getBirthDate());
+        if (address.getBirthdate() != null)
+            addr.setBirthdate(address.getBirthdate());
 
         if (address.getCompany() != null)
             addr.setCompany(address.getCompany());

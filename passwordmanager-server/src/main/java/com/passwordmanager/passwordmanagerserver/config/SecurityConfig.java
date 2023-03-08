@@ -31,6 +31,9 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.List;
 
+/**
+ * Main application security configuration class
+ */
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
@@ -38,11 +41,28 @@ public class SecurityConfig {
     private final RsaKeyProperties rsaKeyProperties;
     private final JpaUserDetailsService jpaUserDetailsService;
 
+    /**
+     * SecurityConfig constructor
+     * @param rsaKeyProperties ConfigurationProperties class for setting key files paths
+     * @param jpaUserDetailsService Implementation of UserDetailsService for JPA access.
+     *
+     * @see RsaKeyProperties
+     * @see JpaUserDetailsService
+     */
     public SecurityConfig(RsaKeyProperties rsaKeyProperties, JpaUserDetailsService jpaUserDetailsService) {
         this.rsaKeyProperties = rsaKeyProperties;
         this.jpaUserDetailsService = jpaUserDetailsService;
     }
 
+    /**
+     * Method that sets UserDetailsService and PasswordEncoder
+     *
+     * @param jpaUserDetailsService Implementation of UserDetailsService for JPA access.
+     * @return AuthenticationManager instance for user authentication
+     *
+     * @see JpaUserDetailsService
+     * @see AuthenticationManager
+     */
     @Bean
     public AuthenticationManager authenticationManager(JpaUserDetailsService jpaUserDetailsService) {
         var authProvider = new DaoAuthenticationProvider();
@@ -52,6 +72,12 @@ public class SecurityConfig {
         return new ProviderManager(authProvider);
     }
 
+    /**
+     * SecurityFilterChain configuration. Sets cors, csrf, authorizeHttpRequests, userDetailsService, oauth2ResourceServer
+     *
+     * @param http HttpSecurity instance
+     * @return SecurityFilterChain configuration
+     */
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
@@ -67,16 +93,32 @@ public class SecurityConfig {
                 .build();
     }
 
+    /**
+     * Instantiate new BCryptPasswordEncoder
+     * @return BCryptPasswordEncoder
+     */
     @Bean
     PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
+    /**
+     * Instantiate new JwtDecoder
+     * @return JwtDecoder
+     *
+     * @see NimbusJwtDecoder
+     */
     @Bean
     JwtDecoder jwtDecoder() {
         return NimbusJwtDecoder.withPublicKey(rsaKeyProperties.publicKey()).build();
     }
 
+    /**
+     * Instantiate new JwtEncoder
+     * @return JwtEncoder
+     *
+     * @see NimbusJwtEncoder
+     */
     @Bean
     JwtEncoder jwtEncoder() {
         JWK jwk = new RSAKey.Builder(rsaKeyProperties.publicKey()).privateKey(rsaKeyProperties.privateKey()).build();
@@ -85,6 +127,11 @@ public class SecurityConfig {
         return new NimbusJwtEncoder(jwks);
     }
 
+    /**
+     * Sets allowed cors origins, methods, and headers.
+     *
+     * @return CorsConfigurationSource
+     */
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration corsConfiguration = new CorsConfiguration();

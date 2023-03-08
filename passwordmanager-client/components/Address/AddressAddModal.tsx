@@ -22,7 +22,7 @@ type AddressAddFormData = {
   lastName?: string;
   username?: string;
   gender?: Gender;
-  birthDate?: Date;
+  birthdate?: Date;
   company?: string;
   address1: string;
   address2?: string;
@@ -71,7 +71,7 @@ export default function AddressAddModal({
         lastName: data.lastName,
         username: data.username,
         gender: data.gender,
-        birthDate: data.birthDate,
+        birthdate: data.birthdate,
         company: data.company,
         address1: data.address1,
         address2: data.address2,
@@ -202,7 +202,7 @@ export default function AddressAddModal({
           <p>Birth date</p>
           <Controller
             control={control}
-            name="birthDate"
+            name="birthdate"
             render={({ field }) => (
               <DatePicker
                 placeholderText="Select birth date"
@@ -212,9 +212,9 @@ export default function AddressAddModal({
               />
             )}
           />
-          {errors.birthDate && (
+          {errors.birthdate && (
             <p className={styles.edit__form__error}>
-              {errors.birthDate?.message}
+              {errors.birthdate?.message}
             </p>
           )}
         </div>

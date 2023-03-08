@@ -8,6 +8,17 @@ import org.hibernate.annotations.ColumnTransformer;
 import java.util.Objects;
 import java.util.Set;
 
+/**
+ * Entity class that's represents saved password
+ * Includes:
+ * <ul>
+ *     <li>Title - Required</li>
+ *     <li>Url - Required</li>
+ *     <li>Username - Required</li>
+ *     <li>Password - Required</li>
+ *     <li>Note</li>
+ * </ul>
+ */
 @Entity
 @Table(name = "passwords")
 public class SavedPassword {
@@ -61,9 +72,20 @@ public class SavedPassword {
     @ElementCollection
     private Set<String> sharedWithUsers;
 
+    /**
+     * Empty constructor for saved password.
+     */
     public SavedPassword() {
     }
 
+    /**
+     * Constructor for saved password.
+     *
+     * @param title Saved password's title
+     * @param url Saved password's url
+     * @param username Saved password's username
+     * @param password Saved password's password
+     */
     public SavedPassword(String title, String url, String username, String password) {
         this.title = title;
         this.url = url;

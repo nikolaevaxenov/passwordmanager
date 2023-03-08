@@ -9,6 +9,17 @@ import java.util.Date;
 import java.util.Objects;
 import java.util.Set;
 
+/**
+ * Entity class that's represents payment card
+ * Includes:
+ * <ul>
+ *     <li>Title - Required</li>
+ *     <li>Credit/debit card number - Required</li>
+ *     <li>Card's security code - Required</li>
+ *     <li>Card's expiration date - Required</li>
+ *     <li>Note</li>
+ * </ul>
+ */
 @Entity
 @Table(name = "payment_cards")
 public class PaymentCard {
@@ -58,9 +69,20 @@ public class PaymentCard {
     @ElementCollection
     private Set<String> sharedWithUsers;
 
+    /**
+     * Empty constructor for payment card entity.
+     */
     public PaymentCard() {
     }
 
+    /**
+     * Constructor for payment card entity.
+     *
+     * @param title Payment card's title
+     * @param number Credit/debit card number
+     * @param securityCode Payment card's number (CVC, CVV)
+     * @param expirationDate Payment card's expiration date (for example 11/24)
+     */
     public PaymentCard(String title, String number, String securityCode, Date expirationDate) {
         this.title = title;
         this.number = number;

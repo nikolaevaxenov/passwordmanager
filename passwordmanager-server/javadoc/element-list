@@ -1,0 +1,8 @@
+com.passwordmanager.passwordmanagerserver
+com.passwordmanager.passwordmanagerserver.config
+com.passwordmanager.passwordmanagerserver.controller
+com.passwordmanager.passwordmanagerserver.exception
+com.passwordmanager.passwordmanagerserver.model
+com.passwordmanager.passwordmanagerserver.repository
+com.passwordmanager.passwordmanagerserver.service
+com.passwordmanager.passwordmanagerserver.types

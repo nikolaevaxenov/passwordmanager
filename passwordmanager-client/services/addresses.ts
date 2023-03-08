@@ -12,7 +12,7 @@ export type AddressData = {
   lastName?: string;
   username?: string;
   gender?: Gender;
-  birthDate?: Date;
+  birthdate?: Date;
   company?: string;
   address1: string;
   address2?: string;
@@ -37,7 +37,7 @@ export type NewAddressData = {
   lastName?: string;
   username?: string;
   gender?: Gender;
-  birthDate?: Date;
+  birthdate?: Date;
   company?: string;
   address1: string;
   address2?: string;
@@ -61,7 +61,7 @@ export type EditAddressData = {
   lastName?: string;
   username?: string;
   gender?: Gender;
-  birthDate?: Date;
+  birthdate?: Date;
   company?: string;
   address1?: string;
   address2?: string;
@@ -118,7 +118,7 @@ export const addNewAddress = async (requestData: NewAddressData) => {
       lastName: requestData.lastName,
       username: requestData.username,
       gender: requestData.gender,
-      birthDate: requestData.birthDate,
+      birthdate: requestData.birthdate,
       company: requestData.company,
       address1: requestData.address1,
       address2: requestData.address2,
@@ -155,7 +155,7 @@ export const editAddress = async (requestData: EditAddressData) => {
       lastName: requestData.lastName,
       username: requestData.username,
       gender: requestData.gender,
-      birthDate: requestData.birthDate,
+      birthdate: requestData.birthdate,
       company: requestData.company,
       address1: requestData.address1,
       address2: requestData.address2,

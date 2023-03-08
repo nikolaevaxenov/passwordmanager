@@ -10,6 +10,31 @@ import java.util.Date;
 import java.util.Objects;
 import java.util.Set;
 
+/**
+ * Entity class that's represents address
+ * Includes:
+ * <ul>
+ *     <li>Title - Required</li>
+ *     <li>First name - Required</li>
+ *     <li>Middle name</li>
+ *     <li>Last name</li>
+ *     <li>Username</li>
+ *     <li>Gender</li>
+ *     <li>Birthdate</li>
+ *     <li>Company</li>
+ *     <li>Address 1 - Required</li>
+ *     <li>Address 2</li>
+ *     <li>Address 3</li>
+ *     <li>City - Required</li>
+ *     <li>County - Required</li>
+ *     <li>State - Required</li>
+ *     <li>Zip code - Required</li>
+ *     <li>Country - Required</li>
+ *     <li>Email</li>
+ *     <li>Phone number</li>
+ *     <li>Note</li>
+ * </ul>
+ */
 @Entity
 @Table(name = "addresses")
 public class Address {
@@ -52,7 +77,7 @@ public class Address {
     private Gender gender;
 
     @Temporal(TemporalType.DATE)
-    private Date birthDate;
+    private Date birthdate;
 
     @ColumnTransformer(
             read = "PGP_SYM_DECRYPT(company::bytea, current_setting('my.dbsecretkey'))",
@@ -144,9 +169,24 @@ public class Address {
     @ElementCollection
     private Set<String> sharedWithUsers;
 
+    /**
+     * Empty constructor for address entity.
+     */
     public Address() {
     }
 
+    /**
+     * Constructor for address entity.
+     *
+     * @param title Address's title
+     * @param firstName Person's first name
+     * @param address1 Represent address line
+     * @param city Represent city name
+     * @param county Represent county name
+     * @param state Represent state name
+     * @param zipCode Represent zip code
+     * @param country Represent country name
+     */
     public Address(String title, String firstName, String address1, String city, String county, String state, String zipCode, String country) {
         this.title = title;
         this.firstName = firstName;
@@ -214,12 +254,12 @@ public class Address {
         this.gender = gender;
     }
 
-    public Date getBirthDate() {
-        return birthDate;
+    public Date getBirthdate() {
+        return birthdate;
     }
 
-    public void setBirthDate(Date birthDate) {
-        this.birthDate = birthDate;
+    public void setBirthdate(Date birthDate) {
+        this.birthdate = birthDate;
     }
 
     public String getCompany() {
@@ -354,12 +394,12 @@ public class Address {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Address address)) return false;
-        return getId().equals(address.getId()) && getTitle().equals(address.getTitle()) && getFirstName().equals(address.getFirstName()) && Objects.equals(getMiddleName(), address.getMiddleName()) && Objects.equals(getLastName(), address.getLastName()) && Objects.equals(getUsername(), address.getUsername()) && getGender() == address.getGender() && Objects.equals(getBirthDate(), address.getBirthDate()) && Objects.equals(getCompany(), address.getCompany()) && getAddress1().equals(address.getAddress1()) && Objects.equals(getAddress2(), address.getAddress2()) && Objects.equals(getAddress3(), address.getAddress3()) && getCity().equals(address.getCity()) && getCounty().equals(address.getCounty()) && getState().equals(address.getState()) && getZipCode().equals(address.getZipCode()) && getCountry().equals(address.getCountry()) && Objects.equals(getEmail(), address.getEmail()) && Objects.equals(getPhone(), address.getPhone()) && Objects.equals(getNote(), address.getNote()) && getUser().equals(address.getUser()) && getOwner_email().equals(address.getOwner_email()) && Objects.equals(getSharedWithUsers(), address.getSharedWithUsers());
+        return getId().equals(address.getId()) && getTitle().equals(address.getTitle()) && getFirstName().equals(address.getFirstName()) && Objects.equals(getMiddleName(), address.getMiddleName()) && Objects.equals(getLastName(), address.getLastName()) && Objects.equals(getUsername(), address.getUsername()) && getGender() == address.getGender() && Objects.equals(getBirthdate(), address.getBirthdate()) && Objects.equals(getCompany(), address.getCompany()) && getAddress1().equals(address.getAddress1()) && Objects.equals(getAddress2(), address.getAddress2()) && Objects.equals(getAddress3(), address.getAddress3()) && getCity().equals(address.getCity()) && getCounty().equals(address.getCounty()) && getState().equals(address.getState()) && getZipCode().equals(address.getZipCode()) && getCountry().equals(address.getCountry()) && Objects.equals(getEmail(), address.getEmail()) && Objects.equals(getPhone(), address.getPhone()) && Objects.equals(getNote(), address.getNote()) && getUser().equals(address.getUser()) && getOwner_email().equals(address.getOwner_email()) && Objects.equals(getSharedWithUsers(), address.getSharedWithUsers());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getTitle(), getFirstName(), getMiddleName(), getLastName(), getUsername(), getGender(), getBirthDate(), getCompany(), getAddress1(), getAddress2(), getAddress3(), getCity(), getCounty(), getState(), getZipCode(), getCountry(), getEmail(), getPhone(), getNote(), getUser(), getOwner_email(), getSharedWithUsers());
+        return Objects.hash(getId(), getTitle(), getFirstName(), getMiddleName(), getLastName(), getUsername(), getGender(), getBirthdate(), getCompany(), getAddress1(), getAddress2(), getAddress3(), getCity(), getCounty(), getState(), getZipCode(), getCountry(), getEmail(), getPhone(), getNote(), getUser(), getOwner_email(), getSharedWithUsers());
     }
 
     @Override
@@ -372,7 +412,7 @@ public class Address {
                 ", lastName='" + lastName + '\'' +
                 ", username='" + username + '\'' +
                 ", gender=" + gender +
-                ", birthDate=" + birthDate +
+                ", birthDate=" + birthdate +
                 ", company='" + company + '\'' +
                 ", address1='" + address1 + '\'' +
                 ", address2='" + address2 + '\'' +
