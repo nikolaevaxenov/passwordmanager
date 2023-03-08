@@ -3,6 +3,7 @@ package com.passwordmanager.passwordmanagerserver.model;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import org.hibernate.annotations.ColumnTransformer;
 
 import java.util.Objects;
 import java.util.Set;
@@ -15,18 +16,38 @@ public class SavedPassword {
     private Long id;
 
     @NotBlank
+    @ColumnTransformer(
+            read = "PGP_SYM_DECRYPT(title::bytea, current_setting('my.dbsecretkey'))",
+            write = "PGP_SYM_ENCRYPT (?, current_setting('my.dbsecretkey'))"
+    )
     private String title;
 
     @NotBlank
+    @ColumnTransformer(
+            read = "PGP_SYM_DECRYPT(url::bytea, current_setting('my.dbsecretkey'))",
+            write = "PGP_SYM_ENCRYPT (?, current_setting('my.dbsecretkey'))"
+    )
     private String url;
 
     @NotBlank
+    @ColumnTransformer(
+            read = "PGP_SYM_DECRYPT(username::bytea, current_setting('my.dbsecretkey'))",
+            write = "PGP_SYM_ENCRYPT (?, current_setting('my.dbsecretkey'))"
+    )
     private String username;
 
     @NotBlank
+    @ColumnTransformer(
+            read = "PGP_SYM_DECRYPT(password::bytea, current_setting('my.dbsecretkey'))",
+            write = "PGP_SYM_ENCRYPT (?, current_setting('my.dbsecretkey'))"
+    )
     private String password;
 
     @Column(columnDefinition = "TEXT")
+    @ColumnTransformer(
+            read = "PGP_SYM_DECRYPT(note::bytea, current_setting('my.dbsecretkey'))",
+            write = "PGP_SYM_ENCRYPT (?, current_setting('my.dbsecretkey'))"
+    )
     private String note;
 
     @ManyToOne(fetch = FetchType.LAZY)

@@ -3,6 +3,7 @@ package com.passwordmanager.passwordmanagerserver.model;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import org.hibernate.annotations.ColumnTransformer;
 
 import java.util.Objects;
 import java.util.Set;
@@ -15,10 +16,18 @@ public class Note {
     private Long id;
 
     @NotBlank
+    @ColumnTransformer(
+            read = "PGP_SYM_DECRYPT(title::bytea, current_setting('my.dbsecretkey'))",
+            write = "PGP_SYM_ENCRYPT (?, current_setting('my.dbsecretkey'))"
+    )
     private String title;
 
     @NotBlank
     @Column(columnDefinition = "TEXT")
+    @ColumnTransformer(
+            read = "PGP_SYM_DECRYPT(text::bytea, current_setting('my.dbsecretkey'))",
+            write = "PGP_SYM_ENCRYPT (?, current_setting('my.dbsecretkey'))"
+    )
     private String text;
 
     @ManyToOne(fetch = FetchType.LAZY)

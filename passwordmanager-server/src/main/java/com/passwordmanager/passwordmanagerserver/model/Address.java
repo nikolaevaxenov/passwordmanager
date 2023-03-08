@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.passwordmanager.passwordmanagerserver.types.Gender;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import org.hibernate.annotations.ColumnTransformer;
 
 import java.util.Date;
 import java.util.Objects;
@@ -17,15 +18,35 @@ public class Address {
     private Long id;
 
     @NotBlank
+    @ColumnTransformer(
+            read = "PGP_SYM_DECRYPT(title::bytea, current_setting('my.dbsecretkey'))",
+            write = "PGP_SYM_ENCRYPT (?, current_setting('my.dbsecretkey'))"
+    )
     private String title;
 
     @NotBlank
+    @ColumnTransformer(
+            read = "PGP_SYM_DECRYPT(first_name::bytea, current_setting('my.dbsecretkey'))",
+            write = "PGP_SYM_ENCRYPT (?, current_setting('my.dbsecretkey'))"
+    )
     private String firstName;
 
+    @ColumnTransformer(
+            read = "PGP_SYM_DECRYPT(middle_name::bytea, current_setting('my.dbsecretkey'))",
+            write = "PGP_SYM_ENCRYPT (?, current_setting('my.dbsecretkey'))"
+    )
     private String middleName;
 
+    @ColumnTransformer(
+            read = "PGP_SYM_DECRYPT(last_name::bytea, current_setting('my.dbsecretkey'))",
+            write = "PGP_SYM_ENCRYPT (?, current_setting('my.dbsecretkey'))"
+    )
     private String lastName;
 
+    @ColumnTransformer(
+            read = "PGP_SYM_DECRYPT(username::bytea, current_setting('my.dbsecretkey'))",
+            write = "PGP_SYM_ENCRYPT (?, current_setting('my.dbsecretkey'))"
+    )
     private String username;
 
     private Gender gender;
@@ -33,35 +54,83 @@ public class Address {
     @Temporal(TemporalType.DATE)
     private Date birthDate;
 
+    @ColumnTransformer(
+            read = "PGP_SYM_DECRYPT(company::bytea, current_setting('my.dbsecretkey'))",
+            write = "PGP_SYM_ENCRYPT (?, current_setting('my.dbsecretkey'))"
+    )
     private String company;
 
     @NotBlank
+    @ColumnTransformer(
+            read = "PGP_SYM_DECRYPT(address1::bytea, current_setting('my.dbsecretkey'))",
+            write = "PGP_SYM_ENCRYPT (?, current_setting('my.dbsecretkey'))"
+    )
     private String address1;
 
+    @ColumnTransformer(
+            read = "PGP_SYM_DECRYPT(address2::bytea, current_setting('my.dbsecretkey'))",
+            write = "PGP_SYM_ENCRYPT (?, current_setting('my.dbsecretkey'))"
+    )
     private String address2;
 
+    @ColumnTransformer(
+            read = "PGP_SYM_DECRYPT(address3::bytea, current_setting('my.dbsecretkey'))",
+            write = "PGP_SYM_ENCRYPT (?, current_setting('my.dbsecretkey'))"
+    )
     private String address3;
 
     @NotBlank
+    @ColumnTransformer(
+            read = "PGP_SYM_DECRYPT(city::bytea, current_setting('my.dbsecretkey'))",
+            write = "PGP_SYM_ENCRYPT (?, current_setting('my.dbsecretkey'))"
+    )
     private String city;
 
     @NotBlank
+    @ColumnTransformer(
+            read = "PGP_SYM_DECRYPT(county::bytea, current_setting('my.dbsecretkey'))",
+            write = "PGP_SYM_ENCRYPT (?, current_setting('my.dbsecretkey'))"
+    )
     private String county;
 
     @NotBlank
+    @ColumnTransformer(
+            read = "PGP_SYM_DECRYPT(state::bytea, current_setting('my.dbsecretkey'))",
+            write = "PGP_SYM_ENCRYPT (?, current_setting('my.dbsecretkey'))"
+    )
     private String state;
 
     @NotBlank
+    @ColumnTransformer(
+            read = "PGP_SYM_DECRYPT(zip_code::bytea, current_setting('my.dbsecretkey'))",
+            write = "PGP_SYM_ENCRYPT (?, current_setting('my.dbsecretkey'))"
+    )
     private String zipCode;
 
     @NotBlank
+    @ColumnTransformer(
+            read = "PGP_SYM_DECRYPT(country::bytea, current_setting('my.dbsecretkey'))",
+            write = "PGP_SYM_ENCRYPT (?, current_setting('my.dbsecretkey'))"
+    )
     private String country;
 
+    @ColumnTransformer(
+            read = "PGP_SYM_DECRYPT(email::bytea, current_setting('my.dbsecretkey'))",
+            write = "PGP_SYM_ENCRYPT (?, current_setting('my.dbsecretkey'))"
+    )
     private String email;
 
+    @ColumnTransformer(
+            read = "PGP_SYM_DECRYPT(phone::bytea, current_setting('my.dbsecretkey'))",
+            write = "PGP_SYM_ENCRYPT (?, current_setting('my.dbsecretkey'))"
+    )
     private String phone;
 
     @Column(columnDefinition = "TEXT")
+    @ColumnTransformer(
+            read = "PGP_SYM_DECRYPT(note::bytea, current_setting('my.dbsecretkey'))",
+            write = "PGP_SYM_ENCRYPT (?, current_setting('my.dbsecretkey'))"
+    )
     private String note;
 
     @ManyToOne(fetch = FetchType.LAZY)

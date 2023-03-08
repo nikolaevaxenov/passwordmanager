@@ -3,6 +3,7 @@ package com.passwordmanager.passwordmanagerserver.model;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import org.hibernate.annotations.ColumnTransformer;
 
 import java.util.Date;
 import java.util.Objects;
@@ -16,18 +17,34 @@ public class PaymentCard {
     private Long id;
 
     @NotBlank
+    @ColumnTransformer(
+            read = "PGP_SYM_DECRYPT(title::bytea, current_setting('my.dbsecretkey'))",
+            write = "PGP_SYM_ENCRYPT (?, current_setting('my.dbsecretkey'))"
+    )
     private String title;
 
     @NotBlank
+    @ColumnTransformer(
+            read = "PGP_SYM_DECRYPT(number::bytea, current_setting('my.dbsecretkey'))",
+            write = "PGP_SYM_ENCRYPT (?, current_setting('my.dbsecretkey'))"
+    )
     private String number;
 
     @NotBlank
+    @ColumnTransformer(
+            read = "PGP_SYM_DECRYPT(security_code::bytea, current_setting('my.dbsecretkey'))",
+            write = "PGP_SYM_ENCRYPT (?, current_setting('my.dbsecretkey'))"
+    )
     private String securityCode;
 
     @Temporal(TemporalType.DATE)
     private Date expirationDate;
 
     @Column(columnDefinition = "TEXT")
+    @ColumnTransformer(
+            read = "PGP_SYM_DECRYPT(note::bytea, current_setting('my.dbsecretkey'))",
+            write = "PGP_SYM_ENCRYPT (?, current_setting('my.dbsecretkey'))"
+    )
     private String note;
 
     @ManyToOne(fetch = FetchType.LAZY)
