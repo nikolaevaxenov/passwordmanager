@@ -17,5 +17,6 @@ spring:
 rsa:
   private-key: classpath:certs/private.pem
   public-key: classpath:certs/public.pem
-
+springdoc:
+  paths-to-match: /api/v1/**
 dbsecretkey: my-secret-key
