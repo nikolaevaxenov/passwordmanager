@@ -4,7 +4,7 @@ import AddressDeleteModal from "@/components/Address/AddressDeleteModal";
 import AddressEditModal from "@/components/Address/AddressEditModal";
 import AddressShareModal from "@/components/Address/AddressShareModal";
 import { AuthToken } from "@/features/auth/authSlice";
-import { AddressData } from "@/services/addresses";
+import { AddressData, Gender } from "@/services/addresses";
 import styles from "@/styles/components/Address/AddressCard.module.scss";
 import { useState } from "react";
 import { AiFillEdit } from "react-icons/ai";
@@ -19,11 +19,13 @@ import {
 import "react-toastify/dist/ReactToastify.css";
 
 export default function AddressCard({
+  t,
   address,
   refetch,
   notify,
   authToken,
 }: {
+  t: Messages["ProfilePage"]["address"];
   address: AddressData;
   refetch: <TPageData>(
     options?: (RefetchOptions & RefetchQueryFilters<TPageData>) | undefined
@@ -37,6 +39,17 @@ export default function AddressCard({
   const [deleteModalIsOpen, setDeleteModalIsOpen] = useState(false);
   const [shareModalIsOpen, setShareModalIsOpen] = useState(false);
 
+  const getGender = () => {
+    switch (address.gender) {
+      case Gender.MALE.toUpperCase():
+        return t.card.gender.male;
+      case Gender.FEMALE.toUpperCase():
+        return t.card.gender.female;
+      case Gender.OTHER.toUpperCase():
+        return t.card.gender.other;
+    }
+  };
+
   return (
     <>
       <div className={styles.main}>
@@ -48,70 +61,70 @@ export default function AddressCard({
             <div className={styles.main__title__shared}>
               <BsLink45Deg />
               {address.owner_email === authToken?.email
-                ? "(Sharing)"
-                : `(Shared with you by ${address.owner_email})`}
+                ? t.card.sharing
+                : `(${t.card.sharedWithYou} ${address.owner_email})`}
             </div>
           ) : null}
         </div>
         <div className={styles.main__address}>
           <div>
-            <h1>First name: </h1>
+            <h1>{t.card.firstName}</h1>
             <p>{address.firstName}</p>
           </div>
           <div>
-            <h1>Middle name: </h1>
+            <h1>{t.card.middleName}</h1>
             <p>{address.middleName}</p>
           </div>
           <div>
-            <h1>Last name: </h1>
+            <h1>{t.card.lastName}</h1>
             <p>{address.lastName}</p>
           </div>
           <div>
-            <h1>Username: </h1>
+            <h1>{t.card.username}</h1>
             <p>{address.username}</p>
           </div>
           <div>
-            <h1>Gender: </h1>
-            <p>{address.gender}</p>
+            <h1>{t.card.gender.text}</h1>
+            <p>{getGender()}</p>
           </div>
           <div>
-            <h1>Birth date: </h1>
+            <h1>{t.card.birthdate}</h1>
             <p>{address.birthdate?.toLocaleString()}</p>
           </div>
           <div>
-            <h1>Company: </h1>
+            <h1>{t.card.company}</h1>
             <p>{address.company}</p>
           </div>
           <div>
-            <h1>Address 1: </h1>
+            <h1>{t.card.address1}</h1>
             <p>{address.address1}</p>
           </div>
           <div>
-            <h1>Address 2: </h1>
+            <h1>{t.card.address2}</h1>
             <p>{address.address2}</p>
           </div>
           <div>
-            <h1>Address 3: </h1>
+            <h1>{t.card.address3}</h1>
             <p>{address.address3}</p>
           </div>
           <div>
-            <h1>City: </h1>
+            <h1>{t.card.city}</h1>
             <p>{address.city}</p>
           </div>
           <div>
-            <h1>County: </h1>
+            <h1>{t.card.county}</h1>
             <p>{address.county}</p>
           </div>
           <div>
-            <h1>State: </h1>
+            <h1>{t.card.state}</h1>
             <p>{address.state}</p>
           </div>
           <div>
-            <h1>Zip code: </h1>
+            <h1>{t.card.zipCode}</h1>
             <p>{address.zipCode}</p>
           </div>
           <div>
-            <h1>Country: </h1>
+            <h1>{t.card.country}</h1>
             <p>{address.country}</p>
           </div>
           <div>
@@ -119,7 +132,7 @@ export default function AddressCard({
             <p>{address.email}</p>
           </div>
           <div>
-            <h1>Phone: </h1>
+            <h1>{t.card.phone}</h1>
             <p>{address.phone}</p>
           </div>
         </div>
@@ -130,7 +143,7 @@ export default function AddressCard({
                 setShowNote(!showNote);
               }}
             >
-              {showNote ? "Hide note" : "Show note"}
+              {showNote ? t.card.hideNoteButton : t.card.showNoteButton}
             </button>
           )}
           {address.owner_email === authToken?.email && (
@@ -146,7 +159,7 @@ export default function AddressCard({
               onClick={() => setShareModalIsOpen(true)}
               style={{ backgroundColor: "#90e0ef" }}
             >
-              <BsLink45Deg /> Share
+              <BsLink45Deg /> {t.card.shareButton}
             </button>
           )}
           <button
@@ -175,6 +188,7 @@ export default function AddressCard({
         }}
       >
         <AddressEditModal
+          t={t.editModal}
           address={address}
           setEditModalIsOpen={setEditModalIsOpen}
           notify={notify}
@@ -194,6 +208,7 @@ export default function AddressCard({
         }}
       >
         <AddressDeleteModal
+          t={t.deleteModal}
           addressId={address.id}
           setDeleteModalIsOpen={setDeleteModalIsOpen}
           notify={notify}
@@ -214,6 +229,7 @@ export default function AddressCard({
         }}
       >
         <AddressShareModal
+          t={t.shareModal}
           address={address}
           setShareModalIsOpen={setShareModalIsOpen}
           refetch={refetch}

@@ -29,11 +29,13 @@ import {
 import "react-toastify/dist/ReactToastify.css";
 
 export default function PasswordCard({
+  t,
   password,
   refetch,
   notify,
   authToken,
 }: {
+  t: Messages["ProfilePage"]["password"];
   password: PasswordData;
   refetch: <TPageData>(
     options?: (RefetchOptions & RefetchQueryFilters<TPageData>) | undefined
@@ -68,8 +70,8 @@ export default function PasswordCard({
             <div className={styles.main__title__shared}>
               <BsLink45Deg />
               {password.owner_email === authToken?.email
-                ? "(Sharing)"
-                : `(Shared with you by ${password.owner_email})`}
+                ? t.card.sharing
+                : `(${t.card.sharedWithYou} ${password.owner_email})`}
             </div>
           ) : null}
         </div>
@@ -83,7 +85,7 @@ export default function PasswordCard({
           <div className={styles.icon__button}>
             <CopyToClipboard
               text={password.username}
-              onCopy={() => notify("Username copied to clipboard!")}
+              onCopy={() => notify(t.card.usernameCopiedNotify)}
             >
               <BiCopy />
             </CopyToClipboard>
@@ -104,7 +106,7 @@ export default function PasswordCard({
             <div className={styles.icon__button}>
               <CopyToClipboard
                 text={password.password}
-                onCopy={() => notify("Password copied to clipboard!")}
+                onCopy={() => notify(t.card.passwordCopiedNotify)}
               >
                 <BiCopy />
               </CopyToClipboard>
@@ -118,7 +120,7 @@ export default function PasswordCard({
                 setShowNote(!showNote);
               }}
             >
-              {showNote ? "Hide note" : "Show note"}
+              {showNote ? t.card.hideNoteButton : t.card.showNoteButton}
             </button>
           )}
           {password.owner_email === authToken?.email && (
@@ -134,7 +136,7 @@ export default function PasswordCard({
               onClick={() => setShareModalIsOpen(true)}
               style={{ backgroundColor: "#90e0ef" }}
             >
-              <BsLink45Deg /> Share
+              <BsLink45Deg /> {t.card.shareButton}
             </button>
           )}
           <button
@@ -159,6 +161,7 @@ export default function PasswordCard({
         }}
       >
         <PasswordEditModal
+          t={t}
           password={password}
           setEditModalIsOpen={setEditModalIsOpen}
           notify={notify}
@@ -178,6 +181,7 @@ export default function PasswordCard({
         }}
       >
         <PasswordDeleteModal
+          t={t.deleteModal}
           passwordId={password.id}
           setDeleteModalIsOpen={setDeleteModalIsOpen}
           notify={notify}
@@ -198,6 +202,7 @@ export default function PasswordCard({
         }}
       >
         <PasswordShareModal
+          t={t.shareModal}
           password={password}
           setShareModalIsOpen={setShareModalIsOpen}
           refetch={refetch}

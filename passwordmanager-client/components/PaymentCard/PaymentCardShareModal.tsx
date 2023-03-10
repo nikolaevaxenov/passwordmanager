@@ -27,10 +27,12 @@ type SharePaymentCardFormData = {
 };
 
 export default function PaymentCardShareModal({
+  t,
   paymentCard,
   setShareModalIsOpen,
   refetch,
 }: {
+  t: Messages["ProfilePage"]["paymentCard"]["shareModal"];
   paymentCard: PaymentCardData;
   setShareModalIsOpen: Dispatch<SetStateAction<boolean>>;
   refetch: <TPageData>(
@@ -87,11 +89,11 @@ export default function PaymentCardShareModal({
       },
       {
         onSuccess: () => {
-          notify("Payment card successfully shared!");
+          notify(t.sharedNotify);
           refetch();
         },
         onError: () => {
-          notify("Share edit failed!", true);
+          notify(t.shareFailedNotify, true);
         },
       }
     );
@@ -100,10 +102,10 @@ export default function PaymentCardShareModal({
   return (
     <>
       <div className={styles.main}>
-        <h1>Share this payment card</h1>
+        <h1>{t.header}</h1>
         <form onSubmit={onSubmit}>
           <p>
-            User's email <span style={{ color: "red" }}>*</span>
+            {t.userEmail} <span style={{ color: "red" }}>*</span>
           </p>
           <input
             placeholder="mail@mail.com"
@@ -111,10 +113,10 @@ export default function PaymentCardShareModal({
               outline: errors.email ? "3px solid red" : undefined,
             }}
             {...register("email", {
-              required: "User's email is required!",
+              required: t.userEmailRequired,
               pattern: {
                 value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/i,
-                message: "Invalid email address!",
+                message: t.userEmailInvalid,
               },
             })}
           />
@@ -122,7 +124,7 @@ export default function PaymentCardShareModal({
             <p className={styles.main__error}>{errors.email?.message}</p>
           )}
 
-          <button type="submit">Share</button>
+          <button type="submit">{t.shareButton}</button>
         </form>
         <div className={styles.main__shareTable}>
           {paymentCard.sharedWithUsers.map((email) => (
@@ -138,11 +140,11 @@ export default function PaymentCardShareModal({
                     },
                     {
                       onSuccess: () => {
-                        notify("User successfully deleted!");
+                        notify(t.userDeletedNotify);
                         refetch();
                       },
                       onError: () => {
-                        notify("Share edit failed!", true);
+                        notify(t.userDeleteFailedNotify, true);
                       },
                     }
                   )
@@ -153,7 +155,9 @@ export default function PaymentCardShareModal({
             </>
           ))}
         </div>
-        <button onClick={() => setShareModalIsOpen(false)}>Exit</button>
+        <button onClick={() => setShareModalIsOpen(false)}>
+          {t.exitButton}
+        </button>
       </div>
       <ToastContainer
         position="bottom-center"

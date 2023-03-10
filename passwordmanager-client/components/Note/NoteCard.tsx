@@ -6,18 +6,9 @@ import NoteShareModal from "@/components/Note/NoteShareModal";
 import { AuthToken } from "@/features/auth/authSlice";
 import { NoteData } from "@/services/notes";
 import styles from "@/styles/components/Note/NoteCard.module.scss";
-import Link from "next/link";
 import { useState } from "react";
-import { CopyToClipboard } from "react-copy-to-clipboard";
 import { AiFillEdit } from "react-icons/ai";
-import { BiCopy } from "react-icons/bi";
-import {
-  BsBoxArrowUpRight,
-  BsFillEyeFill,
-  BsFillKeyFill,
-  BsLink45Deg,
-} from "react-icons/bs";
-import { FaUserAlt } from "react-icons/fa";
+import { BsLink45Deg } from "react-icons/bs";
 import { RiDeleteBin2Fill } from "react-icons/ri";
 import Modal from "react-modal";
 import {
@@ -28,11 +19,13 @@ import {
 import "react-toastify/dist/ReactToastify.css";
 
 export default function NoteCard({
+  t,
   note,
   refetch,
   notify,
   authToken,
 }: {
+  t: Messages["ProfilePage"]["note"];
   note: NoteData;
   refetch: <TPageData>(
     options?: (RefetchOptions & RefetchQueryFilters<TPageData>) | undefined
@@ -56,8 +49,8 @@ export default function NoteCard({
             <div className={styles.main__title__shared}>
               <BsLink45Deg />
               {note.owner_email === authToken?.email
-                ? "(Sharing)"
-                : `(Shared with you by ${note.owner_email})`}
+                ? t.card.sharing
+                : `(${t.card.sharedWithYou} ${note.owner_email})`}
             </div>
           ) : null}
         </div>
@@ -78,7 +71,7 @@ export default function NoteCard({
               onClick={() => setShareModalIsOpen(true)}
               style={{ backgroundColor: "#90e0ef" }}
             >
-              <BsLink45Deg /> Share
+              <BsLink45Deg /> {t.card.shareButton}
             </button>
           )}
           <button
@@ -102,6 +95,7 @@ export default function NoteCard({
         }}
       >
         <NoteEditModal
+          t={t.editModal}
           note={note}
           setEditModalIsOpen={setEditModalIsOpen}
           notify={notify}
@@ -121,6 +115,7 @@ export default function NoteCard({
         }}
       >
         <NoteDeleteModal
+          t={t.deleteModal}
           noteId={note.id}
           setDeleteModalIsOpen={setDeleteModalIsOpen}
           notify={notify}
@@ -141,6 +136,7 @@ export default function NoteCard({
         }}
       >
         <NoteShareModal
+          t={t.shareModal}
           note={note}
           setShareModalIsOpen={setShareModalIsOpen}
           refetch={refetch}

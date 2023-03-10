@@ -19,6 +19,7 @@
     "eslint-config-next": "^13.1.6",
     "generate-password": "^1.7.0",
     "next": "^13.1.6",
+    "next-intl": "^2.12.0-beta.1",
     "react": "^18.2.0",
     "react-copy-to-clipboard": "^5.1.0",
     "react-datepicker": "^4.10.0",

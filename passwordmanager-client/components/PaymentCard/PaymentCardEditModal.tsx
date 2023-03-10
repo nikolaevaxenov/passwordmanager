@@ -28,11 +28,13 @@ type PaymentCardEditFormData = {
 };
 
 export default function PaymentCardEditModal({
+  t,
   paymentCard,
   setEditModalIsOpen,
   notify,
   refetch,
 }: {
+  t: Messages["ProfilePage"]["paymentCard"]["editModal"];
   paymentCard: PaymentCardData;
   setEditModalIsOpen: Dispatch<SetStateAction<boolean>>;
   notify: (text: string, error?: boolean) => void;
@@ -92,15 +94,15 @@ export default function PaymentCardEditModal({
       <form className={styles.edit__form} onSubmit={onSubmit}>
         <div>
           <p>
-            Payment card's title <span style={{ color: "red" }}>*</span>
+            {t.title} <span style={{ color: "red" }}>*</span>
           </p>
           <input
-            placeholder="My payment card"
+            placeholder={t.titlePlaceholder}
             style={{
               outline: errors.title ? "3px solid red" : undefined,
             }}
             {...register("title", {
-              required: "Payment card title is required!",
+              required: t.titleRequired,
             })}
           />
           {errors.title && (
@@ -110,7 +112,7 @@ export default function PaymentCardEditModal({
 
         <div>
           <p>
-            Card number <span style={{ color: "red" }}>*</span>
+            {t.cardNumber} <span style={{ color: "red" }}>*</span>
           </p>
           <input
             placeholder="4210 2489 5875 5593"
@@ -120,18 +122,18 @@ export default function PaymentCardEditModal({
               outline: errors.number ? "3px solid red" : undefined,
             }}
             {...register("number", {
-              required: "Card number is required!",
+              required: t.cardNumberRequired,
               maxLength: {
                 value: 19,
-                message: "Card number should have only 16 digits!",
+                message: t.cardNumberLength,
               },
               minLength: {
                 value: 19,
-                message: "Card number should have only 16 digits!",
+                message: t.cardNumberLength,
               },
               pattern: {
                 value: /^(?=.*\d)[\d ]+$/,
-                message: "Card number should have only digits!",
+                message: t.cardNumberDigits,
               },
             })}
             onKeyDown={(e) => {
@@ -163,15 +165,15 @@ export default function PaymentCardEditModal({
 
         <div>
           <p>
-            Expiration date <span style={{ color: "red" }}>*</span>
+            {t.expirationDate} <span style={{ color: "red" }}>*</span>
           </p>
           <Controller
             control={control}
             name="expirationDate"
-            rules={{ required: "Card expiration date is required!" }}
+            rules={{ required: t.expirationDateRequired }}
             render={({ field }) => (
               <DatePicker
-                placeholderText="Select card expiration date"
+                placeholderText={t.expirationDatePlaceholder}
                 dateFormat="MM/yy"
                 showMonthYearPicker
                 onChange={(date) => field.onChange(date)}
@@ -188,7 +190,7 @@ export default function PaymentCardEditModal({
 
         <div>
           <p>
-            Security code <span style={{ color: "red" }}>*</span>
+            {t.securityCode} <span style={{ color: "red" }}>*</span>
           </p>
           <input
             placeholder="024"
@@ -198,18 +200,18 @@ export default function PaymentCardEditModal({
               outline: errors.securityCode ? "3px solid red" : undefined,
             }}
             {...register("securityCode", {
-              required: "Security code is required!",
+              required: t.securityCodeRequired,
               maxLength: {
                 value: 4,
-                message: "Card security code should have only 3 or 4 digits!",
+                message: t.securityCodeLength,
               },
               minLength: {
                 value: 3,
-                message: "Card security code should have only 3 or 4 digits!",
+                message: t.securityCodeLength,
               },
               pattern: {
                 value: /^(?=.*\d)[\d ]+$/,
-                message: "Card security code should have only digits!",
+                message: t.securityCodeDigits,
               },
             })}
           />
@@ -221,7 +223,7 @@ export default function PaymentCardEditModal({
         </div>
 
         <div>
-          <p>Note</p>
+          <p>{t.note}</p>
           <textarea
             style={{
               outline: errors.note ? "3px solid red" : undefined,
@@ -240,7 +242,7 @@ export default function PaymentCardEditModal({
               background: "#60d394",
             }}
           >
-            Add payment card
+            {t.saveButton}
           </button>
         </div>
         <div className={styles.buttons}>
@@ -252,7 +254,7 @@ export default function PaymentCardEditModal({
               background: "#ef233c",
             }}
           >
-            Cancel
+            {t.cancelButton}
           </button>
         </div>
       </form>

@@ -19,10 +19,12 @@ type NoteAddFormData = {
 };
 
 export default function NoteAddModal({
+  t,
   setAddModalIsOpen,
   notify,
   refetch,
 }: {
+  t: Messages["ProfilePage"]["note"]["addModal"];
   setAddModalIsOpen: Dispatch<SetStateAction<boolean>>;
   notify: (text: string, error?: boolean) => void;
   refetch: <TPageData>(
@@ -51,7 +53,7 @@ export default function NoteAddModal({
       {
         onSuccess: () => {
           setAddModalIsOpen(false);
-          notify("Note successfully added!");
+          notify(t.addedNotify);
           refetch();
         },
       }
@@ -60,19 +62,19 @@ export default function NoteAddModal({
 
   return (
     <div className={styles.main}>
-      <h1>Add new note</h1>
+      <h1>{t.header}</h1>
       <form className={styles.edit__form} onSubmit={onSubmit}>
         <div>
           <p>
-            Note's title <span style={{ color: "red" }}>*</span>
+            {t.title} <span style={{ color: "red" }}>*</span>
           </p>
           <input
-            placeholder="My Note"
+            placeholder={t.titlePlaceholder}
             style={{
               outline: errors.title ? "3px solid red" : undefined,
             }}
             {...register("title", {
-              required: "Note title is required!",
+              required: t.titleRequired,
             })}
           />
           {errors.title && (
@@ -82,14 +84,14 @@ export default function NoteAddModal({
 
         <div>
           <p>
-            Text <span style={{ color: "red" }}>*</span>
+            {t.text} <span style={{ color: "red" }}>*</span>
           </p>
           <textarea
             style={{
               outline: errors.text ? "3px solid red" : undefined,
             }}
             {...register("text", {
-              required: "Note text is required!",
+              required: t.textRequired,
             })}
           />
           {errors.text && (
@@ -103,7 +105,7 @@ export default function NoteAddModal({
             background: "#60d394",
           }}
         >
-          Add note
+          {t.addButton}
         </button>
         <button
           className={styles.modalCancel}
@@ -113,7 +115,7 @@ export default function NoteAddModal({
             background: "#ef233c",
           }}
         >
-          Cancel
+          {t.cancelButton}
         </button>
       </form>
     </div>

@@ -21,18 +21,32 @@
   &__links {
     display: flex;
     gap: 1rem;
+    align-items: center;
 
     color: $text-color;
 
     a:hover {
       color: $hover-text-color;
     }
+
+    div:first-of-type {
+      display: flex;
+      flex-direction: column;
+    }
   }
 
   @media (max-width: 812px) {
+    &__logo {
+      font-size: 0.8rem;
+    }
+
     &__links {
-      flex-direction: column;
       text-align: center;
+      margin: 0 1rem;
+
+      div:first-of-type {
+        flex-direction: row;
+      }
     }
   }
 }

@@ -43,11 +43,13 @@ type AddressEditFormData = {
 };
 
 export default function AddressEditModal({
+  t,
   address,
   setEditModalIsOpen,
   notify,
   refetch,
 }: {
+  t: Messages["ProfilePage"]["address"]["editModal"];
   address: AddressData;
   setEditModalIsOpen: Dispatch<SetStateAction<boolean>>;
   notify: (text: string, error?: boolean) => void;
@@ -118,12 +120,12 @@ export default function AddressEditModal({
       {
         onSuccess: () => {
           setEditModalIsOpen(false);
-          notify("Address successfully edited!");
+          notify(t.editedNotify);
           refetch();
         },
         onError: () => {
           setEditModalIsOpen(false);
-          notify("Address edit failed!", true);
+          notify(t.editFailedNotify, true);
         },
       }
     );
@@ -131,19 +133,19 @@ export default function AddressEditModal({
 
   return (
     <div className={styles.main}>
-      <h1>Editing address</h1>
+      <h1>{t.header}</h1>
       <form className={styles.edit__form} onSubmit={onSubmit}>
         <div>
           <p>
-            Address's title <span style={{ color: "red" }}>*</span>
+            {t.title} <span style={{ color: "red" }}>*</span>
           </p>
           <input
-            placeholder="My Address"
+            placeholder={t.titlePlaceholder}
             style={{
               outline: errors.title ? "3px solid red" : undefined,
             }}
             {...register("title", {
-              required: "Address title is required!",
+              required: t.titleRequired,
             })}
           />
           {errors.title && (
@@ -153,14 +155,14 @@ export default function AddressEditModal({
 
         <div>
           <p>
-            First name <span style={{ color: "red" }}>*</span>
+            {t.firstName} <span style={{ color: "red" }}>*</span>
           </p>
           <input
             style={{
               outline: errors.firstName ? "3px solid red" : undefined,
             }}
             {...register("firstName", {
-              required: "First name field is required!",
+              required: t.firstNameRequired,
             })}
           />
           {errors.firstName && (
@@ -171,7 +173,7 @@ export default function AddressEditModal({
         </div>
 
         <div>
-          <p>Middle name</p>
+          <p>{t.middleName}</p>
           <input
             style={{
               outline: errors.middleName ? "3px solid red" : undefined,
@@ -186,7 +188,7 @@ export default function AddressEditModal({
         </div>
 
         <div>
-          <p>Last name</p>
+          <p>{t.lastName}</p>
           <input
             style={{
               outline: errors.lastName ? "3px solid red" : undefined,
@@ -201,7 +203,7 @@ export default function AddressEditModal({
         </div>
 
         <div>
-          <p>Username</p>
+          <p>{t.username}</p>
           <input
             style={{
               outline: errors.username ? "3px solid red" : undefined,
@@ -216,27 +218,30 @@ export default function AddressEditModal({
         </div>
 
         <div>
-          <p>Gender</p>
+          <p>{t.gender.text}</p>
           <select
             style={{
               outline: errors.gender ? "3px solid red" : undefined,
             }}
             {...register("gender")}
           >
-            <option value="MALE">Male</option>
-            <option value="FEMALE">Female</option>
-            <option value="OTHER">Other</option>
+            <option value="MALE">{t.gender.male}</option>
+            <option value="FEMALE">{t.gender.female}</option>
+            <option value="OTHER">{t.gender.other}</option>
           </select>
+          {errors.gender && (
+            <p className={styles.edit__form__error}>{errors.gender?.message}</p>
+          )}
         </div>
 
         <div>
-          <p>Birth date</p>
+          <p>{t.birthdate}</p>
           <Controller
             control={control}
             name="birthdate"
             render={({ field }) => (
               <DatePicker
-                placeholderText="Select birth date"
+                placeholderText={t.birthdatePlaceholder}
                 showYearDropdown
                 onChange={(date) => field.onChange(date)}
                 selected={field.value}
@@ -251,7 +256,7 @@ export default function AddressEditModal({
         </div>
 
         <div>
-          <p>Company</p>
+          <p>{t.company}</p>
           <input
             style={{
               outline: errors.company ? "3px solid red" : undefined,
@@ -267,14 +272,14 @@ export default function AddressEditModal({
 
         <div>
           <p>
-            Address 1 <span style={{ color: "red" }}>*</span>
+            {t.address1} <span style={{ color: "red" }}>*</span>
           </p>
           <input
             style={{
               outline: errors.address1 ? "3px solid red" : undefined,
             }}
             {...register("address1", {
-              required: "Address field is required!",
+              required: t.address1Required,
             })}
           />
           {errors.address1 && (
@@ -285,7 +290,7 @@ export default function AddressEditModal({
         </div>
 
         <div>
-          <p>Address 2</p>
+          <p>{t.address2}</p>
           <input
             style={{
               outline: errors.address2 ? "3px solid red" : undefined,
@@ -300,7 +305,7 @@ export default function AddressEditModal({
         </div>
 
         <div>
-          <p>Address 3</p>
+          <p>{t.address3}</p>
           <input
             style={{
               outline: errors.address3 ? "3px solid red" : undefined,
@@ -316,14 +321,14 @@ export default function AddressEditModal({
 
         <div>
           <p>
-            City <span style={{ color: "red" }}>*</span>
+            {t.city} <span style={{ color: "red" }}>*</span>
           </p>
           <input
             style={{
               outline: errors.city ? "3px solid red" : undefined,
             }}
             {...register("city", {
-              required: "City field is required!",
+              required: t.cityRequired,
             })}
           />
           {errors.city && (
@@ -333,14 +338,14 @@ export default function AddressEditModal({
 
         <div>
           <p>
-            County <span style={{ color: "red" }}>*</span>
+            {t.county} <span style={{ color: "red" }}>*</span>
           </p>
           <input
             style={{
               outline: errors.county ? "3px solid red" : undefined,
             }}
             {...register("county", {
-              required: "County field is required!",
+              required: t.countyRequired,
             })}
           />
           {errors.county && (
@@ -350,14 +355,14 @@ export default function AddressEditModal({
 
         <div>
           <p>
-            State <span style={{ color: "red" }}>*</span>
+            {t.state} <span style={{ color: "red" }}>*</span>
           </p>
           <input
             style={{
               outline: errors.state ? "3px solid red" : undefined,
             }}
             {...register("state", {
-              required: "State field is required!",
+              required: t.stateRequired,
             })}
           />
           {errors.state && (
@@ -367,14 +372,14 @@ export default function AddressEditModal({
 
         <div>
           <p>
-            Zip code <span style={{ color: "red" }}>*</span>
+            {t.zipCode} <span style={{ color: "red" }}>*</span>
           </p>
           <input
             style={{
               outline: errors.zipCode ? "3px solid red" : undefined,
             }}
             {...register("zipCode", {
-              required: "Zip code field is required!",
+              required: t.zipCodeRequired,
             })}
           />
           {errors.zipCode && (
@@ -386,14 +391,14 @@ export default function AddressEditModal({
 
         <div>
           <p>
-            Country <span style={{ color: "red" }}>*</span>
+            {t.country} <span style={{ color: "red" }}>*</span>
           </p>
           <input
             style={{
               outline: errors.country ? "3px solid red" : undefined,
             }}
             {...register("country", {
-              required: "Country field is required!",
+              required: t.countryRequired,
             })}
           />
           {errors.country && (
@@ -417,7 +422,7 @@ export default function AddressEditModal({
         </div>
 
         <div>
-          <p>Phone number</p>
+          <p>{t.phone}</p>
           <input
             style={{
               outline: errors.phone ? "3px solid red" : undefined,
@@ -430,7 +435,7 @@ export default function AddressEditModal({
         </div>
 
         <div>
-          <p>Note</p>
+          <p>{t.note}</p>
           <textarea
             style={{
               outline: errors.note ? "3px solid red" : undefined,
@@ -449,19 +454,18 @@ export default function AddressEditModal({
               background: "#60d394",
             }}
           >
-            Save Address
+            {t.saveButton}
           </button>
         </div>
         <div className={styles.buttons}>
           <button
-            className={styles.modalCancel}
             type="button"
             onClick={() => setEditModalIsOpen(false)}
             style={{
               background: "#ef233c",
             }}
           >
-            Cancel
+            {t.cancelButton}
           </button>
         </div>
       </form>

@@ -11,7 +11,11 @@ import {
 import { useAppDispatch, useAppSelector } from "@/hooks/hooks";
 import styles from "@/styles/components/EntitySwitcher.module.scss";
 
-export default function EntitySwitcher() {
+export default function EntitySwitcher({
+  t,
+}: {
+  t: Messages["ProfilePage"]["entitySwitcher"];
+}) {
   const dispatch = useAppDispatch();
   const selectedEntity = useAppSelector(selectSelectedEntity);
 
@@ -27,7 +31,7 @@ export default function EntitySwitcher() {
         }}
         onClick={() => dispatch(choosePasswords())}
       >
-        Passwords
+        {t.password}
       </button>
       <button
         style={{
@@ -39,7 +43,7 @@ export default function EntitySwitcher() {
         }}
         onClick={() => dispatch(choosePaymentCards())}
       >
-        Payment Cards
+        {t.paymentCard}
       </button>
       <button
         style={{
@@ -51,7 +55,7 @@ export default function EntitySwitcher() {
         }}
         onClick={() => dispatch(chooseAddresses())}
       >
-        Addresses
+        {t.address}
       </button>
       <button
         style={{
@@ -63,7 +67,7 @@ export default function EntitySwitcher() {
         }}
         onClick={() => dispatch(chooseNotes())}
       >
-        Notes
+        {t.note}
       </button>
     </div>
   );

@@ -11,11 +11,12 @@ import Modal from "react-modal";
 import { useQuery } from "react-query";
 
 type NoteListProps = {
+  t: Messages["ProfilePage"]["note"];
   notify: (text: string, error?: boolean) => void;
   authToken: AuthToken | null;
 };
 
-export default function NoteList({ notify, authToken }: NoteListProps) {
+export default function NoteList({ t, notify, authToken }: NoteListProps) {
   const { isSuccess, refetch, data } = useQuery(
     ["notes", authToken?.token],
     () => authToken?.token && getAllNotes(authToken.token)
@@ -30,6 +31,7 @@ export default function NoteList({ notify, authToken }: NoteListProps) {
           data &&
           data.map((note: NoteData) => (
             <NoteCard
+              t={t}
               key={note.id}
               note={note}
               refetch={refetch}
@@ -56,6 +58,7 @@ export default function NoteList({ notify, authToken }: NoteListProps) {
         }}
       >
         <NoteAddModal
+          t={t.addModal}
           setAddModalIsOpen={setAddModalIsOpen}
           notify={notify}
           refetch={refetch}

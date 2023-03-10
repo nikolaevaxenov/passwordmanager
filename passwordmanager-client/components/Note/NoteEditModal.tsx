@@ -19,11 +19,13 @@ type NoteEditFormData = {
 };
 
 export default function NoteEditModal({
+  t,
   note,
   setEditModalIsOpen,
   notify,
   refetch,
 }: {
+  t: Messages["ProfilePage"]["note"]["editModal"];
   note: NoteData;
   setEditModalIsOpen: Dispatch<SetStateAction<boolean>>;
   notify: (text: string, error?: boolean) => void;
@@ -59,12 +61,12 @@ export default function NoteEditModal({
       {
         onSuccess: () => {
           setEditModalIsOpen(false);
-          notify("Note successfully edited!");
+          notify(t.editedNotify);
           refetch();
         },
         onError: () => {
           setEditModalIsOpen(false);
-          notify("Note edit failed!", true);
+          notify(t.editFailedNotify, true);
         },
       }
     );
@@ -72,19 +74,19 @@ export default function NoteEditModal({
 
   return (
     <div className={styles.main}>
-      <h1>Editing note</h1>
+      <h1>{t.header}</h1>
       <form className={styles.edit__form} onSubmit={onSubmit}>
         <div>
           <p>
-            Note's title <span style={{ color: "red" }}>*</span>
+            {t.header} <span style={{ color: "red" }}>*</span>
           </p>
           <input
-            placeholder="My Note"
+            placeholder={t.titlePlaceholder}
             style={{
               outline: errors.title ? "3px solid red" : undefined,
             }}
             {...register("title", {
-              required: "Note title is required!",
+              required: t.titleRequired,
             })}
           />
           {errors.title && (
@@ -94,14 +96,14 @@ export default function NoteEditModal({
 
         <div>
           <p>
-            Text <span style={{ color: "red" }}>*</span>
+            {t.text} <span style={{ color: "red" }}>*</span>
           </p>
           <textarea
             style={{
               outline: errors.text ? "3px solid red" : undefined,
             }}
             {...register("text", {
-              required: "Note text is required!",
+              required: t.textRequired,
             })}
           />
           {errors.text && (
@@ -115,7 +117,7 @@ export default function NoteEditModal({
             background: "#60d394",
           }}
         >
-          Save note
+          {t.saveButton}
         </button>
         <button
           className={styles.modalCancel}
@@ -125,7 +127,7 @@ export default function NoteEditModal({
             background: "#ef233c",
           }}
         >
-          Cancel
+          {t.cancelButton}
         </button>
       </form>
     </div>

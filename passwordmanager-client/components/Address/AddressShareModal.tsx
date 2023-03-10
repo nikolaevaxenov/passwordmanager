@@ -27,10 +27,12 @@ type ShareAddressFormData = {
 };
 
 export default function AddressShareModal({
+  t,
   address,
   setShareModalIsOpen,
   refetch,
 }: {
+  t: Messages["ProfilePage"]["address"]["shareModal"];
   address: AddressData;
   setShareModalIsOpen: Dispatch<SetStateAction<boolean>>;
   refetch: <TPageData>(
@@ -86,11 +88,11 @@ export default function AddressShareModal({
       },
       {
         onSuccess: () => {
-          notify("Address successfully shared!");
+          notify(t.sharedNotify);
           refetch();
         },
         onError: () => {
-          notify("Share edit failed!", true);
+          notify(t.shareFailedNotify, true);
         },
       }
     );
@@ -99,10 +101,10 @@ export default function AddressShareModal({
   return (
     <>
       <div className={styles.main}>
-        <h1>Share this address</h1>
+        <h1>{t.header}</h1>
         <form onSubmit={onSubmit}>
           <p>
-            User's email <span style={{ color: "red" }}>*</span>
+            {t.userEmail} <span style={{ color: "red" }}>*</span>
           </p>
           <input
             placeholder="mail@mail.com"
@@ -110,10 +112,10 @@ export default function AddressShareModal({
               outline: errors.email ? "3px solid red" : undefined,
             }}
             {...register("email", {
-              required: "User's email is required!",
+              required: t.userEmailRequired,
               pattern: {
                 value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/i,
-                message: "Invalid email address!",
+                message: t.userEmailInvalid,
               },
             })}
           />
@@ -121,7 +123,7 @@ export default function AddressShareModal({
             <p className={styles.main__error}>{errors.email?.message}</p>
           )}
 
-          <button type="submit">Share</button>
+          <button type="submit">{t.shareButton}</button>
         </form>
         <div className={styles.main__shareTable}>
           {address.sharedWithUsers.map((email) => (
@@ -137,11 +139,11 @@ export default function AddressShareModal({
                     },
                     {
                       onSuccess: () => {
-                        notify("User successfully deleted!");
+                        notify(t.userDeletedNotify);
                         refetch();
                       },
                       onError: () => {
-                        notify("Share edit failed!", true);
+                        notify(t.userDeleteFailedNotify, true);
                       },
                     }
                   )
@@ -152,7 +154,9 @@ export default function AddressShareModal({
             </>
           ))}
         </div>
-        <button onClick={() => setShareModalIsOpen(false)}>Exit</button>
+        <button onClick={() => setShareModalIsOpen(false)}>
+          {t.exitButton}
+        </button>
       </div>
       <ToastContainer
         position="bottom-center"

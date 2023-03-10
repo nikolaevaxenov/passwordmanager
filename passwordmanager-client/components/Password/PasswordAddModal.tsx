@@ -25,10 +25,12 @@ export type PasswordAddFormData = {
 };
 
 export default function PasswordAddModal({
+  t,
   setAddModalIsOpen,
   notify,
   refetch,
 }: {
+  t: Messages["ProfilePage"]["password"];
   setAddModalIsOpen: Dispatch<SetStateAction<boolean>>;
   notify: (text: string, error?: boolean) => void;
   refetch: <TPageData>(
@@ -64,7 +66,7 @@ export default function PasswordAddModal({
       {
         onSuccess: () => {
           setAddModalIsOpen(false);
-          notify("Password successfully added!");
+          notify(t.addModal.addedNotify);
           refetch();
         },
       }
@@ -73,19 +75,19 @@ export default function PasswordAddModal({
 
   return (
     <div className={styles.main}>
-      <h1>Add new password</h1>
+      <h1>{t.addModal.header}</h1>
       <form className={styles.edit__form} onSubmit={onSubmit}>
         <div>
           <p>
-            Password's title <span style={{ color: "red" }}>*</span>
+            {t.addModal.title} <span style={{ color: "red" }}>*</span>
           </p>
           <input
-            placeholder="My password"
+            placeholder={t.addModal.titlePlaceholder}
             style={{
               outline: errors.title ? "3px solid red" : undefined,
             }}
             {...register("title", {
-              required: "Password title is required!",
+              required: t.addModal.titleRequired,
             })}
           />
           {errors.title && (
@@ -95,7 +97,7 @@ export default function PasswordAddModal({
 
         <div>
           <p>
-            Username <span style={{ color: "red" }}>*</span>
+            {t.addModal.username} <span style={{ color: "red" }}>*</span>
           </p>
           <input
             placeholder="username@mail.com"
@@ -103,7 +105,7 @@ export default function PasswordAddModal({
               outline: errors.username ? "3px solid red" : undefined,
             }}
             {...register("username", {
-              required: "Username is required!",
+              required: t.addModal.usernameRequired,
             })}
           />
           {errors.username && (
@@ -115,7 +117,7 @@ export default function PasswordAddModal({
 
         <div>
           <p>
-            Password <span style={{ color: "red" }}>*</span>
+            {t.addModal.password} <span style={{ color: "red" }}>*</span>
           </p>
           <div className={styles.edit__form__password}>
             <input
@@ -125,7 +127,7 @@ export default function PasswordAddModal({
                 outline: errors.password ? "3px solid red" : undefined,
               }}
               {...register("password", {
-                required: "Password is required!",
+                required: t.addModal.passwordRequired,
               })}
             />
             <div className={styles.icon_button}>
@@ -148,7 +150,7 @@ export default function PasswordAddModal({
 
         <div>
           <p>
-            Website url <span style={{ color: "red" }}>*</span>
+            {t.addModal.website} <span style={{ color: "red" }}>*</span>
           </p>
           <input
             placeholder="https://google.com/"
@@ -156,7 +158,7 @@ export default function PasswordAddModal({
               outline: errors.url ? "3px solid red" : undefined,
             }}
             {...register("url", {
-              required: "Website url is required!",
+              required: t.addModal.website,
             })}
           />
           {errors.url && (
@@ -165,7 +167,7 @@ export default function PasswordAddModal({
         </div>
 
         <div>
-          <p>Note</p>
+          <p>{t.addModal.note}</p>
           <textarea
             style={{
               outline: errors.note ? "3px solid red" : undefined,
@@ -183,7 +185,7 @@ export default function PasswordAddModal({
             background: "#60d394",
           }}
         >
-          Add password
+          {t.addModal.addButton}
         </button>
         <button
           className={styles.modalCancel}
@@ -193,11 +195,12 @@ export default function PasswordAddModal({
             background: "#ef233c",
           }}
         >
-          Cancel
+          {t.addModal.cancelButton}
         </button>
       </form>
       {showPasswordGenerator && (
         <PasswordGenerator
+          t={t.passwordGenerator}
           setShowPasswordGenerator={setShowPasswordGenerator}
           setValue={setValue}
         />

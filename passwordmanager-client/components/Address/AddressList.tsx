@@ -11,11 +11,16 @@ import Modal from "react-modal";
 import { useQuery } from "react-query";
 
 type AddressListProps = {
+  t: Messages["ProfilePage"]["address"];
   notify: (text: string, error?: boolean) => void;
   authToken: AuthToken | null;
 };
 
-export default function AddressList({ notify, authToken }: AddressListProps) {
+export default function AddressList({
+  t,
+  notify,
+  authToken,
+}: AddressListProps) {
   const { isSuccess, refetch, data } = useQuery(
     ["addresses", authToken?.token],
     () => authToken?.token && getAllAddresses(authToken.token)
@@ -31,6 +36,7 @@ export default function AddressList({ notify, authToken }: AddressListProps) {
           data.map((address: AddressData) => (
             <AddressCard
               key={address.id}
+              t={t}
               address={address}
               refetch={refetch}
               notify={notify}
@@ -56,6 +62,7 @@ export default function AddressList({ notify, authToken }: AddressListProps) {
         }}
       >
         <AddressAddModal
+          t={t.addModal}
           setAddModalIsOpen={setAddModalIsOpen}
           notify={notify}
           refetch={refetch}

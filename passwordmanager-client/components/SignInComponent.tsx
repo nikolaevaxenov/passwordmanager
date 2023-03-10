@@ -19,7 +19,7 @@ type SignInFormData = {
   password: string;
 };
 
-export default function SignInForm() {
+export default function SignInComponent({ t }: { t: Messages["SignInPage"] }) {
   const dispatch = useAppDispatch();
   const authToken = useAppSelector(selectAuthToken);
 
@@ -58,9 +58,9 @@ export default function SignInForm() {
     <div className={styles.main}>
       <div className={styles.signin}>
         <div className={styles.signin__header}>
-          <h1>Welcome back!</h1>
+          <h1>{t.header}</h1>
           <p>
-            Don't have an account? <Link href="/signin">Sign Up</Link>
+            {t.subHeader} <Link href="/signup">{t.subHeaderLink}</Link>
           </p>
         </div>
         <form className={styles.signin__form} onSubmit={onSubmit}>
@@ -74,10 +74,10 @@ export default function SignInForm() {
                 outline: errors.email ? "3px solid red" : undefined,
               }}
               {...register("email", {
-                required: "Email address is required!",
+                required: t.emailRequired,
                 pattern: {
                   value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/i,
-                  message: "Invalid email address!",
+                  message: t.emailInvalid,
                 },
               })}
             />
@@ -90,7 +90,7 @@ export default function SignInForm() {
 
           <div>
             <p>
-              Password <span style={{ color: "red" }}>*</span>
+              {t.password} <span style={{ color: "red" }}>*</span>
             </p>
             <input
               type="password"
@@ -98,14 +98,14 @@ export default function SignInForm() {
                 outline: errors.password ? "3px solid red" : undefined,
               }}
               {...register("password", {
-                required: "Password is required",
+                required: t.passwordRequired,
                 minLength: {
                   value: 6,
-                  message: "Password must contain minimum 6 symbols!",
+                  message: t.passwordMinLength,
                 },
                 maxLength: {
                   value: 32,
-                  message: "Password must contain maximum 32 symbols!",
+                  message: t.passwordMaxLength,
                 },
               })}
             />
@@ -115,12 +115,10 @@ export default function SignInForm() {
               </p>
             )}
             {authError && (
-              <p className={styles.signin__form__error}>
-                Email or password is incorrect!
-              </p>
+              <p className={styles.signin__form__error}>{t.wrongCredentials}</p>
             )}
           </div>
-          <button type="submit">Sign In</button>
+          <button type="submit">{t.signInButton}</button>
         </form>
       </div>
     </div>

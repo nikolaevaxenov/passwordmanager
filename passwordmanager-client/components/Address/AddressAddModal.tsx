@@ -38,10 +38,12 @@ type AddressAddFormData = {
 };
 
 export default function AddressAddModal({
+  t,
   setAddModalIsOpen,
   notify,
   refetch,
 }: {
+  t: Messages["ProfilePage"]["address"]["addModal"];
   setAddModalIsOpen: Dispatch<SetStateAction<boolean>>;
   notify: (text: string, error?: boolean) => void;
   refetch: <TPageData>(
@@ -88,7 +90,7 @@ export default function AddressAddModal({
       {
         onSuccess: () => {
           setAddModalIsOpen(false);
-          notify("Address successfully added!");
+          notify(t.addedNotify);
           refetch();
         },
       }
@@ -97,19 +99,19 @@ export default function AddressAddModal({
 
   return (
     <div className={styles.main}>
-      <h1>Add new address</h1>
+      <h1>{t.header}</h1>
       <form className={styles.edit__form} onSubmit={onSubmit}>
         <div>
           <p>
-            Address's title <span style={{ color: "red" }}>*</span>
+            {t.title} <span style={{ color: "red" }}>*</span>
           </p>
           <input
-            placeholder="My Address"
+            placeholder={t.titlePlaceholder}
             style={{
               outline: errors.title ? "3px solid red" : undefined,
             }}
             {...register("title", {
-              required: "Address title is required!",
+              required: t.titleRequired,
             })}
           />
           {errors.title && (
@@ -119,14 +121,14 @@ export default function AddressAddModal({
 
         <div>
           <p>
-            First name <span style={{ color: "red" }}>*</span>
+            {t.firstName} <span style={{ color: "red" }}>*</span>
           </p>
           <input
             style={{
               outline: errors.firstName ? "3px solid red" : undefined,
             }}
             {...register("firstName", {
-              required: "First name field is required!",
+              required: t.firstNameRequired,
             })}
           />
           {errors.firstName && (
@@ -137,7 +139,7 @@ export default function AddressAddModal({
         </div>
 
         <div>
-          <p>Middle name</p>
+          <p>{t.middleName}</p>
           <input
             style={{
               outline: errors.middleName ? "3px solid red" : undefined,
@@ -152,7 +154,7 @@ export default function AddressAddModal({
         </div>
 
         <div>
-          <p>Last name</p>
+          <p>{t.lastName}</p>
           <input
             style={{
               outline: errors.lastName ? "3px solid red" : undefined,
@@ -167,7 +169,7 @@ export default function AddressAddModal({
         </div>
 
         <div>
-          <p>Username</p>
+          <p>{t.username}</p>
           <input
             style={{
               outline: errors.username ? "3px solid red" : undefined,
@@ -182,16 +184,16 @@ export default function AddressAddModal({
         </div>
 
         <div>
-          <p>Gender</p>
+          <p>{t.gender.text}</p>
           <select
             style={{
               outline: errors.gender ? "3px solid red" : undefined,
             }}
             {...register("gender")}
           >
-            <option value="MALE">Male</option>
-            <option value="FEMALE">Female</option>
-            <option value="OTHER">Other</option>
+            <option value="MALE">{t.gender.male}</option>
+            <option value="FEMALE">{t.gender.female}</option>
+            <option value="OTHER">{t.gender.other}</option>
           </select>
           {errors.gender && (
             <p className={styles.edit__form__error}>{errors.gender?.message}</p>
@@ -199,13 +201,13 @@ export default function AddressAddModal({
         </div>
 
         <div>
-          <p>Birth date</p>
+          <p>{t.birthdate}</p>
           <Controller
             control={control}
             name="birthdate"
             render={({ field }) => (
               <DatePicker
-                placeholderText="Select birth date"
+                placeholderText={t.birthdatePlaceholder}
                 showYearDropdown
                 onChange={(date) => field.onChange(date)}
                 selected={field.value}
@@ -220,7 +222,7 @@ export default function AddressAddModal({
         </div>
 
         <div>
-          <p>Company</p>
+          <p>{t.company}</p>
           <input
             style={{
               outline: errors.company ? "3px solid red" : undefined,
@@ -236,14 +238,14 @@ export default function AddressAddModal({
 
         <div>
           <p>
-            Address 1 <span style={{ color: "red" }}>*</span>
+            {t.address1} <span style={{ color: "red" }}>*</span>
           </p>
           <input
             style={{
               outline: errors.address1 ? "3px solid red" : undefined,
             }}
             {...register("address1", {
-              required: "Address field is required!",
+              required: t.address1Required,
             })}
           />
           {errors.address1 && (
@@ -254,7 +256,7 @@ export default function AddressAddModal({
         </div>
 
         <div>
-          <p>Address 2</p>
+          <p>{t.address2}</p>
           <input
             style={{
               outline: errors.address2 ? "3px solid red" : undefined,
@@ -269,7 +271,7 @@ export default function AddressAddModal({
         </div>
 
         <div>
-          <p>Address 3</p>
+          <p>{t.address3}</p>
           <input
             style={{
               outline: errors.address3 ? "3px solid red" : undefined,
@@ -285,14 +287,14 @@ export default function AddressAddModal({
 
         <div>
           <p>
-            City <span style={{ color: "red" }}>*</span>
+            {t.city} <span style={{ color: "red" }}>*</span>
           </p>
           <input
             style={{
               outline: errors.city ? "3px solid red" : undefined,
             }}
             {...register("city", {
-              required: "City field is required!",
+              required: t.cityRequired,
             })}
           />
           {errors.city && (
@@ -302,14 +304,14 @@ export default function AddressAddModal({
 
         <div>
           <p>
-            County <span style={{ color: "red" }}>*</span>
+            {t.county} <span style={{ color: "red" }}>*</span>
           </p>
           <input
             style={{
               outline: errors.county ? "3px solid red" : undefined,
             }}
             {...register("county", {
-              required: "County field is required!",
+              required: t.countyRequired,
             })}
           />
           {errors.county && (
@@ -319,14 +321,14 @@ export default function AddressAddModal({
 
         <div>
           <p>
-            State <span style={{ color: "red" }}>*</span>
+            {t.state} <span style={{ color: "red" }}>*</span>
           </p>
           <input
             style={{
               outline: errors.state ? "3px solid red" : undefined,
             }}
             {...register("state", {
-              required: "State field is required!",
+              required: t.stateRequired,
             })}
           />
           {errors.state && (
@@ -336,14 +338,14 @@ export default function AddressAddModal({
 
         <div>
           <p>
-            Zip code <span style={{ color: "red" }}>*</span>
+            {t.zipCode} <span style={{ color: "red" }}>*</span>
           </p>
           <input
             style={{
               outline: errors.zipCode ? "3px solid red" : undefined,
             }}
             {...register("zipCode", {
-              required: "Zip code field is required!",
+              required: t.zipCodeRequired,
             })}
           />
           {errors.zipCode && (
@@ -355,14 +357,14 @@ export default function AddressAddModal({
 
         <div>
           <p>
-            Country <span style={{ color: "red" }}>*</span>
+            {t.country} <span style={{ color: "red" }}>*</span>
           </p>
           <input
             style={{
               outline: errors.country ? "3px solid red" : undefined,
             }}
             {...register("country", {
-              required: "Country field is required!",
+              required: t.countryRequired,
             })}
           />
           {errors.country && (
@@ -386,7 +388,7 @@ export default function AddressAddModal({
         </div>
 
         <div>
-          <p>Phone number</p>
+          <p>{t.phone}</p>
           <input
             style={{
               outline: errors.phone ? "3px solid red" : undefined,
@@ -399,7 +401,7 @@ export default function AddressAddModal({
         </div>
 
         <div>
-          <p>Note</p>
+          <p>{t.note}</p>
           <textarea
             style={{
               outline: errors.note ? "3px solid red" : undefined,
@@ -418,7 +420,7 @@ export default function AddressAddModal({
               background: "#60d394",
             }}
           >
-            Add address
+            {t.addButton}
           </button>
         </div>
         <div className={styles.buttons}>
@@ -429,7 +431,7 @@ export default function AddressAddModal({
               background: "#ef233c",
             }}
           >
-            Cancel
+            {t.cancelButton}
           </button>
         </div>
       </form>

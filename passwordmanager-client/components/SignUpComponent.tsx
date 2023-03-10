@@ -20,7 +20,7 @@ type SignUpFormData = {
   password2: string;
 };
 
-export default function SignUpForm() {
+export default function SignUpComponent({ t }: { t: Messages["SignUpPage"] }) {
   const dispatch = useAppDispatch();
   const authToken = useAppSelector(selectAuthToken);
 
@@ -62,9 +62,9 @@ export default function SignUpForm() {
     <div className={styles.main}>
       <div className={styles.signup}>
         <div className={styles.signup__header}>
-          <h1>Create an account</h1>
+          <h1>{t.header}</h1>
           <p>
-            Already have an account? <Link href="/signin">Sign In</Link>
+            {t.subHeader} <Link href="/signin">{t.subHeaderLink}</Link>
           </p>
         </div>
         <form className={styles.signup__form} onSubmit={onSubmit}>
@@ -78,10 +78,10 @@ export default function SignUpForm() {
                 outline: errors.email ? "3px solid red" : undefined,
               }}
               {...register("email", {
-                required: "Email address is required!",
+                required: t.emailRequired,
                 pattern: {
                   value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/i,
-                  message: "Invalid email address!",
+                  message: t.emailInvalid,
                 },
               })}
             />
@@ -94,7 +94,7 @@ export default function SignUpForm() {
 
           <div>
             <p>
-              Password <span style={{ color: "red" }}>*</span>
+              {t.password} <span style={{ color: "red" }}>*</span>
             </p>
             <input
               type="password"
@@ -102,14 +102,14 @@ export default function SignUpForm() {
                 outline: errors.password1 ? "3px solid red" : undefined,
               }}
               {...register("password1", {
-                required: "Password is required",
+                required: t.passwordRequired,
                 minLength: {
                   value: 6,
-                  message: "Password must contain minimum 6 symbols!",
+                  message: t.passwordMinLength,
                 },
                 maxLength: {
                   value: 32,
-                  message: "Password must contain maximum 32 symbols!",
+                  message: t.passwordMaxLength,
                 },
               })}
             />
@@ -122,7 +122,7 @@ export default function SignUpForm() {
 
           <div>
             <p>
-              Confirm your password <span style={{ color: "red" }}>*</span>
+              {t.passwordConfirm} <span style={{ color: "red" }}>*</span>
             </p>
             <input
               type="password"
@@ -130,17 +130,17 @@ export default function SignUpForm() {
                 outline: errors.password2 ? "3px solid red" : undefined,
               }}
               {...register("password2", {
-                required: "Password is required!",
+                required: t.passwordRequired,
                 minLength: {
                   value: 6,
-                  message: "Password must contain minimum 6 symbols!",
+                  message: t.passwordMinLength,
                 },
                 maxLength: {
                   value: 32,
-                  message: "Password must contain maximum 32 symbols!",
+                  message: t.passwordMaxLength,
                 },
                 validate: (pass) =>
-                  pass === password1Value[0] || "Passwords must match!",
+                  pass === password1Value[0] || t.passwordMustMatch,
               })}
             />
             {errors.password2 && (
@@ -150,11 +150,11 @@ export default function SignUpForm() {
             )}
             {authError && (
               <p className={styles.signup__form__error}>
-                Email is already registered!
+                {t.emailAlreadyExists}
               </p>
             )}
           </div>
-          <button type="submit">Sign Up</button>
+          <button type="submit">{t.signUpButton}</button>
         </form>
       </div>
     </div>

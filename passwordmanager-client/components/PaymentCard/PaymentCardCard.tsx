@@ -27,11 +27,13 @@ import "react-toastify/dist/ReactToastify.css";
 import creditCardType from "credit-card-type";
 
 export default function PaymentCardCard({
+  t,
   paymentCard,
   refetch,
   notify,
   authToken,
 }: {
+  t: Messages["ProfilePage"]["paymentCard"];
   paymentCard: PaymentCardData;
   refetch: <TPageData>(
     options?: (RefetchOptions & RefetchQueryFilters<TPageData>) | undefined
@@ -60,8 +62,8 @@ export default function PaymentCardCard({
             <div className={styles.main__title__shared}>
               <BsLink45Deg />
               {paymentCard.owner_email === authToken?.email
-                ? "(Sharing)"
-                : `(Shared with you by ${paymentCard.owner_email})`}
+                ? t.card.sharing
+                : `(${t.card.sharedWithYou} ${paymentCard.owner_email})`}
             </div>
           ) : null}
         </div>
@@ -78,7 +80,7 @@ export default function PaymentCardCard({
           <div className={styles.icon__button}>
             <CopyToClipboard
               text={paymentCard.number}
-              onCopy={() => notify("Card number copied to clipboard!")}
+              onCopy={() => notify(t.card.cardNumberCopiedNotify)}
             >
               <BiCopy />
             </CopyToClipboard>
@@ -98,9 +100,7 @@ export default function PaymentCardCard({
                 text={`${
                   paymentCard.expirationDate.split("-")[1]
                 }/${paymentCard.expirationDate.split("-")[0].slice(2, 4)}`}
-                onCopy={() =>
-                  notify("Card expiration date copied to clipboard!")
-                }
+                onCopy={() => notify(t.card.expirationDateCopiedNotify)}
               >
                 <BiCopy />
               </CopyToClipboard>
@@ -122,7 +122,7 @@ export default function PaymentCardCard({
             <div className={styles.icon__button}>
               <CopyToClipboard
                 text={paymentCard.securityCode}
-                onCopy={() => notify("Card security code copied to clipboard!")}
+                onCopy={() => notify(t.card.securityCodeCopiedNotify)}
               >
                 <BiCopy />
               </CopyToClipboard>
@@ -136,7 +136,7 @@ export default function PaymentCardCard({
                 setShowNote(!showNote);
               }}
             >
-              {showNote ? "Hide note" : "Show note"}
+              {showNote ? t.card.hideNoteButton : t.card.showNoteButton}
             </button>
           )}
           {paymentCard.owner_email === authToken?.email && (
@@ -152,7 +152,7 @@ export default function PaymentCardCard({
               onClick={() => setShareModalIsOpen(true)}
               style={{ backgroundColor: "#90e0ef" }}
             >
-              <BsLink45Deg /> Share
+              <BsLink45Deg /> {t.card.shareButton}
             </button>
           )}
           <button
@@ -181,6 +181,7 @@ export default function PaymentCardCard({
         }}
       >
         <PaymentCardEditModal
+          t={t.editModal}
           paymentCard={paymentCard}
           setEditModalIsOpen={setEditModalIsOpen}
           notify={notify}
@@ -200,6 +201,7 @@ export default function PaymentCardCard({
         }}
       >
         <PaymentCardDeleteModal
+          t={t.deleteModal}
           paymentCardId={paymentCard.id}
           setDeleteModalIsOpen={setDeleteModalIsOpen}
           notify={notify}
@@ -220,6 +222,7 @@ export default function PaymentCardCard({
         }}
       >
         <PaymentCardShareModal
+          t={t.shareModal}
           paymentCard={paymentCard}
           setShareModalIsOpen={setShareModalIsOpen}
           refetch={refetch}

@@ -2,6 +2,8 @@
 
 const path = require("path");
 
+const withNextIntl = require("next-intl/plugin")("./i18n.ts");
+
 const nextConfig = {
   experimental: {
     appDir: true,
@@ -11,4 +13,4 @@ const nextConfig = {
   },
 };
 
-module.exports = nextConfig;
+module.exports = withNextIntl(nextConfig);

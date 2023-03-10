@@ -11,11 +11,13 @@ import Modal from "react-modal";
 import { useQuery } from "react-query";
 
 type PaymentCardListProps = {
+  t: Messages["ProfilePage"]["paymentCard"];
   notify: (text: string, error?: boolean) => void;
   authToken: AuthToken | null;
 };
 
 export default function PaymentCardList({
+  t,
   notify,
   authToken,
 }: PaymentCardListProps) {
@@ -34,6 +36,7 @@ export default function PaymentCardList({
           data.map((paymentCard: PaymentCardData) => (
             <PaymentCardCard
               key={paymentCard.id}
+              t={t}
               paymentCard={paymentCard}
               refetch={refetch}
               notify={notify}
@@ -59,6 +62,7 @@ export default function PaymentCardList({
         }}
       >
         <PaymentCardAddModal
+          t={t.addModal}
           setAddModalIsOpen={setAddModalIsOpen}
           notify={notify}
           refetch={refetch}

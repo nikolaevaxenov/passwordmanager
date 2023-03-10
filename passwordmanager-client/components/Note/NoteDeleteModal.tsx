@@ -17,12 +17,14 @@ import {
 } from "react-query";
 
 export default function NoteDeleteModal({
+  t,
   noteId,
   setDeleteModalIsOpen,
   notify,
   refetch,
   shared = false,
 }: {
+  t: Messages["ProfilePage"]["note"]["deleteModal"];
   noteId: number;
   setDeleteModalIsOpen: Dispatch<SetStateAction<boolean>>;
   notify: (text: string, error?: boolean) => void;
@@ -43,11 +45,7 @@ export default function NoteDeleteModal({
 
   return (
     <div className={styles.main}>
-      <h1>
-        {shared
-          ? "Are you sure want to stop sharing this note with you?"
-          : "Are you sure want to delete this note?"}
-      </h1>
+      <h1>{shared ? t.deleteSharingText : t.deleteText}</h1>
       <div>
         <button
           onClick={() => {
@@ -60,12 +58,12 @@ export default function NoteDeleteModal({
                   {
                     onSuccess: () => {
                       setDeleteModalIsOpen(false);
-                      notify("Note successfully deleted!");
+                      notify(t.deleteSuccessfulNotify);
                       refetch();
                     },
                     onError: () => {
                       setDeleteModalIsOpen(false);
-                      notify("Note delete failed!", true);
+                      notify(t.deleteFailedNotify, true);
                     },
                   }
                 )
@@ -77,21 +75,21 @@ export default function NoteDeleteModal({
                   {
                     onSuccess: () => {
                       setDeleteModalIsOpen(false);
-                      notify("Note successfully deleted!");
+                      notify(t.deleteSuccessfulNotify);
                       refetch();
                     },
                     onError: () => {
                       setDeleteModalIsOpen(false);
-                      notify("Note delete failed!", true);
+                      notify(t.deleteFailedNotify, true);
                     },
                   }
                 );
           }}
         >
-          Yes, delete
+          {t.deleteButton}
         </button>
         <button onClick={() => setDeleteModalIsOpen(false)}>
-          No, I've changed my mind
+          {t.cancelButton}
         </button>
       </div>
     </div>

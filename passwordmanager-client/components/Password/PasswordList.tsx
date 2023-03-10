@@ -11,11 +11,16 @@ import Modal from "react-modal";
 import { useQuery } from "react-query";
 
 type PasswordListProps = {
+  t: Messages["ProfilePage"]["password"];
   notify: (text: string, error?: boolean) => void;
   authToken: AuthToken | null;
 };
 
-export default function PasswordList({ notify, authToken }: PasswordListProps) {
+export default function PasswordList({
+  t,
+  notify,
+  authToken,
+}: PasswordListProps) {
   const { isSuccess, refetch, data } = useQuery(
     ["passwords", authToken?.token],
     () => authToken?.token && getAllPasswords(authToken.token)
@@ -31,6 +36,7 @@ export default function PasswordList({ notify, authToken }: PasswordListProps) {
           data.map((password: PasswordData) => (
             <PasswordCard
               key={password.id}
+              t={t}
               password={password}
               refetch={refetch}
               notify={notify}
@@ -56,6 +62,7 @@ export default function PasswordList({ notify, authToken }: PasswordListProps) {
         }}
       >
         <PasswordAddModal
+          t={t}
           setAddModalIsOpen={setAddModalIsOpen}
           notify={notify}
           refetch={refetch}

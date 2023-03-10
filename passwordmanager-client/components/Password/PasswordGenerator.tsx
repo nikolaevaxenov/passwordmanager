@@ -15,9 +15,11 @@ type PasswordGeneratorFormData = {
 };
 
 export default function PasswordGenerator({
+  t,
   setShowPasswordGenerator,
   setValue,
 }: {
+  t: Messages["ProfilePage"]["password"]["passwordGenerator"];
   setShowPasswordGenerator: Dispatch<SetStateAction<boolean>>;
   setValue: UseFormSetValue<PasswordAddFormData | PasswordEditFormData>;
 }) {
@@ -64,22 +66,22 @@ export default function PasswordGenerator({
                 </option>
               ))}
           </select>
-          <p>Password length</p>
+          <p>{t.passwordLength}</p>
         </div>
 
         <div>
           <input type="checkbox" {...register("allowNumbers")} />
-          <p>Allow numbers (0-9)</p>
+          <p>{t.allowNumbers}</p>
         </div>
 
         <div>
           <input type="checkbox" {...register("allowUppercase")} />
-          <p>Allow uppercase (A-Z)</p>
+          <p>{t.allowUppercase}</p>
         </div>
 
         <div>
           <input type="checkbox" {...register("allowSymbols")} />
-          <p>Allow symbols (!@#$%^&*()+)</p>
+          <p>{t.allowSymbols}</p>
         </div>
 
         <div className={styles.main__buttons}>
@@ -89,7 +91,7 @@ export default function PasswordGenerator({
               background: "#60d394",
             }}
           >
-            Generate
+            {t.generateButton}
           </button>
           <button
             className={styles.modalCancel}
@@ -99,7 +101,7 @@ export default function PasswordGenerator({
               background: "#ef233c",
             }}
           >
-            Cancel
+            {t.cancelButton}
           </button>
         </div>
       </form>
