@@ -12,7 +12,7 @@ import {
   QueryObserverResult,
   RefetchOptions,
   RefetchQueryFilters,
-  useMutation,
+  useMutation
 } from "react-query";
 
 type PaymentCardAddFormData = {

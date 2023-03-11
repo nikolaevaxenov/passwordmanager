@@ -1,11 +1,11 @@
 "use client";
 
-import styles from "@/styles/components/Password/PasswordGenerator.module.scss";
-import { Dispatch, SetStateAction } from "react";
-import { useForm, UseFormSetValue } from "react-hook-form";
-import { generate } from "generate-password";
 import { PasswordAddFormData } from "@/components/Password/PasswordAddModal";
 import { PasswordEditFormData } from "@/components/Password/PasswordEditModal";
+import styles from "@/styles/components/Password/PasswordGenerator.module.scss";
+import { generate } from "generate-password";
+import { Dispatch, SetStateAction } from "react";
+import { useForm, UseFormSetValue } from "react-hook-form";
 
 type PasswordGeneratorFormData = {
   passwordLength: string;

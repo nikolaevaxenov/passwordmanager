@@ -1,16 +1,16 @@
-import styles from "@/styles/components/homePage.module.scss";
-import Image from "next/image";
-import passwordPic from "@/public/password.jpg";
 import addressPic from "@/public/address.jpg";
-import paymentCardPic from "@/public/paymentCard.jpg";
 import notePic from "@/public/note.jpg";
+import passwordPic from "@/public/password.jpg";
+import paymentCardPic from "@/public/paymentCard.jpg";
+import styles from "@/styles/components/homePage.module.scss";
 import { useTranslations } from "next-intl";
+import Image from "next/image";
 
 export default function Home() {
   const t = useTranslations("IndexPage");
 
   return (
-    <main className={styles.main}>
+    <div className={styles.main}>
       <h1>PassStorage</h1>
       <p>{t("description")}</p>
       <div className={styles.main__photos}>
@@ -35,6 +35,6 @@ export default function Home() {
           <p>{t("noteDescription")}</p>
         </div>
       </div>
-    </main>
+    </div>
   );
 }

@@ -379,5 +379,10 @@
     "logout": "Logout",
     "signIn": "Sign In",
     "signUp": "Sign Up"
+  },
+  "Title": {
+    "profile": "Profile",
+    "signIn": "Sign In",
+    "signUp": "Sign Up"
   }
 }

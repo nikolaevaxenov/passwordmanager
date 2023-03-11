@@ -7,7 +7,7 @@ import {
   AddShareNoteData,
   NoteData,
   removeShareNote,
-  RemoveShareNoteData,
+  RemoveShareNoteData
 } from "@/services/notes";
 import styles from "@/styles/components/Note/NoteShareModal.module.scss";
 import { Dispatch, SetStateAction } from "react";
@@ -17,7 +17,7 @@ import {
   QueryObserverResult,
   RefetchOptions,
   RefetchQueryFilters,
-  useMutation,
+  useMutation
 } from "react-query";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";

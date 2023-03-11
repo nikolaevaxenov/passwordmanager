@@ -7,8 +7,7 @@ import PasswordList from "@/components/Password/PasswordList";
 import PaymentCardList from "@/components/PaymentCard/PaymentCardList";
 import { selectAuthToken } from "@/features/auth/authSlice";
 import {
-  selectSelectedEntity,
-  ProfileEntities,
+  ProfileEntities, selectSelectedEntity
 } from "@/features/profile/profileReducer";
 import { useAppSelector } from "@/hooks/hooks";
 import styles from "@/styles/components/profile.module.scss";
@@ -63,7 +62,7 @@ export default function ProfileComponent({
   };
 
   return (
-    <main className={styles.main}>
+    <div className={styles.main}>
       <EntitySwitcher t={entitySwitcherT} />
 
       {selectedEntity === ProfileEntities.Passwords && (
@@ -95,6 +94,6 @@ export default function ProfileComponent({
         pauseOnHover
         theme="dark"
       />
-    </main>
+    </div>
   );
 }

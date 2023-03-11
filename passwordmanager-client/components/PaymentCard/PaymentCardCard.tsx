@@ -6,6 +6,7 @@ import PaymentCardShareModal from "@/components/PaymentCard/PaymentCardShareModa
 import { AuthToken } from "@/features/auth/authSlice";
 import { PaymentCardData } from "@/services/paymentCards";
 import styles from "@/styles/components/PaymentCard/PaymentCardCard.module.scss";
+import creditCardType from "credit-card-type";
 import { useState } from "react";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { AiFillEdit, AiFillLock } from "react-icons/ai";
@@ -24,7 +25,6 @@ import {
   RefetchQueryFilters,
 } from "react-query";
 import "react-toastify/dist/ReactToastify.css";
-import creditCardType from "credit-card-type";
 
 export default function PaymentCardCard({
   t,

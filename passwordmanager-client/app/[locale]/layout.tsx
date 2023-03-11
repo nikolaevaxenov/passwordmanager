@@ -1,3 +1,4 @@
+import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import "@/styles/globals.scss";
 import { useLocale, useTranslations } from "next-intl";
@@ -32,10 +33,13 @@ export default function RootLayout({
       <body>
         <Providers>
           <div className="wrapper">
-            <div className="wrapper__header">
+            <nav className="wrapper__header">
               <Navbar t={navbarT} />
-            </div>
-            <div className="wrapper__content">{children}</div>
+            </nav>
+            <main className="wrapper__content">{children}</main>
+            <footer>
+              <Footer />
+            </footer>
           </div>
         </Providers>
       </body>

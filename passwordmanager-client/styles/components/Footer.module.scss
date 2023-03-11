@@ -1,0 +1,19 @@
+@import "@/styles/colors.scss";
+
+.main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  height: 2rem;
+
+  background-color: $navbar-bg;
+
+  a {
+    color: $text-color;
+
+    &:hover {
+      color: $hover-text-color;
+    }
+  }
+}
