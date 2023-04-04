@@ -28,7 +28,7 @@ public class User {
 
     private String roles;
 
-    private boolean isActivated = true;
+    private boolean isActivated = false;
 
     @OneToMany(mappedBy = "user", orphanRemoval = true, fetch = FetchType.LAZY)
     @JsonManagedReference(value = "savedPasswords")
@@ -45,6 +45,9 @@ public class User {
     @OneToMany(mappedBy = "user", orphanRemoval = true, fetch = FetchType.LAZY)
     @JsonManagedReference(value = "paymentCards")
     private Set<PaymentCard> paymentCards;
+
+    @OneToOne(mappedBy = "user", orphanRemoval = true, fetch = FetchType.LAZY)
+    ConfirmationToken confirmationToken;
 
     /**
      * Empty constuctor for user entity.
@@ -137,6 +140,14 @@ public class User {
         this.paymentCards = paymentCards;
     }
 
+    public ConfirmationToken getConfirmationToken() {
+        return confirmationToken;
+    }
+
+    public void setConfirmationToken(ConfirmationToken confirmationToken) {
+        this.confirmationToken = confirmationToken;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -161,6 +172,7 @@ public class User {
                 ", notes=" + notes +
                 ", addresses=" + addresses +
                 ", paymentCards=" + paymentCards +
+                ", confirmationToken=" + confirmationToken +
                 '}';
     }
 }

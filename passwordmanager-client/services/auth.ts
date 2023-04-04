@@ -11,6 +11,12 @@ export type SignInCredentials = {
   password: string;
 };
 
+export class FetchError extends Error {
+  constructor(public res: Response, message?: string) {
+    super(message);
+  }
+}
+
 export const signIn = async (credentials: SignInCredentials) => {
   const response = await fetch(
     "http://localhost:8080/api/v1/authorization/signin",
@@ -26,8 +32,11 @@ export const signIn = async (credentials: SignInCredentials) => {
     }
   );
 
+  if (response.status === 409)
+    throw new FetchError(response, "Email is not confirmed");
+
   if (response.status >= 400 && response.status < 600)
-    throw new Error("Bad response from server");
+    throw new FetchError(response, "Bad response from server");
 
   return response.text();
 };

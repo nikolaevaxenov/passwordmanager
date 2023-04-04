@@ -14,16 +14,48 @@ Content-Type: application/json
 
 ###
 # @no-log
+# @name SignIn with wrong email
+POST http://localhost:8080/api/v1/authorization/signin
+Content-Type: application/json
+
+{
+  "username": "lorem@mail.com",
+  "password": "123456"
+}
+
+> {% client.global.set("auth_token", response.body); %}
+###
+
+###
+# @no-log
 # @name SignUp
 POST http://localhost:8080/api/v1/authorization/signup
 Content-Type: application/json
 
 {
-  "username": "user@mail.com",
+  "username": "ghost777t@ya.ru",
+  "password": "123456"
+}
+###
+
+###
+# @no-log
+# @name SignIn
+POST http://localhost:8080/api/v1/authorization/signin
+Content-Type: application/json
+
+{
+  "username": "ghost777t@ya.ru",
   "password": "123456"
 }
 
 > {% client.global.set("auth_token", response.body); %}
+###
+
+###
+# @no-log
+# @name Confirm email
+GET http://localhost:8080/api/v1/authorization/confirmEmail/91dc92b7-00f8-4bd8-8128-fa23fbd4462c
 ###
 
 ###

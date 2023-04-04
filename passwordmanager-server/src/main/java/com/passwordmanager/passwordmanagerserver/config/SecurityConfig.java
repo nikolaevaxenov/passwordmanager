@@ -85,9 +85,9 @@ public class SecurityConfig {
                 .cors(Customizer.withDefaults())
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/v1/authorization/signin").permitAll()
-                        .requestMatchers("/api/v1/authorization/signup").permitAll()
+                        .requestMatchers("/api/v1/authorization/**").permitAll()
                         .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
+                        .requestMatchers("/error").permitAll()
                         .anyRequest().authenticated())
                 .userDetailsService(jpaUserDetailsService)
                 .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt)

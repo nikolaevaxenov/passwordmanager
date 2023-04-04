@@ -6,7 +6,7 @@ import {
   setAuthToken,
 } from "@/features/auth/authSlice";
 import { useAppDispatch, useAppSelector } from "@/hooks/hooks";
-import { signIn, SignInCredentials } from "@/services/auth";
+import { FetchError, signIn, SignInCredentials } from "@/services/auth";
 import styles from "@/styles/components/signInForm.module.scss";
 import Link from "next/link";
 import { redirect } from "next/navigation";
@@ -23,7 +23,7 @@ export default function SignInComponent({ t }: { t: Messages["SignInPage"] }) {
   const dispatch = useAppDispatch();
   const authToken = useAppSelector(selectAuthToken);
 
-  const [authError, setAuthError] = useState(false);
+  const [authError, setAuthError] = useState(null);
 
   useEffect(() => {
     if (authToken !== null) {
@@ -47,9 +47,11 @@ export default function SignInComponent({ t }: { t: Messages["SignInPage"] }) {
       {
         onSuccess: (data, variables) => {
           dispatch(setAuthToken(createAuthToken(variables.email, data)));
-          setAuthError(false);
+          setAuthError(0);
         },
-        onError: () => setAuthError(true),
+        onError: (error: FetchError) => {
+          setAuthError(error.res.status === 409 ? 1 : 2);
+        },
       }
     );
   });
@@ -114,9 +116,16 @@ export default function SignInComponent({ t }: { t: Messages["SignInPage"] }) {
                 {errors.password?.message}
               </p>
             )}
-            {authError && (
-              <p className={styles.signin__form__error}>{t.wrongCredentials}</p>
-            )}
+            {authError &&
+              (authError === 2 ? (
+                <p className={styles.signin__form__error}>
+                  {t.wrongCredentials}
+                </p>
+              ) : (
+                <p className={styles.signin__form__error}>
+                  First you need to activate your account
+                </p>
+              ))}
           </div>
           <button type="submit">{t.signInButton}</button>
         </form>

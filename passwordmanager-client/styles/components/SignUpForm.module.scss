@@ -7,6 +7,30 @@
   align-items: center;
 }
 
+.confirmEmail {
+  margin: 1rem;
+
+  display: flex;
+  flex-direction: column;
+
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+
+  text-align: center;
+
+  color: #ced4da;
+
+  a {
+    text-decoration: underline;
+    color: #a3cef1;
+
+    &:hover {
+      color: darken(#a3cef1, 10);
+    }
+  }
+}
+
 .signup {
   display: flex;
   flex-direction: column;

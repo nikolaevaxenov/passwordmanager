@@ -5,8 +5,10 @@ import com.passwordmanager.passwordmanagerserver.service.AuthService;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.view.RedirectView;
 
 import java.security.Principal;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1/authorization")
@@ -25,8 +27,8 @@ public class AuthController {
 
     @PostMapping("/signup")
     @ResponseStatus(HttpStatus.CREATED)
-    public String signUp(@RequestBody LoginRequest loginRequest) {
-        return authService.signUp(loginRequest);
+    public void signUp(@RequestBody LoginRequest loginRequest) {
+        authService.signUp(loginRequest);
     }
 
     @GetMapping("/signin")
@@ -35,4 +37,8 @@ public class AuthController {
         return authService.getEmail(principal);
     }
 
+    @GetMapping("/confirmEmail/{token}")
+    public RedirectView confirmEmail(@PathVariable UUID token) {
+        return authService.confirmEmail(token);
+    }
 }

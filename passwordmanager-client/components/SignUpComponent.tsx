@@ -21,7 +21,6 @@ type SignUpFormData = {
 };
 
 export default function SignUpComponent({ t }: { t: Messages["SignUpPage"] }) {
-  const dispatch = useAppDispatch();
   const authToken = useAppSelector(selectAuthToken);
 
   const [authError, setAuthError] = useState(false);
@@ -49,16 +48,18 @@ export default function SignUpComponent({ t }: { t: Messages["SignUpPage"] }) {
     mutation.mutate(
       { email: data.email, password: data.password1 },
       {
-        onSuccess: (data, variables) => {
-          dispatch(setAuthToken(createAuthToken(variables.email, data)));
-          setAuthError(false);
-        },
         onError: () => setAuthError(true),
       }
     );
   });
 
-  return (
+  return mutation.isSuccess ? (
+    <div className={styles.confirmEmail}>
+      <h1>Check your email for activation link</h1>
+      <p>Your account is currently not activated</p>
+      <Link href="/signin">Sign in</Link>
+    </div>
+  ) : (
     <div className={styles.main}>
       <div className={styles.signup}>
         <div className={styles.signup__header}>

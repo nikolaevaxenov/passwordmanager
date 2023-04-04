@@ -14,6 +14,22 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         format_sql: true
+  mail:
+    host: smtp.mail.com
+    port: 465
+    username: user@mail.com
+    password: password
+    properties:
+      mail:
+        transport:
+          protocol: smtp
+        smtp:
+          auth: true
+          ssl:
+            enable: true
+          starttls:
+            enable: true
+
 rsa:
   private-key: classpath:certs/private.pem
   public-key: classpath:certs/public.pem
