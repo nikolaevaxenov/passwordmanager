@@ -5,7 +5,7 @@ POST http://localhost:8080/api/v1/authorization/signin
 Content-Type: application/json
 
 {
-  "username": "first@mail.com",
+  "username": "asdfgh@mail.com",
   "password": "123456"
 }
 
@@ -72,7 +72,7 @@ POST http://localhost:8080/api/v1/address/shared/4
 Authorization: Bearer {{auth_token}}
 Content-Type: application/json
 
-"first@mail.com"
+"second@mail.com"
 
 ###
 

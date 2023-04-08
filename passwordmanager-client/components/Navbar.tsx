@@ -6,6 +6,8 @@ import styles from "@/styles/components/Navbar.module.scss";
 import { Link } from "next-intl";
 import { usePathname } from "next-intl/client";
 import { useEffect, useState } from "react";
+import { BsFillGearFill, BsFillPersonFill } from "react-icons/bs";
+import { HiOutlineLogout } from "react-icons/hi";
 import { FaKey } from "react-icons/fa";
 
 export default function Navbar({ t }: { t: Messages["Navbar"] }) {
@@ -30,25 +32,31 @@ export default function Navbar({ t }: { t: Messages["Navbar"] }) {
       <div className={styles.navbar__links}>
         <div>
           <div>
-            <Link href={pathname || "/"} locale="en">
+            <Link href={pathname || "/"} locale="en" title="English">
               🇺🇸
             </Link>
           </div>
           <div>
-            <Link href={pathname || "/"} locale="ru">
+            <Link href={pathname || "/"} locale="ru" title="Russian">
               🇷🇺
             </Link>
           </div>
         </div>
         {navAuthState ? (
-          <>
-            <Link href="/profile">
-              {t.profile} (<>{authToken?.email}</>)
+          <div className={styles.navbar__userlinks}>
+            <Link href="/profile" title={t.profilePage}>
+              <BsFillPersonFill />{" "}
+              <p>
+                (<>{authToken?.email}</>)
+              </p>
             </Link>
-            <a href="#" onClick={() => dispatch(logout())}>
-              {t.logout}
+            <Link href="/settings" title={t.accountSettings}>
+              <BsFillGearFill />
+            </Link>
+            <a href="#" onClick={() => dispatch(logout())} title={t.logout}>
+              <HiOutlineLogout />
             </a>
-          </>
+          </div>
         ) : (
           <>
             <Link href="/signin">{t.signIn}</Link>

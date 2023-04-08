@@ -38,7 +38,12 @@
     "passwordRequired": "Пароль обязателен для заполнения!",
     "passwordMinLength": "Пароль должен содержать как минимум 6 символов!",
     "passwordMaxLength": "Пароль должен содержать максимум 32 символа!",
-    "passwordMustMatch": "Пароли должны совпадать!"
+    "passwordMustMatch": "Пароли должны совпадать!",
+    "confirmEmail": {
+      "header": "Проверьте вашу почту для активации аккаунта",
+      "subtext": "В настоящий момент аккаунт не активирован",
+      "link": "Войти"
+    }
   },
   "ProfilePage": {
     "entitySwitcher": {
@@ -378,11 +383,52 @@
     "profile": "Личный кабинет",
     "logout": "Выйти",
     "signIn": "Войти",
-    "signUp": "Регистрация"
+    "signUp": "Регистрация",
+    "profilePage": "Личный кабинет",
+    "accountSettings": "Настройки аккаунта"
   },
   "Title": {
     "profile": "Личный кабинет",
     "signIn": "Авторизация",
     "signUp": "Регистрация"
+  },
+  "Settings": {
+    "passwordSuccessNotification": "Пароль успешно изменен!",
+    "successEmailChange": {
+      "header": "Адрес электронной почты успешно изменен",
+      "subtext": "Проверьте вашу новую почту для сохранения изменения",
+      "link": "Вернуться на главную страницу"
+    },
+    "passwordChange": {
+      "header": "Изменить пароль",
+      "currentPassword": "Текущий пароль",
+      "currentPasswordRequired": "Текущий пароль обязателен для заполнения!",
+      "currentPasswordMinLength": "Пароль должен содержать как минимум 6 символов!",
+      "currentPasswordMaxLength": "Пароль должен содержать максимум 32 символа!",
+      "newPassword": "Новый пароль",
+      "newPasswordRequired": "Новый пароль обязателен для заполнения!",
+      "newPasswordMinLength": "Пароль должен содержать как минимум 6 символов!",
+      "newPasswordMaxLength": "Пароль должен содержать максимум 32 символа!",
+      "confirmPassword": "Подтвердите ваш пароль",
+      "confirmPasswordRequired": "Пароль обязателен для заполнения!",
+      "confirmPasswordMinLength": "Пароль должен содержать как минимум 6 символов!",
+      "confirmPasswordMaxLength": "Пароль должен содержать максимум 32 символа!",
+      "confirmPasswordMustMatch": "Пароли должны совпадать!",
+      "passwordIncorrect": "Текущий пароль неверен!",
+      "passwordChangeSave": "Сохранить"
+    },
+    "emailChange": {
+      "header": "Изменить адрес электронной почты",
+      "currentEmail": "Текущая почта",
+      "currentPassword": "Текущий пароль",
+      "currentPasswordRequired": "Текущий пароль обязателен для заполнения!",
+      "currentPasswordMinLength": "Пароль должен содержать как минимум 6 символов!",
+      "currentPasswordMaxLength": "Пароль должен содержать максимум 32 символа!",
+      "newEmail": "Новый адрес электронной почты",
+      "newEmailRequired": "Адрес электронной почты обязателен для заполнения!",
+      "newEmailInvalid": "Неверный адрес электронной почты!",
+      "newEmailExists": "Введенная электронная почта уже существует!",
+      "emailChangeSave": "Сохранить"
+    }
   }
 }

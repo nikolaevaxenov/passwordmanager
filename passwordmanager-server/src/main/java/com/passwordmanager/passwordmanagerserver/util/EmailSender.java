@@ -26,11 +26,28 @@ public class EmailSender {
                 <p>Thank you for choosing PassStorage</p>
                 <p>Please confirm that\s""" + email + """
                  is your e-mail address by clicking on the link below within 24 hours.</p>
-                <a href="http://localhost:8080/api/v1/authorization/confirmEmail/""" + token + "\">VERIFY</a>";
+                <a href="http://localhost:8080/api/v1/authorization/confirmemail/""" + token + "\">VERIFY</a>";
 
         mimeMessageHelper.setTo(email);
         mimeMessageHelper.setFrom(senderEmail);
         mimeMessageHelper.setSubject("Confirm your email address");
+        mimeMessageHelper.setText(emailText, true);
+
+        javaMailSender.send(mimeMessage);
+    }
+
+    public void sendNewEmailConfirmation(String email, String token) throws MessagingException {
+        MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+        MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, true);
+        String emailText = """
+                <h1>Confirm your new email address for use PassStorage</h1>
+                <p>Please confirm that\s""" + email + """
+                 is your e-mail address by clicking on the link below within 24 hours.</p>
+                <a href="http://localhost:8080/api/v1/authorization/confirmnewemail/""" + token + "\">VERIFY</a>";
+
+        mimeMessageHelper.setTo(email);
+        mimeMessageHelper.setFrom(senderEmail);
+        mimeMessageHelper.setSubject("Confirm your new email address");
         mimeMessageHelper.setText(emailText, true);
 
         javaMailSender.send(mimeMessage);

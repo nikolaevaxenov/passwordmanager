@@ -39,11 +39,9 @@ public class Note {
     private String text;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "owner_email", referencedColumnName = "email")
     @JsonBackReference(value = "notes")
     private User user;
 
-    @Column(name = "owner_email", insertable=false, updatable=false)
     private String owner_email;
 
     @ElementCollection
@@ -96,6 +94,7 @@ public class Note {
 
     public void setUser(User user) {
         this.user = user;
+        this.owner_email = user.getEmail();
     }
 
     public Set<String> getSharedWithUsers() {

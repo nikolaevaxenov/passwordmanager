@@ -55,9 +55,9 @@ export default function SignUpComponent({ t }: { t: Messages["SignUpPage"] }) {
 
   return mutation.isSuccess ? (
     <div className={styles.confirmEmail}>
-      <h1>Check your email for activation link</h1>
-      <p>Your account is currently not activated</p>
-      <Link href="/signin">Sign in</Link>
+      <h1>{t.confirmEmail.header}</h1>
+      <p>{t.confirmEmail.subtext}</p>
+      <Link href="/signin">{t.confirmEmail.link}</Link>
     </div>
   ) : (
     <div className={styles.main}>

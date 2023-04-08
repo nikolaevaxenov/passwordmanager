@@ -11,6 +11,16 @@ export type SignInCredentials = {
   password: string;
 };
 
+export type ChangePasswordData = {
+  loginRequest: SignInCredentials;
+  newPassword: string;
+};
+
+export type ChangeEmailData = {
+  loginRequest: SignInCredentials;
+  newEmail: string;
+};
+
 export class FetchError extends Error {
   constructor(public res: Response, message?: string) {
     super(message);
@@ -73,8 +83,53 @@ export const getEmail = async (token: string) => {
     }
   );
 
-  console.log(response.status);
-  console.log(response.text());
+  return response.text();
+};
+
+export const changePassword = async (credentials: ChangePasswordData) => {
+  const response = await fetch(
+    "http://localhost:8080/api/v1/authorization/changepassword",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        loginRequest: {
+          username: credentials.loginRequest.email,
+          password: credentials.loginRequest.password,
+        },
+        newPassword: credentials.newPassword,
+      }),
+    }
+  );
+
+  if (response.status >= 400 && response.status < 600)
+    throw new Error("Bad response from server");
+
+  return response.text();
+};
+
+export const changeEmail = async (credentials: ChangeEmailData) => {
+  const response = await fetch(
+    "http://localhost:8080/api/v1/authorization/changeemail",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        loginRequest: {
+          username: credentials.loginRequest.email,
+          password: credentials.loginRequest.password,
+        },
+        newEmail: credentials.newEmail,
+      }),
+    }
+  );
+
+  if (response.status >= 400 && response.status < 600)
+    throw new Error("Bad response from server");
 
   return response.text();
 };

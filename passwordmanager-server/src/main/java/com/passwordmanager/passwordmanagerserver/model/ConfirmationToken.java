@@ -21,11 +21,18 @@ public class ConfirmationToken {
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
+    private String newEmail;
+
     public ConfirmationToken() {
     }
 
     public ConfirmationToken(User user) {
         this.user = user;
+    }
+
+    public ConfirmationToken(User user, String newEmail) {
+        this.user = user;
+        this.newEmail = newEmail;
     }
 
     public UUID getId() {
@@ -52,16 +59,24 @@ public class ConfirmationToken {
         this.user = user;
     }
 
+    public String getNewEmail() {
+        return newEmail;
+    }
+
+    public void setNewEmail(String newEmail) {
+        this.newEmail = newEmail;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof ConfirmationToken that)) return false;
-        return getId().equals(that.getId()) && getExpirationTime().equals(that.getExpirationTime()) && getUser().equals(that.getUser());
+        return Objects.equals(getId(), that.getId()) && Objects.equals(getExpirationTime(), that.getExpirationTime()) && Objects.equals(getUser(), that.getUser()) && Objects.equals(getNewEmail(), that.getNewEmail());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getExpirationTime(), getUser());
+        return Objects.hash(getId(), getExpirationTime(), getUser(), getNewEmail());
     }
 
     @Override
@@ -70,6 +85,7 @@ public class ConfirmationToken {
                 "id=" + id +
                 ", expirationTime=" + expirationTime +
                 ", user=" + user +
+                ", newEmail='" + newEmail + '\'' +
                 '}';
     }
 }

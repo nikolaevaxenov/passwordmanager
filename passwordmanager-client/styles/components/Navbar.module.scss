@@ -35,6 +35,24 @@
     }
   }
 
+  &__userlinks {
+    display: flex;
+    justify-items: center;
+    align-items: center;
+    gap: 1rem;
+
+    a {
+      display: flex;
+      justify-items: center;
+      align-items: center;
+      gap: 0.2rem;
+
+      &:last-of-type {
+        font-size: 1.3rem;
+      }
+    }
+  }
+
   @media (max-width: 812px) {
     &__logo {
       font-size: 0.8rem;
@@ -42,10 +60,18 @@
 
     &__links {
       text-align: center;
-      margin: 0 1rem;
+      margin: 0;
 
       div:first-of-type {
         flex-direction: row;
+      }
+    }
+
+    &__userlinks {
+      a {
+        p {
+          display: none;
+        }
       }
     }
   }

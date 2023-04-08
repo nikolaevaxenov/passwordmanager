@@ -38,7 +38,12 @@
     "passwordRequired": "Password is required!",
     "passwordMinLength": "Password must contain minimum 6 symbols!",
     "passwordMaxLength": "Password must contain maximum 32 symbols!",
-    "passwordMustMatch": "Passwords must match!"
+    "passwordMustMatch": "Passwords must match!",
+    "confirmEmail": {
+      "header": "Check your email for activation link",
+      "subtext": "Your account is currently not activated",
+      "link": "Sign in"
+    }
   },
   "ProfilePage": {
     "entitySwitcher": {
@@ -378,11 +383,52 @@
     "profile": "Profile",
     "logout": "Logout",
     "signIn": "Sign In",
-    "signUp": "Sign Up"
+    "signUp": "Sign Up",
+    "profilePage": "Profile page",
+    "accountSettings": "Account settings"
   },
   "Title": {
     "profile": "Profile",
     "signIn": "Sign In",
     "signUp": "Sign Up"
+  },
+  "Settings": {
+    "passwordSuccessNotification": "Password successfully changed!",
+    "successEmailChange": {
+      "header": "Email successfully changed",
+      "subtext": "Check your new email for confirmation link",
+      "link": "Return to home"
+    },
+    "passwordChange": {
+      "header": "Change password",
+      "currentPassword": "Current password",
+      "currentPasswordRequired": "Current password is required!",
+      "currentPasswordMinLength": "Password must contain minimum 6 symbols!",
+      "currentPasswordMaxLength": "Password must contain maximum 32 symbols!",
+      "newPassword": "New password",
+      "newPasswordRequired": "New password is required!",
+      "newPasswordMinLength": "Password must contain minimum 6 symbols!",
+      "newPasswordMaxLength": "Password must contain maximum 32 symbols!",
+      "confirmPassword": "Confirm new password",
+      "confirmPasswordRequired": "Confirm new password is required!",
+      "confirmPasswordMinLength": "Password must contain minimum 6 symbols!",
+      "confirmPasswordMaxLength": "Password must contain maximum 32 symbols!",
+      "confirmPasswordMustMatch": "Passwords must match!",
+      "passwordIncorrect": "Current password is incorrect!",
+      "passwordChangeSave": "Save"
+    },
+    "emailChange": {
+      "header": "Change email",
+      "currentEmail": "Current email is",
+      "currentPassword": "Current password",
+      "currentPasswordRequired": "Current password is required!",
+      "currentPasswordMinLength": "Password must contain minimum 6 symbols!",
+      "currentPasswordMaxLength": "Password must contain maximum 32 symbols!",
+      "newEmail": "New email",
+      "newEmailRequired": "New email is required!",
+      "newEmailInvalid": "Email address is invalid!",
+      "newEmailExists": "User with this email already exists!",
+      "emailChangeSave": "Save"
+    }
   }
 }

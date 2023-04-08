@@ -35,7 +35,7 @@ public class PasswordmanagerServerApplication {
             var adminUser = new User("root@mail.com", passwordEncoder.encode("123456"), "ROLE_USER,ROLE_ADMIN");
 
             user1.setActivated(true);
-//            user2.setActivated(true);
+            user2.setActivated(true);
 //            user3.setActivated(true);
 //            adminUser.setActivated(true);
 

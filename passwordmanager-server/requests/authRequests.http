@@ -45,7 +45,7 @@ POST http://localhost:8080/api/v1/authorization/signin
 Content-Type: application/json
 
 {
-  "username": "ghost777t@ya.ru",
+  "username": "first@mail.com",
   "password": "123456"
 }
 
@@ -55,7 +55,7 @@ Content-Type: application/json
 ###
 # @no-log
 # @name Confirm email
-GET http://localhost:8080/api/v1/authorization/confirmEmail/91dc92b7-00f8-4bd8-8128-fa23fbd4462c
+GET http://localhost:8080/api/v1/authorization/confirmemail/91dc92b7-00f8-4bd8-8128-fa23fbd4462c
 ###
 
 ###
@@ -77,4 +77,34 @@ Authorization: Bearer {{auth_token}}
 # @name Get email
 GET http://localhost:8080/api/v1/authorization/signin
 Authorization: Bearer {{auth_token}}
+###
+
+###
+# @no-log
+# @name Change password
+POST http://localhost:8080/api/v1/authorization/changepassword
+Content-Type: application/json
+
+{
+  "loginRequest": {
+    "username": "qwerty@mail.com",
+    "password": "123456"
+  },
+  "newPassword": "qwerty"
+}
+###
+
+###
+# @no-log
+# @name Change email
+POST http://localhost:8080/api/v1/authorization/changeemail
+Content-Type: application/json
+
+{
+  "loginRequest": {
+    "username": "second@mail.com",
+    "password": "123456"
+  },
+  "newEmail": "qwerty@mail.com"
+}
 ###

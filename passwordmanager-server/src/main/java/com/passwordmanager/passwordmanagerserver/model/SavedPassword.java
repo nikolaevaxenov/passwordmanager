@@ -62,11 +62,9 @@ public class SavedPassword {
     private String note;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "owner_email", referencedColumnName = "email")
     @JsonBackReference(value = "savedPasswords")
     private User user;
 
-    @Column(name = "owner_email", insertable=false, updatable=false)
     private String owner_email;
 
     @ElementCollection
@@ -147,6 +145,7 @@ public class SavedPassword {
 
     public void setUser(User user) {
         this.user = user;
+        this.owner_email = user.getEmail();
     }
 
     public Set<String> getSharedWithUsers() {
