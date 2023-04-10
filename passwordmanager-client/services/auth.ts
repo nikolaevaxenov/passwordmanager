@@ -21,6 +21,11 @@ export type ChangeEmailData = {
   newEmail: string;
 };
 
+export type ForgotPasswordData = {
+  email: string;
+  newPassword: string;
+};
+
 export class FetchError extends Error {
   constructor(public res: Response, message?: string) {
     super(message);
@@ -124,6 +129,29 @@ export const changeEmail = async (credentials: ChangeEmailData) => {
           password: credentials.loginRequest.password,
         },
         newEmail: credentials.newEmail,
+      }),
+    }
+  );
+
+  if (response.status >= 400 && response.status < 600)
+    throw new Error("Bad response from server");
+
+  return response.text();
+};
+
+export const forgotPasswordRequest = async (
+  credentials: ForgotPasswordData
+) => {
+  const response = await fetch(
+    "http://localhost:8080/api/v1/authorization/forgotpassword",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: credentials.email,
+        newPassword: credentials.newPassword,
       }),
     }
   );

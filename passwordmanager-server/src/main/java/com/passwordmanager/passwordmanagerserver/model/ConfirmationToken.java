@@ -3,8 +3,6 @@ package com.passwordmanager.passwordmanagerserver.model;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -22,6 +20,8 @@ public class ConfirmationToken {
     private User user;
 
     private String newEmail;
+
+    private String newPassword;
 
     public ConfirmationToken() {
     }
@@ -67,16 +67,24 @@ public class ConfirmationToken {
         this.newEmail = newEmail;
     }
 
+    public String getNewPassword() {
+        return newPassword;
+    }
+
+    public void setNewPassword(String newPassword) {
+        this.newPassword = newPassword;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof ConfirmationToken that)) return false;
-        return Objects.equals(getId(), that.getId()) && Objects.equals(getExpirationTime(), that.getExpirationTime()) && Objects.equals(getUser(), that.getUser()) && Objects.equals(getNewEmail(), that.getNewEmail());
+        return Objects.equals(getId(), that.getId()) && Objects.equals(getExpirationTime(), that.getExpirationTime()) && Objects.equals(getUser(), that.getUser()) && Objects.equals(getNewEmail(), that.getNewEmail()) && Objects.equals(getNewPassword(), that.getNewPassword());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getExpirationTime(), getUser(), getNewEmail());
+        return Objects.hash(getId(), getExpirationTime(), getUser(), getNewEmail(), getNewPassword());
     }
 
     @Override
@@ -86,6 +94,7 @@ public class ConfirmationToken {
                 ", expirationTime=" + expirationTime +
                 ", user=" + user +
                 ", newEmail='" + newEmail + '\'' +
+                ", newPassword='" + newPassword + '\'' +
                 '}';
     }
 }

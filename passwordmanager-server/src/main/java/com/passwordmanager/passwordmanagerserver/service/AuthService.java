@@ -4,7 +4,7 @@ import com.passwordmanager.passwordmanagerserver.exception.ConfirmationTokenExpi
 import com.passwordmanager.passwordmanagerserver.exception.UserAlreadyExistsException;
 import com.passwordmanager.passwordmanagerserver.exception.UserEmailIsNotConfirmed;
 import com.passwordmanager.passwordmanagerserver.model.ConfirmationToken;
-import com.passwordmanager.passwordmanagerserver.model.LoginRequest;
+import com.passwordmanager.passwordmanagerserver.dto.LoginRequest;
 import com.passwordmanager.passwordmanagerserver.model.User;
 import com.passwordmanager.passwordmanagerserver.repository.*;
 import com.passwordmanager.passwordmanagerserver.util.EmailSender;
@@ -243,6 +243,43 @@ public class AuthService {
             updateEmailsInNotes(oldEmail, user);
             updateEmailsInPaymentCards(oldEmail, user);
             updateEmailsInSavedPasswords(oldEmail, user);
+
+            userRepository.save(user);
+        } else {
+            confirmationTokenRepository.delete(confirmationToken);
+            throw new ConfirmationTokenExpired("Confirmation token in expired!");
+        }
+
+        confirmationTokenRepository.delete(confirmationToken);
+
+        RedirectView redirectView = new RedirectView();
+        redirectView.setUrl("http://localhost:3000/signin");
+
+        return redirectView;
+    }
+
+    public void forgotPasswordRequest(String email, String newPassword) {
+        try {
+            var user = userRepository.findByEmail(email).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+            var confirmationToken = new ConfirmationToken(user);
+            confirmationToken.setNewPassword(passwordEncoder.encode(newPassword));
+
+            confirmationTokenRepository.save(confirmationToken);
+
+            emailSender.sendForgotPasswordConfirmation(email, confirmationToken.getId().toString());
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public RedirectView forgotPassword(UUID token) {
+        var confirmationToken = confirmationTokenRepository.findById(token).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        if (confirmationToken.getExpirationTime().isAfter(LocalDateTime.now())) {
+            var user = confirmationToken.getUser();
+
+            user.setPassword(confirmationToken.getNewPassword());
 
             userRepository.save(user);
         } else {

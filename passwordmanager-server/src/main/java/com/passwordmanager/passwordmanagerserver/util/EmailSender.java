@@ -30,7 +30,7 @@ public class EmailSender {
 
         mimeMessageHelper.setTo(email);
         mimeMessageHelper.setFrom(senderEmail);
-        mimeMessageHelper.setSubject("Confirm your email address");
+        mimeMessageHelper.setSubject("Confirm your email address | PassStorage");
         mimeMessageHelper.setText(emailText, true);
 
         javaMailSender.send(mimeMessage);
@@ -47,7 +47,23 @@ public class EmailSender {
 
         mimeMessageHelper.setTo(email);
         mimeMessageHelper.setFrom(senderEmail);
-        mimeMessageHelper.setSubject("Confirm your new email address");
+        mimeMessageHelper.setSubject("Confirm your new email address | PassStorage");
+        mimeMessageHelper.setText(emailText, true);
+
+        javaMailSender.send(mimeMessage);
+    }
+
+    public void sendForgotPasswordConfirmation(String email, String token) throws MessagingException {
+        MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+        MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, true);
+        String emailText = """
+                <h1>Forgot your password?</h1>
+                <p>Change your password by clicking on the link below within 24 hours.</p>
+                <a href="http://localhost:8080/api/v1/authorization/confirmforgotpassword/""" + token + "\">CHANGE PASSWORD</a>";
+
+        mimeMessageHelper.setTo(email);
+        mimeMessageHelper.setFrom(senderEmail);
+        mimeMessageHelper.setSubject("Change your password | PassStorage");
         mimeMessageHelper.setText(emailText, true);
 
         javaMailSender.send(mimeMessage);

@@ -1,4 +1,4 @@
-package com.passwordmanager.passwordmanagerserver.model;
+package com.passwordmanager.passwordmanagerserver.dto;
 
 public record ChangePasswordData(LoginRequest loginRequest, String newPassword) {
 }

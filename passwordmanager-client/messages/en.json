@@ -22,7 +22,14 @@
     "passwordRequired": "Password is required!",
     "passwordMinLength": "Password must contain minimum 6 symbols!",
     "passwordMaxLength": "Password must contain maximum 32 symbols!",
-    "wrongCredentials": "Email or password is incorrect!"
+    "wrongCredentials": "Email or password is incorrect!",
+    "forgotPasswordNotification": "To change your password, please follow the link in the email sent to your email.",
+    "forgotPasswordHeader": "Forgot password",
+    "passwordConfirm": "Confirm your password",
+    "passwordMustMatch": "Passwords must match!",
+    "forgotPasswordError": "An error occurred while resetting your password, please try again",
+    "forgotPasswordButton": "Change password",
+    "forgotPasswordLink": "Forgot your password?"
   },
   "SignUpPage": {
     "title": "Sign up",

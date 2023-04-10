@@ -17,6 +17,15 @@ export default function SignInForm() {
     passwordMinLength: signInLocalization("passwordMinLength"),
     passwordMaxLength: signInLocalization("passwordMaxLength"),
     wrongCredentials: signInLocalization("wrongCredentials"),
+    forgotPasswordNotification: signInLocalization(
+      "forgotPasswordNotification"
+    ),
+    forgotPasswordHeader: signInLocalization("forgotPasswordHeader"),
+    passwordConfirm: signInLocalization("passwordConfirm"),
+    passwordMustMatch: signInLocalization("passwordMustMatch"),
+    forgotPasswordError: signInLocalization("forgotPasswordError"),
+    forgotPasswordButton: signInLocalization("forgotPasswordButton"),
+    forgotPasswordLink: signInLocalization("forgotPasswordLink"),
   };
 
   return <SignInComponent t={signInT} />;

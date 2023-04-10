@@ -75,7 +75,20 @@
       }
     }
 
+    a {
+      text-align: center;
+      text-decoration: underline;
+      color: #a3cef1;
+
+      &:hover {
+        color: darken(#a3cef1, 10);
+      }
+    }
+
     @import "@/styles/Button.scss";
+    button {
+      padding: 0.5rem;
+    }
 
     &__error {
       color: red;

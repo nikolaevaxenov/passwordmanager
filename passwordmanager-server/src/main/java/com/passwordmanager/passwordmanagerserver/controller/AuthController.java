@@ -1,8 +1,9 @@
 package com.passwordmanager.passwordmanagerserver.controller;
 
-import com.passwordmanager.passwordmanagerserver.model.ChangeEmailData;
-import com.passwordmanager.passwordmanagerserver.model.ChangePasswordData;
-import com.passwordmanager.passwordmanagerserver.model.LoginRequest;
+import com.passwordmanager.passwordmanagerserver.dto.ChangeEmailData;
+import com.passwordmanager.passwordmanagerserver.dto.ChangePasswordData;
+import com.passwordmanager.passwordmanagerserver.dto.ForgotPasswordData;
+import com.passwordmanager.passwordmanagerserver.dto.LoginRequest;
 import com.passwordmanager.passwordmanagerserver.service.AuthService;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.AuthenticationException;
@@ -10,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 
 import java.security.Principal;
-import java.util.Map;
 import java.util.UUID;
 
 
@@ -62,5 +62,16 @@ public class AuthController {
     @GetMapping("/confirmnewemail/{token}")
     public RedirectView confirmNewEmail(@PathVariable UUID token) {
         return authService.changeEmail(token);
+    }
+
+    @PostMapping("/forgotpassword")
+    @ResponseStatus(HttpStatus.OK)
+    public void forgotPasswordRequest(@RequestBody ForgotPasswordData forgotPasswordData) {
+        authService.forgotPasswordRequest(forgotPasswordData.email(), forgotPasswordData.newPassword());
+    }
+
+    @GetMapping("/confirmforgotpassword/{token}")
+    public RedirectView confirmForgotPassword(@PathVariable UUID token) {
+        return authService.forgotPassword(token);
     }
 }

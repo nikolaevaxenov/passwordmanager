@@ -22,7 +22,14 @@
     "passwordRequired": "Пароль обязателен для заполнения!",
     "passwordMinLength": "Пароль должен содержать как минимум 6 символов!",
     "passwordMaxLength": "Пароль должен содержать максимум 32 символа!",
-    "wrongCredentials": "Электронная почта или пароль неверны!"
+    "wrongCredentials": "Электронная почта или пароль неверны!",
+    "forgotPasswordNotification": "Для изменения вашего пароля, пожалуйста, перейдите по ссылке в письме, отправленную на вашу почту",
+    "forgotPasswordHeader": "Забыли пароль",
+    "passwordConfirm": "Подтвердите ваш пароль",
+    "passwordMustMatch": "Пароли должны совпадать!",
+    "forgotPasswordError": "При восстановлении пароля возникла ошибка, попробуйте снова",
+    "forgotPasswordButton": "Изменить пароль",
+    "forgotPasswordLink": "Забыли пароль?"
   },
   "SignUpPage": {
     "title": "Регистрация",
