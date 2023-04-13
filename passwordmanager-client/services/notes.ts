@@ -37,28 +37,34 @@ export type RemoveShareNoteData = {
 };
 
 export const getAllNotes = async (token: string) => {
-  const response = await fetch("http://localhost:8080/api/v1/note", {
-    method: "GET",
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_BACKEND_LINK}api/v1/note`,
+    {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
 
   return response.json();
 };
 
 export const addNewNote = async (requestData: NewNoteData) => {
-  const response = await fetch("http://localhost:8080/api/v1/note", {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${requestData.token}`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      title: requestData.title,
-      text: requestData.text,
-    }),
-  });
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_BACKEND_LINK}api/v1/note`,
+    {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${requestData.token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        title: requestData.title,
+        text: requestData.text,
+      }),
+    }
+  );
 
   if (response.status >= 400 && response.status < 600)
     throw new Error("Bad response from server");
@@ -67,18 +73,21 @@ export const addNewNote = async (requestData: NewNoteData) => {
 };
 
 export const editNote = async (requestData: EditNoteData) => {
-  const response = await fetch("http://localhost:8080/api/v1/note", {
-    method: "PUT",
-    headers: {
-      Authorization: `Bearer ${requestData.token}`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      id: requestData.id,
-      title: requestData.title,
-      text: requestData.text,
-    }),
-  });
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_BACKEND_LINK}api/v1/note`,
+    {
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${requestData.token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        id: requestData.id,
+        title: requestData.title,
+        text: requestData.text,
+      }),
+    }
+  );
 
   if (response.status >= 400 && response.status < 600)
     throw new Error("Bad response from server");
@@ -88,7 +97,7 @@ export const editNote = async (requestData: EditNoteData) => {
 
 export const deleteNote = async (requestData: DeleteNoteData) => {
   const response = await fetch(
-    `http://localhost:8080/api/v1/note/${requestData.id}`,
+    `${process.env.NEXT_PUBLIC_BACKEND_LINK}api/v1/note/${requestData.id}`,
     {
       method: "DELETE",
       headers: {
@@ -105,7 +114,7 @@ export const deleteNote = async (requestData: DeleteNoteData) => {
 
 export const addShareNote = async (requestData: AddShareNoteData) => {
   const response = await fetch(
-    `http://localhost:8080/api/v1/note/shared/${requestData.id}`,
+    `${process.env.NEXT_PUBLIC_BACKEND_LINK}api/v1/note/shared/${requestData.id}`,
     {
       method: "POST",
       headers: {
@@ -124,7 +133,7 @@ export const addShareNote = async (requestData: AddShareNoteData) => {
 
 export const removeShareNoteWithMe = async (requestData: DeleteNoteData) => {
   const response = await fetch(
-    `http://localhost:8080/api/v1/note/shared/${requestData.id}`,
+    `${process.env.NEXT_PUBLIC_BACKEND_LINK}api/v1/note/shared/${requestData.id}`,
     {
       method: "PUT",
       headers: {
@@ -142,7 +151,7 @@ export const removeShareNoteWithMe = async (requestData: DeleteNoteData) => {
 
 export const removeShareNote = async (requestData: RemoveShareNoteData) => {
   const response = await fetch(
-    `http://localhost:8080/api/v1/note/shared/${requestData.id}`,
+    `${process.env.NEXT_PUBLIC_BACKEND_LINK}api/v1/note/shared/${requestData.id}`,
     {
       method: "DELETE",
       headers: {

@@ -10,6 +10,7 @@ import com.passwordmanager.passwordmanagerserver.repository.*;
 import com.passwordmanager.passwordmanagerserver.util.EmailSender;
 import jakarta.mail.MessagingException;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -45,6 +46,9 @@ public class AuthService {
     private final ConfirmationTokenRepository confirmationTokenRepository;
     private final PasswordEncoder passwordEncoder;
     private final EmailSender emailSender;
+
+    @Value("${links.frontend}")
+    private String frontendLink;
 
     public AuthService(AuthenticationManager authenticationManager, TokenService tokenService, UserRepository userRepository, AddressRepository addressRepository, NoteRepository noteRepository, PaymentCardRepository paymentCardRepository, SavedPasswordRepository savedPasswordRepository, ConfirmationTokenRepository confirmationTokenRepository, PasswordEncoder passwordEncoder, EmailSender emailSender) {
         this.authenticationManager = authenticationManager;
@@ -102,7 +106,7 @@ public class AuthService {
         confirmationTokenRepository.delete(confirmationToken);
 
         RedirectView redirectView = new RedirectView();
-        redirectView.setUrl("http://localhost:3000/signin");
+        redirectView.setUrl(frontendLink + "signin");
 
         return redirectView;
     }
@@ -253,7 +257,7 @@ public class AuthService {
         confirmationTokenRepository.delete(confirmationToken);
 
         RedirectView redirectView = new RedirectView();
-        redirectView.setUrl("http://localhost:3000/signin");
+        redirectView.setUrl(frontendLink + "signin");
 
         return redirectView;
     }
@@ -290,7 +294,7 @@ public class AuthService {
         confirmationTokenRepository.delete(confirmationToken);
 
         RedirectView redirectView = new RedirectView();
-        redirectView.setUrl("http://localhost:3000/signin");
+        redirectView.setUrl(frontendLink + "signin");
 
         return redirectView;
     }

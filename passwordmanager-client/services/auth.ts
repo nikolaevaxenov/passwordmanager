@@ -34,7 +34,7 @@ export class FetchError extends Error {
 
 export const signIn = async (credentials: SignInCredentials) => {
   const response = await fetch(
-    "http://localhost:8080/api/v1/authorization/signin",
+    `${process.env.NEXT_PUBLIC_BACKEND_LINK}api/v1/authorization/signin`,
     {
       method: "POST",
       headers: {
@@ -58,7 +58,7 @@ export const signIn = async (credentials: SignInCredentials) => {
 
 export const signUp = async (credentials: SignInCredentials) => {
   const response = await fetch(
-    "http://localhost:8080/api/v1/authorization/signup",
+    `${process.env.NEXT_PUBLIC_BACKEND_LINK}api/v1/authorization/signup`,
     {
       method: "POST",
       headers: {
@@ -79,7 +79,7 @@ export const signUp = async (credentials: SignInCredentials) => {
 
 export const getEmail = async (token: string) => {
   const response = await fetch(
-    "http://localhost:8080/api/v1/authorization/signin",
+    `${process.env.NEXT_PUBLIC_BACKEND_LINK}api/v1/authorization/signin`,
     {
       method: "GET",
       headers: {
@@ -93,7 +93,7 @@ export const getEmail = async (token: string) => {
 
 export const changePassword = async (credentials: ChangePasswordData) => {
   const response = await fetch(
-    "http://localhost:8080/api/v1/authorization/changepassword",
+    `${process.env.NEXT_PUBLIC_BACKEND_LINK}api/v1/authorization/changepassword`,
     {
       method: "POST",
       headers: {
@@ -117,7 +117,7 @@ export const changePassword = async (credentials: ChangePasswordData) => {
 
 export const changeEmail = async (credentials: ChangeEmailData) => {
   const response = await fetch(
-    "http://localhost:8080/api/v1/authorization/changeemail",
+    `${process.env.NEXT_PUBLIC_BACKEND_LINK}api/v1/authorization/changeemail`,
     {
       method: "POST",
       headers: {
@@ -143,7 +143,7 @@ export const forgotPasswordRequest = async (
   credentials: ForgotPasswordData
 ) => {
   const response = await fetch(
-    "http://localhost:8080/api/v1/authorization/forgotpassword",
+    `${process.env.NEXT_PUBLIC_BACKEND_LINK}api/v1/authorization/forgotpassword`,
     {
       method: "POST",
       headers: {

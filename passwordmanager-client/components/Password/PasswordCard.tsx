@@ -43,7 +43,6 @@ export default function PasswordCard({
   notify: (text: string, error?: boolean) => void;
   authToken: AuthToken | null;
 }) {
-  console.log(password);
   const [showPassword, setShowPassword] = useState(false);
   const [showNote, setShowNote] = useState(false);
   const [editModalIsOpen, setEditModalIsOpen] = useState(false);

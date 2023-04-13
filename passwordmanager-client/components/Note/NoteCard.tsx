@@ -33,7 +33,6 @@ export default function NoteCard({
   notify: (text: string, error?: boolean) => void;
   authToken: AuthToken | null;
 }) {
-  console.log(note);
   const [editModalIsOpen, setEditModalIsOpen] = useState(false);
   const [deleteModalIsOpen, setDeleteModalIsOpen] = useState(false);
   const [shareModalIsOpen, setShareModalIsOpen] = useState(false);

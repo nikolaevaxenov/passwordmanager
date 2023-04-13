@@ -14,6 +14,9 @@ public class EmailSender {
     @Value("${spring.mail.username}")
     private String senderEmail;
 
+    @Value("${links.backend}")
+    private String backendLink;
+
     public EmailSender(JavaMailSender javaMailSender) {
         this.javaMailSender = javaMailSender;
     }
@@ -26,7 +29,7 @@ public class EmailSender {
                 <p>Thank you for choosing PassStorage</p>
                 <p>Please confirm that\s""" + email + """
                  is your e-mail address by clicking on the link below within 24 hours.</p>
-                <a href="http://localhost:8080/api/v1/authorization/confirmemail/""" + token + "\">VERIFY</a>";
+                <a href=\"""" + backendLink + "api/v1/authorization/confirmemail/" + token + "\">VERIFY</a>";
 
         mimeMessageHelper.setTo(email);
         mimeMessageHelper.setFrom(senderEmail);
@@ -43,7 +46,7 @@ public class EmailSender {
                 <h1>Confirm your new email address for use PassStorage</h1>
                 <p>Please confirm that\s""" + email + """
                  is your e-mail address by clicking on the link below within 24 hours.</p>
-                <a href="http://localhost:8080/api/v1/authorization/confirmnewemail/""" + token + "\">VERIFY</a>";
+                <a href=\"""" + backendLink + "api/v1/authorization/confirmnewemail/" + token + "\">VERIFY</a>";
 
         mimeMessageHelper.setTo(email);
         mimeMessageHelper.setFrom(senderEmail);
@@ -59,7 +62,7 @@ public class EmailSender {
         String emailText = """
                 <h1>Forgot your password?</h1>
                 <p>Change your password by clicking on the link below within 24 hours.</p>
-                <a href="http://localhost:8080/api/v1/authorization/confirmforgotpassword/""" + token + "\">CHANGE PASSWORD</a>";
+                <a href=\"""" + backendLink + "api/v1/authorization/confirmforgotpassword/" + token + "\">VERIFY</a>";
 
         mimeMessageHelper.setTo(email);
         mimeMessageHelper.setFrom(senderEmail);

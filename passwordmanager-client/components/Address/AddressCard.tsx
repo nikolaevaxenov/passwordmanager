@@ -33,7 +33,6 @@ export default function AddressCard({
   notify: (text: string, error?: boolean) => void;
   authToken: AuthToken | null;
 }) {
-  console.log(address);
   const [showNote, setShowNote] = useState(false);
   const [editModalIsOpen, setEditModalIsOpen] = useState(false);
   const [deleteModalIsOpen, setDeleteModalIsOpen] = useState(false);

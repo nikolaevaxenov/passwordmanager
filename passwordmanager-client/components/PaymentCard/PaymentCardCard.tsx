@@ -41,7 +41,6 @@ export default function PaymentCardCard({
   notify: (text: string, error?: boolean) => void;
   authToken: AuthToken | null;
 }) {
-  console.log(paymentCard);
   const [showSecurityCode, setShowSecurityCode] = useState(false);
   const [showNote, setShowNote] = useState(false);
   const [editModalIsOpen, setEditModalIsOpen] = useState(false);

@@ -46,31 +46,37 @@ export type RemoveSharePaymentCardData = {
 };
 
 export const getAllPaymentCards = async (token: string) => {
-  const response = await fetch("http://localhost:8080/api/v1/paymentcard", {
-    method: "GET",
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_BACKEND_LINK}api/v1/paymentcard`,
+    {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
 
   return response.json();
 };
 
 export const addNewPaymentCard = async (requestData: NewPaymentCardData) => {
-  const response = await fetch("http://localhost:8080/api/v1/paymentcard", {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${requestData.token}`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      title: requestData.title,
-      number: requestData.number,
-      securityCode: requestData.securityCode,
-      expirationDate: requestData.expirationDate,
-      note: requestData.note,
-    }),
-  });
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_BACKEND_LINK}api/v1/paymentcard`,
+    {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${requestData.token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        title: requestData.title,
+        number: requestData.number,
+        securityCode: requestData.securityCode,
+        expirationDate: requestData.expirationDate,
+        note: requestData.note,
+      }),
+    }
+  );
 
   if (response.status >= 400 && response.status < 600)
     throw new Error("Bad response from server");
@@ -79,21 +85,24 @@ export const addNewPaymentCard = async (requestData: NewPaymentCardData) => {
 };
 
 export const editPaymentCard = async (requestData: EditPaymentCardData) => {
-  const response = await fetch("http://localhost:8080/api/v1/paymentcard", {
-    method: "PUT",
-    headers: {
-      Authorization: `Bearer ${requestData.token}`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      id: requestData.id,
-      title: requestData.title,
-      number: requestData.number,
-      securityCode: requestData.securityCode,
-      expirationDate: requestData.expirationDate,
-      note: requestData.note,
-    }),
-  });
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_BACKEND_LINK}api/v1/paymentcard`,
+    {
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${requestData.token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        id: requestData.id,
+        title: requestData.title,
+        number: requestData.number,
+        securityCode: requestData.securityCode,
+        expirationDate: requestData.expirationDate,
+        note: requestData.note,
+      }),
+    }
+  );
 
   if (response.status >= 400 && response.status < 600)
     throw new Error("Bad response from server");
@@ -103,7 +112,7 @@ export const editPaymentCard = async (requestData: EditPaymentCardData) => {
 
 export const deletePaymentCard = async (requestData: DeletePaymentCardData) => {
   const response = await fetch(
-    `http://localhost:8080/api/v1/paymentcard/${requestData.id}`,
+    `${process.env.NEXT_PUBLIC_BACKEND_LINK}api/v1/paymentcard/${requestData.id}`,
     {
       method: "DELETE",
       headers: {
@@ -122,7 +131,7 @@ export const addSharePaymentCard = async (
   requestData: AddSharePaymentCardData
 ) => {
   const response = await fetch(
-    `http://localhost:8080/api/v1/paymentcard/shared/${requestData.id}`,
+    `${process.env.NEXT_PUBLIC_BACKEND_LINK}api/v1/paymentcard/shared/${requestData.id}`,
     {
       method: "POST",
       headers: {
@@ -143,7 +152,7 @@ export const removeSharePaymentCardWithMe = async (
   requestData: DeletePaymentCardData
 ) => {
   const response = await fetch(
-    `http://localhost:8080/api/v1/paymentcard/shared/${requestData.id}`,
+    `${process.env.NEXT_PUBLIC_BACKEND_LINK}api/v1/paymentcard/shared/${requestData.id}`,
     {
       method: "PUT",
       headers: {
@@ -163,7 +172,7 @@ export const removeSharePaymentCard = async (
   requestData: RemoveSharePaymentCardData
 ) => {
   const response = await fetch(
-    `http://localhost:8080/api/v1/paymentcard/shared/${requestData.id}`,
+    `${process.env.NEXT_PUBLIC_BACKEND_LINK}api/v1/paymentcard/shared/${requestData.id}`,
     {
       method: "DELETE",
       headers: {

@@ -94,45 +94,51 @@ export type RemoveShareAddressData = {
 };
 
 export const getAllAddresses = async (token: string) => {
-  const response = await fetch("http://localhost:8080/api/v1/address", {
-    method: "GET",
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_BACKEND_LINK}api/v1/address`,
+    {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
 
   return response.json();
 };
 
 export const addNewAddress = async (requestData: NewAddressData) => {
-  const response = await fetch("http://localhost:8080/api/v1/address", {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${requestData.token}`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      title: requestData.title,
-      firstName: requestData.firstName,
-      middleName: requestData.middleName,
-      lastName: requestData.lastName,
-      username: requestData.username,
-      gender: requestData.gender,
-      birthdate: requestData.birthdate,
-      company: requestData.company,
-      address1: requestData.address1,
-      address2: requestData.address2,
-      address3: requestData.address3,
-      city: requestData.city,
-      county: requestData.county,
-      state: requestData.state,
-      zipCode: requestData.zipCode,
-      country: requestData.country,
-      email: requestData.email,
-      phone: requestData.phone,
-      note: requestData.note,
-    }),
-  });
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_BACKEND_LINK}api/v1/address`,
+    {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${requestData.token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        title: requestData.title,
+        firstName: requestData.firstName,
+        middleName: requestData.middleName,
+        lastName: requestData.lastName,
+        username: requestData.username,
+        gender: requestData.gender,
+        birthdate: requestData.birthdate,
+        company: requestData.company,
+        address1: requestData.address1,
+        address2: requestData.address2,
+        address3: requestData.address3,
+        city: requestData.city,
+        county: requestData.county,
+        state: requestData.state,
+        zipCode: requestData.zipCode,
+        country: requestData.country,
+        email: requestData.email,
+        phone: requestData.phone,
+        note: requestData.note,
+      }),
+    }
+  );
 
   if (response.status >= 400 && response.status < 600)
     throw new Error("Bad response from server");
@@ -141,35 +147,38 @@ export const addNewAddress = async (requestData: NewAddressData) => {
 };
 
 export const editAddress = async (requestData: EditAddressData) => {
-  const response = await fetch("http://localhost:8080/api/v1/address", {
-    method: "PUT",
-    headers: {
-      Authorization: `Bearer ${requestData.token}`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      id: requestData.id,
-      title: requestData.title,
-      firstName: requestData.firstName,
-      middleName: requestData.middleName,
-      lastName: requestData.lastName,
-      username: requestData.username,
-      gender: requestData.gender,
-      birthdate: requestData.birthdate,
-      company: requestData.company,
-      address1: requestData.address1,
-      address2: requestData.address2,
-      address3: requestData.address3,
-      city: requestData.city,
-      county: requestData.county,
-      state: requestData.state,
-      zipCode: requestData.zipCode,
-      country: requestData.country,
-      email: requestData.email,
-      phone: requestData.phone,
-      note: requestData.note,
-    }),
-  });
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_BACKEND_LINK}api/v1/address`,
+    {
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${requestData.token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        id: requestData.id,
+        title: requestData.title,
+        firstName: requestData.firstName,
+        middleName: requestData.middleName,
+        lastName: requestData.lastName,
+        username: requestData.username,
+        gender: requestData.gender,
+        birthdate: requestData.birthdate,
+        company: requestData.company,
+        address1: requestData.address1,
+        address2: requestData.address2,
+        address3: requestData.address3,
+        city: requestData.city,
+        county: requestData.county,
+        state: requestData.state,
+        zipCode: requestData.zipCode,
+        country: requestData.country,
+        email: requestData.email,
+        phone: requestData.phone,
+        note: requestData.note,
+      }),
+    }
+  );
 
   if (response.status >= 400 && response.status < 600)
     throw new Error("Bad response from server");
@@ -179,7 +188,7 @@ export const editAddress = async (requestData: EditAddressData) => {
 
 export const deleteAddress = async (requestData: DeleteAddressData) => {
   const response = await fetch(
-    `http://localhost:8080/api/v1/address/${requestData.id}`,
+    `${process.env.NEXT_PUBLIC_BACKEND_LINK}api/v1/address/${requestData.id}`,
     {
       method: "DELETE",
       headers: {
@@ -196,7 +205,7 @@ export const deleteAddress = async (requestData: DeleteAddressData) => {
 
 export const addShareAddress = async (requestData: AddShareAddressData) => {
   const response = await fetch(
-    `http://localhost:8080/api/v1/address/shared/${requestData.id}`,
+    `${process.env.NEXT_PUBLIC_BACKEND_LINK}api/v1/address/shared/${requestData.id}`,
     {
       method: "POST",
       headers: {
@@ -217,7 +226,7 @@ export const removeShareAddressWithMe = async (
   requestData: DeleteAddressData
 ) => {
   const response = await fetch(
-    `http://localhost:8080/api/v1/address/shared/${requestData.id}`,
+    `${process.env.NEXT_PUBLIC_BACKEND_LINK}api/v1/address/shared/${requestData.id}`,
     {
       method: "PUT",
       headers: {
@@ -237,7 +246,7 @@ export const removeShareAddress = async (
   requestData: RemoveShareAddressData
 ) => {
   const response = await fetch(
-    `http://localhost:8080/api/v1/address/shared/${requestData.id}`,
+    `${process.env.NEXT_PUBLIC_BACKEND_LINK}api/v1/address/shared/${requestData.id}`,
     {
       method: "DELETE",
       headers: {

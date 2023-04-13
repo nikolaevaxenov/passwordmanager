@@ -30,7 +30,7 @@ public class PasswordmanagerServerApplication {
                                         PaymentCardRepository paymentCardRepository) {
         return args -> {
             var user1 = new User("first@mail.com", passwordEncoder.encode("123456"), "ROLE_USER");
-            var user2 = new User("ghost777t@ya.ru", passwordEncoder.encode("123456"), "ROLE_USER");
+            var user2 = new User("second@mail.com", passwordEncoder.encode("123456"), "ROLE_USER");
             var user3 = new User("third@mail.com", passwordEncoder.encode("123456"), "ROLE_USER");
             var adminUser = new User("root@mail.com", passwordEncoder.encode("123456"), "ROLE_USER,ROLE_ADMIN");
 

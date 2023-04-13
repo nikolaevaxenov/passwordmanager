@@ -36,3 +36,6 @@ rsa:
 springdoc:
   paths-to-match: /api/v1/**
 dbsecretkey: my-secret-key
+links:
+  frontend: http://localhost:3000/
+  backend: http://localhost:8080/
