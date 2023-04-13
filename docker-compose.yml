@@ -1,0 +1,30 @@
+version: '3.9'
+name: passstorage
+services:
+  database:
+    image: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: qwerty
+      POSTGRES_DB: passwordmanagerdb
+    ports:
+      - 5432:5432
+    volumes:
+      - ./passwordmanager-database:/docker-entrypoint-initdb.d
+
+  server:
+    build: passwordmanager-server/
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+    ports:
+      - 8080:8080
+    restart: on-failure
+    depends_on:
+      - database
+
+  client:
+    build: passwordmanager-client/
+    ports:
+      - 3000:3000
+    depends_on:
+      - server
