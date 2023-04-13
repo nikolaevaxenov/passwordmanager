@@ -21,7 +21,9 @@ export default function PasswordGenerator({
 }: {
   t: Messages["ProfilePage"]["password"]["passwordGenerator"];
   setShowPasswordGenerator: Dispatch<SetStateAction<boolean>>;
-  setValue: UseFormSetValue<PasswordAddFormData | PasswordEditFormData>;
+  setValue:
+    | UseFormSetValue<PasswordAddFormData>
+    | UseFormSetValue<PasswordEditFormData>;
 }) {
   const {
     register,

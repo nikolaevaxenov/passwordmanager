@@ -19,6 +19,11 @@ export default function SignUpForm() {
     passwordMinLength: signUpLocalization("passwordMinLength"),
     passwordMaxLength: signUpLocalization("passwordMaxLength"),
     passwordMustMatch: signUpLocalization("passwordMustMatch"),
+    confirmEmail: {
+      header: signUpLocalization("confirmEmail.header"),
+      subtext: signUpLocalization("confirmEmail.subtext"),
+      link: signUpLocalization("confirmEmail.link"),
+    },
   };
 
   return <SignUpComponent t={signUpT} />;

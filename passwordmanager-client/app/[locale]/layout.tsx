@@ -25,6 +25,8 @@ export default function RootLayout({
     logout: navbarLocalization("logout"),
     signIn: navbarLocalization("signIn"),
     signUp: navbarLocalization("signUp"),
+    profilePage: navbarLocalization("profilePage"),
+    accountSettings: navbarLocalization("accountSettings"),
   };
 
   return (

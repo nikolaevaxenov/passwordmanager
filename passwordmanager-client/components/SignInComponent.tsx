@@ -37,7 +37,7 @@ export default function SignInComponent({ t }: { t: Messages["SignInPage"] }) {
   const dispatch = useAppDispatch();
   const authToken = useAppSelector(selectAuthToken);
 
-  const [authError, setAuthError] = useState(null);
+  const [authError, setAuthError] = useState<number | null>(null);
 
   const [forgotPassword, setForgotPassword] = useState(false);
   const [forgotPasswordError, setForgotPasswordError] = useState(false);
@@ -79,8 +79,10 @@ export default function SignInComponent({ t }: { t: Messages["SignInPage"] }) {
           dispatch(setAuthToken(createAuthToken(variables.email, data)));
           setAuthError(0);
         },
-        onError: (error: FetchError) => {
-          setAuthError(error.res.status === 409 ? 1 : 2);
+        onError: (error: FetchError | unknown) => {
+          if (error instanceof FetchError) {
+            setAuthError(error.res.status === 409 ? 1 : 2);
+          }
         },
       }
     );
