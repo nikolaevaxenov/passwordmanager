@@ -1,15 +1,11 @@
 "use client";
 
-import {
-  createAuthToken,
-  selectAuthToken,
-  setAuthToken,
-} from "@/features/auth/authSlice";
-import { useAppDispatch, useAppSelector } from "@/hooks/hooks";
-import { SignInCredentials, signUp } from "@/services/auth";
+import { selectAuthToken } from "@/features/auth/authSlice";
+import { useAppSelector } from "@/hooks/hooks";
+import { signUp, SignUpCredentials } from "@/services/auth";
 import styles from "@/styles/components/SignUpForm.module.scss";
 import Link from "next/link";
-import { redirect } from "next/navigation";
+import { redirect, usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useMutation } from "react-query";
@@ -24,6 +20,15 @@ export default function SignUpComponent({ t }: { t: Messages["SignUpPage"] }) {
   const authToken = useAppSelector(selectAuthToken);
 
   const [authError, setAuthError] = useState(false);
+
+  const pathname = usePathname();
+  console.log(
+    pathname
+      ? ["en", "ru"].includes(pathname?.split("/")[1])
+        ? pathname?.split("/")[1]
+        : "ru"
+      : "ru"
+  );
 
   useEffect(() => {
     if (authToken !== null) {
@@ -40,13 +45,20 @@ export default function SignUpComponent({ t }: { t: Messages["SignUpPage"] }) {
 
   const password1Value = watch(["password1"]);
 
-  const mutation = useMutation((credentials: SignInCredentials) =>
+  const mutation = useMutation((credentials: SignUpCredentials) =>
     signUp(credentials)
   );
 
   const onSubmit = handleSubmit((data) => {
     mutation.mutate(
-      { email: data.email, password: data.password1 },
+      {
+        loginRequest: { email: data.email, password: data.password1 },
+        locale: pathname
+          ? ["en", "ru"].includes(pathname?.split("/")[1])
+            ? pathname?.split("/")[1]
+            : "ru"
+          : "ru",
+      },
       {
         onError: () => setAuthError(true),
       }

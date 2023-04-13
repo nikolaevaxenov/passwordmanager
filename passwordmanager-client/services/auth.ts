@@ -11,6 +11,11 @@ export type SignInCredentials = {
   password: string;
 };
 
+export type SignUpCredentials = {
+  loginRequest: SignInCredentials;
+  locale: string;
+};
+
 export type ChangePasswordData = {
   loginRequest: SignInCredentials;
   newPassword: string;
@@ -19,11 +24,13 @@ export type ChangePasswordData = {
 export type ChangeEmailData = {
   loginRequest: SignInCredentials;
   newEmail: string;
+  locale: string;
 };
 
 export type ForgotPasswordData = {
   email: string;
   newPassword: string;
+  locale: string;
 };
 
 export class FetchError extends Error {
@@ -56,7 +63,7 @@ export const signIn = async (credentials: SignInCredentials) => {
   return response.text();
 };
 
-export const signUp = async (credentials: SignInCredentials) => {
+export const signUp = async (credentials: SignUpCredentials) => {
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_BACKEND_LINK}api/v1/authorization/signup`,
     {
@@ -65,8 +72,11 @@ export const signUp = async (credentials: SignInCredentials) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        username: credentials.email,
-        password: credentials.password,
+        loginRequest: {
+          username: credentials.loginRequest.email,
+          password: credentials.loginRequest.password,
+        },
+        locale: credentials.locale,
       }),
     }
   );
@@ -129,6 +139,7 @@ export const changeEmail = async (credentials: ChangeEmailData) => {
           password: credentials.loginRequest.password,
         },
         newEmail: credentials.newEmail,
+        locale: credentials.locale,
       }),
     }
   );
@@ -152,6 +163,7 @@ export const forgotPasswordRequest = async (
       body: JSON.stringify({
         email: credentials.email,
         newPassword: credentials.newPassword,
+        locale: credentials.locale,
       }),
     }
   );

@@ -1,9 +1,6 @@
 package com.passwordmanager.passwordmanagerserver.controller;
 
-import com.passwordmanager.passwordmanagerserver.dto.ChangeEmailData;
-import com.passwordmanager.passwordmanagerserver.dto.ChangePasswordData;
-import com.passwordmanager.passwordmanagerserver.dto.ForgotPasswordData;
-import com.passwordmanager.passwordmanagerserver.dto.LoginRequest;
+import com.passwordmanager.passwordmanagerserver.dto.*;
 import com.passwordmanager.passwordmanagerserver.service.AuthService;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.AuthenticationException;
@@ -12,8 +9,6 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import java.security.Principal;
 import java.util.UUID;
-
-
 
 @RestController
 @RequestMapping("/api/v1/authorization")
@@ -32,8 +27,8 @@ public class AuthController {
 
     @PostMapping("/signup")
     @ResponseStatus(HttpStatus.CREATED)
-    public void signUp(@RequestBody LoginRequest loginRequest) {
-        authService.signUp(loginRequest);
+    public void signUp(@RequestBody SignUpData signUpData) {
+        authService.signUp(signUpData.loginRequest(), signUpData.locale());
     }
 
     @GetMapping("/signin")
@@ -56,7 +51,7 @@ public class AuthController {
     @PostMapping("/changeemail")
     @ResponseStatus(HttpStatus.OK)
     public void requestToChangeEmail(@RequestBody ChangeEmailData changeEmailData) {
-        authService.requestToChangeEmail(changeEmailData.loginRequest(), changeEmailData.newEmail());
+        authService.requestToChangeEmail(changeEmailData.loginRequest(), changeEmailData.newEmail(), changeEmailData.locale());
     }
 
     @GetMapping("/confirmnewemail/{token}")
@@ -67,7 +62,7 @@ public class AuthController {
     @PostMapping("/forgotpassword")
     @ResponseStatus(HttpStatus.OK)
     public void forgotPasswordRequest(@RequestBody ForgotPasswordData forgotPasswordData) {
-        authService.forgotPasswordRequest(forgotPasswordData.email(), forgotPasswordData.newPassword());
+        authService.forgotPasswordRequest(forgotPasswordData.email(), forgotPasswordData.newPassword(), forgotPasswordData.locale());
     }
 
     @GetMapping("/confirmforgotpassword/{token}")

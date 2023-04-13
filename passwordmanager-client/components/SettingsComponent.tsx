@@ -10,7 +10,7 @@ import {
 } from "@/services/auth";
 import styles from "@/styles/components/Settings.module.scss";
 import Link from "next/link";
-import { redirect } from "next/navigation";
+import { redirect, usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { flushSync } from "react-dom";
 import { useForm } from "react-hook-form";
@@ -32,6 +32,9 @@ type EmailChangeFormData = {
 export default function SettingsComponent({ t }: { t: Messages["Settings"] }) {
   const authToken = useAppSelector(selectAuthToken);
   const dispatch = useAppDispatch();
+
+  const pathname = usePathname();
+
   const [changePasswordError, setChangePasswordError] = useState(false);
   const [changeEmailError, setChangeEmailError] = useState(false);
   const [changeEmailSuccess, setChangeEmailSuccess] = useState(false);
@@ -104,6 +107,11 @@ export default function SettingsComponent({ t }: { t: Messages["Settings"] }) {
             password: data.currentPassword,
           },
           newEmail: data.newEmail,
+          locale: pathname
+            ? ["en", "ru"].includes(pathname?.split("/")[1])
+              ? pathname?.split("/")[1]
+              : "ru"
+            : "ru",
         },
         {
           onSuccess: () => {

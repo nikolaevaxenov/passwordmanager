@@ -75,7 +75,7 @@ public class AuthService {
         }
     }
 
-    public void signUp(LoginRequest loginRequest) {
+    public void signUp(LoginRequest loginRequest, String locale) {
         try {
             var newUser = new User(loginRequest.username(), passwordEncoder.encode(loginRequest.password()), "ROLE_USER");
             userRepository.save(newUser);
@@ -83,7 +83,7 @@ public class AuthService {
             var confirmationToken = new ConfirmationToken(newUser);
             confirmationTokenRepository.save(confirmationToken);
 
-            emailSender.sendConfirmationEmail(newUser.getEmail(), confirmationToken.getId().toString());
+            emailSender.sendConfirmationEmail(newUser.getEmail(), confirmationToken.getId().toString(), locale);
         } catch (DataIntegrityViolationException e) {
             throw new UserAlreadyExistsException("Email address already used!");
         } catch (MessagingException e) {
@@ -215,7 +215,7 @@ public class AuthService {
         });
     }
 
-    public void requestToChangeEmail(LoginRequest loginRequest, String newEmail) throws AuthenticationException {
+    public void requestToChangeEmail(LoginRequest loginRequest, String newEmail, String locale) throws AuthenticationException {
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.username(), loginRequest.password()));
 
@@ -226,7 +226,7 @@ public class AuthService {
             var confirmationToken = new ConfirmationToken(user, newEmail);
             confirmationTokenRepository.save(confirmationToken);
 
-            emailSender.sendNewEmailConfirmation(newEmail, confirmationToken.getId().toString());
+            emailSender.sendNewEmailConfirmation(newEmail, confirmationToken.getId().toString(), locale);
         } catch (BadCredentialsException e) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN);
         } catch (MessagingException e) {
@@ -262,7 +262,7 @@ public class AuthService {
         return redirectView;
     }
 
-    public void forgotPasswordRequest(String email, String newPassword) {
+    public void forgotPasswordRequest(String email, String newPassword, String locale) {
         try {
             var user = userRepository.findByEmail(email).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
@@ -271,7 +271,7 @@ public class AuthService {
 
             confirmationTokenRepository.save(confirmationToken);
 
-            emailSender.sendForgotPasswordConfirmation(email, confirmationToken.getId().toString());
+            emailSender.sendForgotPasswordConfirmation(email, confirmationToken.getId().toString(), locale);
         } catch (MessagingException e) {
             throw new RuntimeException(e);
         }

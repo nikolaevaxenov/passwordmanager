@@ -15,7 +15,7 @@ import {
 } from "@/services/auth";
 import styles from "@/styles/components/SignInForm.module.scss";
 import Link from "next/link";
-import { redirect } from "next/navigation";
+import { redirect, usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useMutation } from "react-query";
@@ -36,6 +36,8 @@ type ForgotPasswordFormData = {
 export default function SignInComponent({ t }: { t: Messages["SignInPage"] }) {
   const dispatch = useAppDispatch();
   const authToken = useAppSelector(selectAuthToken);
+
+  const pathname = usePathname();
 
   const [authError, setAuthError] = useState<number | null>(null);
 
@@ -104,12 +106,20 @@ export default function SignInComponent({ t }: { t: Messages["SignInPage"] }) {
   const onSubmitForgotPassword = handleSubmitForgotPasswordForm(
     (data: ForgotPasswordFormData) => {
       mutationForgotPassword.mutate(
-        { email: data.email, newPassword: data.newPassword },
+        {
+          email: data.email,
+          newPassword: data.newPassword,
+          locale: pathname
+            ? ["en", "ru"].includes(pathname?.split("/")[1])
+              ? pathname?.split("/")[1]
+              : "ru"
+            : "ru",
+        },
         {
           onSuccess: () => {
             setForgotPassword(false);
             setForgotPasswordError(false);
-            notify("For change your password please follow the link in email");
+            notify(t.forgotPasswordNotification);
           },
           onError: () => {
             setForgotPasswordError(true);
